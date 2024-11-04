@@ -1,8 +1,12 @@
+import {CarouselSize} from "./CarouselComp.tsx";
 import NavigationBar from "./NavigationBar";
 
 const Home = () => {
     return(
-        <NavigationBar/>
+        <div>
+            {/* <NavigationBar /> */}
+        <CarouselSize/>
+        </div>
     )
   }
 

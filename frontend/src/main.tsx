@@ -7,6 +7,7 @@ import {
   gql,
 } from '@apollo/client';
 import App from './App';
+import "./index.css"
 
 // Set up Apollo Client
 const client = new ApolloClient({
