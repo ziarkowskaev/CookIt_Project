@@ -7,6 +7,7 @@ import {
   gql,
 } from '@apollo/client';
 import App from './App';
+import { CardWithAvatar } from './components/Recipe';
 
 // Set up Apollo Client
 const client = new ApolloClient({
@@ -15,11 +16,17 @@ const client = new ApolloClient({
 });
 
 // Main App component
+// function Root() {
+//   return (
+//     <ApolloProvider client={client}>
+//       <App />
+//     </ApolloProvider>
+//   );
+// }
+
 function Root() {
   return (
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+    <CardWithAvatar/>
   );
 }
 

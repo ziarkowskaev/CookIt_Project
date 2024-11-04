@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { ALL_PERSONS } from './queries'
 import Home from './pages/home/Home'
+import 'App.css'
 
 
 const App = () => {
