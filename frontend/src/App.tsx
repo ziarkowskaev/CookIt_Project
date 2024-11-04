@@ -13,7 +13,7 @@ const App = () => {
   }
 
   return (
-    <div className='flex flex-col bg-lilac w-screen h-screen'>
+    <div className='flex flex-col w-screen h-screen'>
       <div className='flex flex-start'>
         <NavigationMenuDemo/>
       </div>
