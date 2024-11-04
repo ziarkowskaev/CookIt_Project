@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
   name: {
@@ -18,10 +18,10 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  images: {
-    type: Image,
+  images: [{
+    type: String,
     required: true,
-  },
+  }],
   tags: {
     type: String,
     required: true,
