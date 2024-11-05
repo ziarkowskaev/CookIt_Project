@@ -2,6 +2,9 @@ const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
 const { GraphQLError } = require("graphql");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+const { typeDefs, resolvers } = require("./graphql/schema");
 
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
@@ -12,7 +15,7 @@ const Rating = require("./models/Rating");
 const Folder = require("./models/Folder");
 const Category = require("./models/Category");
 
-require("dotenv").config();
+
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -27,75 +30,7 @@ mongoose
     console.log("error connection to MongoDB:", error.message);
   });
 
-const typeDefs = `
-
-  type User {
-    username: String!
-    favoriteGenre: String!
-    id: ID!
-  }
-  type Token {
-    value: String!
-  }
-
-  type Query {
-    me: User
-  }
-
-  type Mutation {
-    createUser(
-      username: String!
-      favoriteGenre: String!
-    ): User
-    
-    login(
-      username: String!
-      password: String!
-    ): Token  
-  }  
-`;
-const resolvers = {
-  Query: {
-    me: (root, args, context) => {
-      return context.currentUser;
-    },
-  },
-  Mutation: {
-    createUser: async (root, args) => {
-      const user = new User({
-        username: args.username,
-        favoriteGenre: args.favoriteGenre,
-      });
-
-      return user.save().catch((error) => {
-        throw new GraphQLError("Creating the user failed", {
-          extensions: {
-            code: "BAD_USER_INPUT",
-            invalidArgs: args.name,
-            error,
-          },
-        });
-      });
-    },
-    login: async (root, args) => {
-      const user = await User.findOne({ username: args.username });
-
-      if (!user || args.password !== "secret") {
-        throw new GraphQLError("wrong credentials", {
-          extensions: { code: "BAD_USER_INPUT" },
-        });
-      }
-
-      const userForToken = {
-        username: user.username,
-        id: user._id,
-      };
-
-      return { value: jwt.sign(userForToken, process.env.JWT_SECRET) };
-    },
-  },
-};
-
+  
 const server = new ApolloServer({
   typeDefs,
   resolvers,
