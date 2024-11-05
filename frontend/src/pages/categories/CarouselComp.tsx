@@ -44,7 +44,7 @@ interface Recipe{
     }, [api])
     return (
       <div className="flex flex-row items-center justify-between">
-      <Button className="flex bg-transparent rounded-full w-15 h-15 border-black" onClick={() => api?.scrollTo(current - 1)}>
+      <Button className="flex bg-transparent rounded-full w-12 h-12 border-black" onClick={() => api?.scrollTo(current - 1)}>
         <ArrowLeft className="size-6 text-black"></ArrowLeft>
       </Button>     
       <div className="px-3">
@@ -64,8 +64,8 @@ interface Recipe{
         </CarouselContent>
       </Carousel>
       </div>   
-      <Button className="flex bg-transparent rounded-full w-15 h-15 border-black" onClick={() => api?.scrollTo(current + 1)}>
-        <ArrowRight className="size-7 text-black"></ArrowRight>
+      <Button className="flex bg-transparent rounded-full w-12 h-12 border-black" onClick={() => api?.scrollTo(current + 1)}>
+        <ArrowRight className="size-6 text-black"></ArrowRight>
       </Button>
   </div>
     )
