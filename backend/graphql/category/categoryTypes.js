@@ -7,7 +7,7 @@ const categoryTypeDefs = `#graphql
 
   extend type Query {
     allCategories: [Category]      
-    category(name: String!): Category        
+    category(name: ID!): Category        
   }
 
   extend type Mutation {
