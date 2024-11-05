@@ -15,8 +15,6 @@ const Rating = require("./models/Rating");
 const Folder = require("./models/Folder");
 const Category = require("./models/Category");
 
-
-
 const MONGODB_URI = process.env.MONGODB_URI;
 
 console.log("connecting to", MONGODB_URI);
@@ -30,7 +28,6 @@ mongoose
     console.log("error connection to MongoDB:", error.message);
   });
 
-  
 const server = new ApolloServer({
   typeDefs,
   resolvers,

@@ -11,8 +11,6 @@ const schema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  
-
 });
 
 module.exports = mongoose.model("Rating", schema);

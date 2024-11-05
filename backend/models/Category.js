@@ -6,11 +6,7 @@ const schema = new mongoose.Schema({
     required: true,
     minlength: 3,
   },
-  recipes: {
-    type: String,
-    required: true,
-  },
-
+  recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Recipe" }],
 });
 
 module.exports = mongoose.model("Category", schema);

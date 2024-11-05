@@ -14,14 +14,16 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  preperation: {
+  preparation: {
     type: String,
     required: true,
   },
-  images: [{
-    type: String,
-    required: true,
-  }],
+  images: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
   tags: {
     type: String,
     required: true,
@@ -36,7 +38,6 @@ const schema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-
 });
 
 module.exports = mongoose.model("Recipe", schema);

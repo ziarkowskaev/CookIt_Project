@@ -12,10 +12,10 @@ const rootTypeDefs = `#graphql
   }
 `;
 
-const typeDefs = mergeTypeDefs([userTypeDefs,rootTypeDefs]);
+const typeDefs = mergeTypeDefs([userTypeDefs, rootTypeDefs]);
 const resolvers = mergeResolvers([
-  { Query: { ...userQueries,} },
-  { Mutation: { ...userMutations, } },
+  { Query: { ...userQueries } },
+  { Mutation: { ...userMutations } },
 ]);
 
 module.exports = { typeDefs, resolvers };
