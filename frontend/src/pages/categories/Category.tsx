@@ -1,6 +1,5 @@
 // import { Card, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
 import { CateogriesCarousel } from "./CarouselComp"
-import {NavigationMenuDemo} from "./NavigationBar.tsx"
 
 
 const Category = () => {
