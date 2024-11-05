@@ -4,9 +4,9 @@ const { GraphQLError } = require("graphql");
 const recipeMutations = {
   createRecipe: async (root, args) => {
     const recipe = new Recipe({
-        ...args,
-        createdOn: new Date(),
-      });
+      ...args,
+      createdOn: new Date(),
+    });
     return recipe.save();
   },
   deleteRecipe: async (root, args) => {

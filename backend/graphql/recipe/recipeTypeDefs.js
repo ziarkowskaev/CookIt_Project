@@ -1,4 +1,6 @@
 const recipeTypeDefs = `#graphql
+  scalar Date
+
   type Recipe {
     name: String!
     description: String!
@@ -30,8 +32,8 @@ const recipeTypeDefs = `#graphql
     ): Recipe
     deleteRecipe(
         id: ID!
-    )
+    ): Recipe
   }
 `;
 
-module.exports = userTypeDefs;
+module.exports = recipeTypeDefs;
