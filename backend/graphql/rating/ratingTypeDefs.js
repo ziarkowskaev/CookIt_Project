@@ -18,6 +18,8 @@ const ratingTypeDefs = `#graphql
       value: Float!,
       timestamp: Date!
     ): Rating
+    deleteRating(id: ID!):Rating
+    updateRating(id: ID!, value: Float!):Rating
   }
 `;
 

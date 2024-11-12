@@ -10,10 +10,29 @@ const ratingMutations = {
       userId,
       recipeId,
       value,
-      timestamp: new Date(), // Set timestamp to the current date
+      timestamp: new Date(), 
     });
     return newRating.save();
   },
+  deleteRating: async (_, { id }) => {
+    const deletedRating = await Rating.findByIdAndDelete(id);
+    if (!deletedRating) {
+      throw new Error("Rating not found");
+    }
+    return deletedRating;
+  },
+  updateRating: async (_, { id, value }) => {
+    const updatedRating = await Rating.findByIdAndUpdate(
+      id,
+      { value },
+      { new: true }
+    );
+    if (!updatedRating) {
+      throw new Error("Rating not found");
+    }
+    return updatedRating;
+  },
+
 };
 
 module.exports = ratingMutations;
