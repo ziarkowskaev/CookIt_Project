@@ -1,15 +1,5 @@
 import { gql } from '@apollo/client'
 
-export const ALL_PERSONS = gql`
-  query {
-    allPersons  {
-      name
-      phone
-      id
-    }
-  }
-`
-
 export const CREATE_PERSON = gql`
   mutation createPerson($name: String!, $street: String!, $city: String!, $phone: String) {
     addPerson(
@@ -29,19 +19,6 @@ export const CREATE_PERSON = gql`
   }
 `
 
-export const FIND_PERSON = gql`
-  query findPersonByName($nameToSearch: String!) {
-    findPerson(name: $nameToSearch) {
-      name
-      phone
-      id
-      address {
-        street
-        city
-      }
-    }
-  }
-`
 
 export const EDIT_NUMBER = gql`
   mutation editNumber($name: String!, $phone: String!) {
