@@ -51,33 +51,49 @@ const mockData = async () => {
       _id: toObjectId("172a70ec86b1909118c87d54"),
       name: "Spaghetti Bolognese",
       description: "A classic Italian pasta dish with a rich and savory sauce.",
-      ingredients:
-        "spaghetti, ground beef, tomato sauce, onions, garlic, olive oil, salt, pepper",
+      ingredients: [
+        "spaghetti",
+        "ground beef",
+        "tomato sauce",
+        "onions",
+        "garlic",
+        "olive oil",
+        "salt",
+        "pepper",
+      ],
       preparation:
         "Cook spaghetti. Sauté onions and garlic, add ground beef and cook until brown. Add tomato sauce, salt, and pepper. Combine with spaghetti.",
       images: [
         "https://example.com/image1.jpg",
         "https://example.com/image2.jpg",
       ],
-      tags: "Italian, pasta, comfort food",
-      ratings: "5,4,5,3,4", // Example ratings as strings; typically handled in app logic or ratings array
-      createdBy: toObjectId("172a6cca80225447bec329b7"), // Set to a user ID after creating mock users if needed
+      tags: ["Italian", "pasta", "comfort food"],
+      ratings: [5, 4, 5, 3, 4],
+      createdBy: toObjectId("172a6cca80225447bec329b7"),
       createdOn: new Date(),
     },
     {
       _id: toObjectId("272a70ec86b1909118c87d54"),
       name: "Chicken Curry",
       description: "A flavorful and spicy chicken curry from South Asia.",
-      ingredients:
-        "chicken, curry powder, coconut milk, onions, garlic, ginger, salt, pepper",
+      ingredients: [
+        "chicken",
+        "curry powder",
+        "coconut milk",
+        "onions",
+        "garlic",
+        "ginger",
+        "salt",
+        "pepper",
+      ],
       preparation:
         "Cook onions, garlic, and ginger. Add chicken and curry powder, cook until fragrant. Pour in coconut milk, salt, and pepper. Simmer until chicken is tender.",
       images: [
         "https://example.com/curry1.jpg",
         "https://example.com/curry2.jpg",
       ],
-      tags: "Asian, spicy, curry",
-      ratings: "4,5,4,4,5",
+      tags: ["Asian", "spicy", "curry"],
+      ratings: [4, 5, 4, 4, 5],
       createdBy: toObjectId("272a6cca80225447bec329b7"),
       createdOn: new Date(),
     },
@@ -85,13 +101,23 @@ const mockData = async () => {
       _id: toObjectId("372a70ec86b1909118c87d54"),
       name: "Vegetable Stir Fry",
       description: "A quick and healthy stir fry with fresh vegetables.",
-      ingredients:
-        "broccoli, bell peppers, carrots, soy sauce, garlic, olive oil, salt",
+      ingredients: [
+        "broccoli",
+        "bell peppers",
+        "carrots",
+        "soy sauce",
+        "garlic",
+        "olive oil",
+        "salt",
+      ],
       preparation:
         "Heat oil in a pan, sauté garlic. Add vegetables and stir fry with soy sauce until tender-crisp.",
-      images: ["https://example.com/veg1.jpg", "https://example.com/veg2.jpg"],
-      tags: "Vegetarian, quick, healthy",
-      ratings: "5,5,4,3,4",
+      images: [
+        "https://example.com/veg1.jpg",
+        "https://example.com/veg2.jpg",
+      ],
+      tags: ["Vegetarian", "quick", "healthy"],
+      ratings: [5, 5, 4, 3, 4],
       createdBy: toObjectId("372a6cca80225447bec329b7"),
       createdOn: new Date(),
     },

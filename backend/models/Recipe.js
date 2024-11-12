@@ -10,10 +10,10 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  ingredients: {
+  ingredients: [{
     type: String,
     required: true,
-  },
+  }],
   preparation: {
     type: String,
     required: true,
@@ -24,15 +24,14 @@ const schema = new mongoose.Schema({
       required: true,
     },
   ],
-  tags: {
+  tags: [{
     type: String,
     required: true,
-  },
-  ratings: {
-    type: String,
+  }],
+  ratings: [{
+    type: Number,
     required: true,
-  },
-  //never store average rating
+  }],
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   createdOn: {
     type: Date,
