@@ -1,6 +1,5 @@
 // "use client";
 
-import { useNavigate } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -8,7 +7,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-
+import { useNavigate } from "react-router-dom";
 // TODO: navigate to create recipe page
 export function NavigationMenuApp() {
   return (

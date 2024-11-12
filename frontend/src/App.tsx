@@ -2,12 +2,11 @@ import { useQuery } from "@apollo/client";
 import { ALL_PERSONS } from "./queries";
 import Home from "./pages/home/Home";
 import Category from "./pages/categories/Category";
-import { NavigationMenuApp } from "./pages/categories/NavigationBar";
+import { NavigationMenuApp } from "./pages/navbar/NavigationBar";
 import { SearchRes } from "./pages/search/SearchRes";
 import { Profile } from "./pages/profile/Profile";
 import { Recipes } from "./pages/recipes/Recipes";
 import * as React from "react";
-import * as ReactDOM from "react-dom/client";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
