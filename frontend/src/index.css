@@ -9,14 +9,16 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  background-color: #c8a2c8;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+.rounded-custom {
+  border-radius: 2.5rem; /* Adjust this value as needed */
+}
 a {
   font-weight: 500;
   color: #646cff;
@@ -27,11 +29,13 @@ a:hover {
 }
 
 body {
+  padding: 0;
   margin: 0;
   display: flex;
   /* place-items: center; */
   min-width: 320px;
   min-height: 100vh;
+  background-color: #c8a2c8;
 }
 
 h1 {
