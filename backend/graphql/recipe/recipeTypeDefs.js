@@ -4,11 +4,11 @@ const recipeTypeDefs = `#graphql
   type Recipe {
     name: String!
     description: String!
-    ingredients: String!
+    ingredients: [String]!
     preparation: String!
-    images: [String!]
-    tags: String!
-    ratings: String!
+    images: [String]
+    tags: [String]!
+    ratings: [Rating]
     createdBy: ID!
     createdOn: Date!
     id: ID!
@@ -21,14 +21,12 @@ const recipeTypeDefs = `#graphql
 
   extend type Mutation {
     createRecipe(
-      name: String!,
-      description: String!,
-      ingredients: String!,
-      preparation: String!,
-      images: [String!],
-      tags: String!,
-      ratings: String!,
-      createdBy: ID!,
+      name: String!
+      description: String!
+      ingredients: [String]!
+      preparation: String!
+      images: [String]
+      tags: [String]!
     ): Recipe
     deleteRecipe(
         id: ID!

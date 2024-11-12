@@ -29,8 +29,7 @@ const schema = new mongoose.Schema({
     required: true,
   }],
   ratings: [{
-    type: Number,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId, ref: "Rating"
   }],
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   createdOn: {

@@ -9,6 +9,8 @@ const recipeMutations = {
     });
     return recipe.save();
   },
+
+  //delete Ratings when recipe is removed
   deleteRecipe: async (root, args) => {
     const recipe = await Recipe.findByIdAndRemove(args.id);
     if (!recipe) {
