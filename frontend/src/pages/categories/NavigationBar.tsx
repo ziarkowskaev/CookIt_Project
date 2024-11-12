@@ -1,56 +1,49 @@
-"use client"
+// "use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
-// import { Icons } from "../../components/icons"
+import { useNavigate } from "react-router-dom";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
-import { Input } from "@/components/ui/input"
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
+} from "@/components/ui/navigation-menu";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
-// const components: { title: string; href: string; description: string }[] = [
-//   {
-// ]}
-
+// TODO: navigate to create recipe page
 export function NavigationMenuApp() {
   return (
-    <NavigationMenu>
-      <NavigationMenuList className="flex w-screen m-8 justify-around">
+    <NavigationMenu className="border-4 border-black">
+      <NavigationMenuList className="flex w-screen m-8 justify-between">
         <NavigationMenuItem>
           <h1>CookIt</h1>
         </NavigationMenuItem>
-        
-        <NavigationMenuItem>
-          <button className="bg-black text-white text-sm rounded-md">Create Recipe</button>
+        {/* container for create, categories and recipes */}
+        <div className="flex gap-x-4">
+          <NavigationMenuItem>
+            <button className="bg-black text-white text-sm rounded-md">
+              Create Recipe
+            </button>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <button className="bg-white text-sm rounded">Categories</button>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <button className="bg-white text-sm rounded">Recipes</button>
+          </NavigationMenuItem>
+        </div>
+        <NavigationMenuItem className="">
+          <Input className="bg-white" type="text" placeholder="Search" />
         </NavigationMenuItem>
 
-        <NavigationMenuItem >
-          <button className="bg-white text-sm rounded">Categories</button>
-        </NavigationMenuItem>
-        
-        <NavigationMenuItem>
-          <button className="bg-white text-sm rounded">Recipes</button>
-        </NavigationMenuItem>
-          
-        <NavigationMenuItem >
-          <Input className='bg-white w-30' type='text' placeholder="Search"/>
-        </NavigationMenuItem>
-          
         <NavigationMenuItem>
           <Avatar>
-            <AvatarImage/>
-              <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage />
+            <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </NavigationMenuItem>
-          
       </NavigationMenuList>
     </NavigationMenu>
-  )
+  );
 }

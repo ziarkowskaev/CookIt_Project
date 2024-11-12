@@ -1,17 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   gql,
-} from '@apollo/client';
-import App from './App';
-import "./index.css"
+} from "@apollo/client";
+import App from "./App";
+import "./index.css";
 
 // Set up Apollo Client
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql', // Your GraphQL server URL
+  uri: "http://localhost:4000/graphql", // Your GraphQL server URL
   cache: new InMemoryCache(),
 });
 
@@ -24,4 +24,4 @@ function Root() {
   );
 }
 
-ReactDOM.render(<Root />, document.getElementById('root'));
+ReactDOM.render(<Root />, document.getElementById("root"));
