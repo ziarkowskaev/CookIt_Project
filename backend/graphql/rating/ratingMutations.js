@@ -1,9 +1,14 @@
 const Rating = require("../../models/Rating");
+const Recipe = require("../../models/Recipe");
 
 const ratingMutations = {
   createRating: async (_, { userId, recipeId, value }) => {
     if (value < 1 || value > 5) {
       throw new Error("Rating value must be between 1 and 5");
+    }
+
+    if (!Recipe.findById(recipeId)) {
+      throw new Error("Recipe not found");
     }
 
     const newRating = new Rating({
@@ -12,7 +17,20 @@ const ratingMutations = {
       value,
       timestamp: new Date(), 
     });
-    return newRating.save();
+
+    const savedRating = await newRating.save();
+
+    const updatedRecipe = await Recipe.findByIdAndUpdate(
+      recipeId,
+      { $addToSet: { ratings: savedRating._id } },
+      { new: true }
+    );
+
+    if (!updatedRecipe) {
+      throw new Error("Recipe not found");
+    }
+
+    return savedRating;
   },
   deleteRating: async (_, { id }) => {
     const deletedRating = await Rating.findByIdAndDelete(id);

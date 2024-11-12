@@ -16,7 +16,7 @@ const ratingTypeDefs = `#graphql
       userId: ID!,
       recipeId: ID!,
       value: Float!,
-      timestamp: Date!
+      timestamp: Date
     ): Rating
     deleteRating(id: ID!):Rating
     updateRating(id: ID!, value: Float!):Rating

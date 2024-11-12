@@ -22,6 +22,8 @@ const mockData = async () => {
   await User.deleteMany({});
   await Recipe.deleteMany({});
   await Category.deleteMany({});
+  await Rating.deleteMany({});
+  await Folder.deleteMany({});
 
   const users = [
     {
@@ -68,7 +70,6 @@ const mockData = async () => {
         "https://example.com/image2.jpg",
       ],
       tags: ["Italian", "pasta", "comfort food"],
-      ratings: [5, 4, 5, 3, 4],
       createdBy: toObjectId("172a6cca80225447bec329b7"),
       createdOn: new Date(),
     },
@@ -93,7 +94,6 @@ const mockData = async () => {
         "https://example.com/curry2.jpg",
       ],
       tags: ["Asian", "spicy", "curry"],
-      ratings: [4, 5, 4, 4, 5],
       createdBy: toObjectId("272a6cca80225447bec329b7"),
       createdOn: new Date(),
     },
@@ -117,7 +117,6 @@ const mockData = async () => {
         "https://example.com/veg2.jpg",
       ],
       tags: ["Vegetarian", "quick", "healthy"],
-      ratings: [5, 5, 4, 3, 4],
       createdBy: toObjectId("372a6cca80225447bec329b7"),
       createdOn: new Date(),
     },
@@ -139,7 +138,6 @@ const mockData = async () => {
       "https://example.com/caesar2.jpg",
     ],
     tags: ["salad", "quick", "vegetarian"],
-    ratings: [4, 5, 4, 4, 5],
     createdBy: toObjectId("272a6cca80225447bec329b7"),
     createdOn: new Date(),
   },
@@ -162,7 +160,6 @@ const mockData = async () => {
       "https://example.com/margarita2.jpg",
     ],
     tags: ["Italian", "pizza", "vegetarian"],
-    ratings: [5, 5, 4, 4, 5],
     createdBy: toObjectId("272a6cca80225447bec329b7"),
     createdOn: new Date(),
   },
@@ -185,7 +182,6 @@ const mockData = async () => {
       "https://example.com/avocado2.jpg",
     ],
     tags: ["breakfast", "healthy", "quick"],
-    ratings: [5, 4, 5, 5, 4],
     createdBy: toObjectId("172a6cca80225447bec329b7"),
     createdOn: new Date(),
   },
@@ -210,7 +206,6 @@ const mockData = async () => {
       "https://example.com/lentil2.jpg",
     ],
     tags: ["soup", "vegetarian", "healthy"],
-    ratings: [4, 4, 5, 5, 5],
     createdBy: toObjectId("372a6cca80225447bec329b7"),
     createdOn: new Date(),
   },
@@ -234,7 +229,6 @@ const mockData = async () => {
       "https://example.com/alfredo2.jpg",
     ],
     tags: ["Italian", "pasta", "creamy"],
-    ratings: [5, 5, 4, 4, 5],
     createdBy: toObjectId("172a6cca80225447bec329b7"),
     createdOn: new Date(),
   },
@@ -258,7 +252,6 @@ const mockData = async () => {
       "https://example.com/taco2.jpg",
     ],
     tags: ["Mexican", "spicy", "comfort food"],
-    ratings: [5, 4, 4, 4, 5],
     createdBy: toObjectId("272a6cca80225447bec329b7"),
     createdOn: new Date(),
   },
@@ -282,7 +275,6 @@ const mockData = async () => {
       "https://example.com/sushi2.jpg",
     ],
     tags: ["Japanese", "seafood", "healthy"],
-    ratings: [5, 5, 5, 4, 5],
     createdBy: toObjectId("372a6cca80225447bec329b7"),
     createdOn: new Date(),
   },
@@ -307,7 +299,6 @@ const mockData = async () => {
       "https://example.com/tomato2.jpg",
     ],
     tags: ["soup", "vegetarian", "comfort food"],
-    ratings: [5, 5, 4, 4, 5],
     createdBy: toObjectId("172a6cca80225447bec329b7"),
     createdOn: new Date(),
   },
@@ -331,7 +322,6 @@ const mockData = async () => {
       "https://example.com/greek2.jpg",
     ],
     tags: ["salad", "Mediterranean", "healthy"],
-    ratings: [4, 4, 5, 5, 5],
     createdBy: toObjectId("272a6cca80225447bec329b7"),
     createdOn: new Date(),
   },
@@ -356,7 +346,6 @@ const mockData = async () => {
       "https://example.com/pancakes2.jpg",
     ],
     tags: ["breakfast", "sweet", "quick"],
-    ratings: [5, 5, 4, 4, 5],
     createdBy: toObjectId("372a6cca80225447bec329b7"),
     createdOn: new Date(),
   },
