@@ -1,13 +1,12 @@
 import { useQuery } from "@apollo/client";
 import { ALL_PERSONS } from "./queries";
-import { useQuery } from "@apollo/client";
-import { ALL_PERSONS } from "./queries";
 import Home from "./pages/home/Home";
 import Category from "./pages/categories/Category";
 import { NavigationMenuApp } from "./pages/navbar/NavigationBar";
 import { SearchRes } from "./pages/search/SearchRes";
 import { Profile } from "./pages/profile/Profile";
 import { Recipes } from "./pages/recipes/Recipes";
+import Login from "./pages/login/Login";
 import Recipe from './pages/Recipe';
 import * as React from "react";
 
@@ -39,6 +38,10 @@ const App = () => {
       path: "/search",
       element: <SearchRes />,
     },
+    {
+      path: "/login",
+      element: <Login />,
+    }
   ]);
 
   if (result.loading) {
@@ -58,28 +61,11 @@ const App = () => {
 
   return (
     <div>
-      <Home/>
-      {result.data && result.data.allPersons && result.data.allPersons.map(person => (
-          <div className="flex flex-col lg:w-screen justify-around">
-              <div>
-                  <NavigationMenuApp />
-              </div>
-              <div>
-                  <React.StrictMode>
-                      <RouterProvider router={router} />
-                  </React.StrictMode>
-              </div>
-              {/* <Category /> */}
-              {/* <Home /> */}
-              {/* <Profile /> */}
-              {/* <Recipes /> */}
-              {/* {result.data &&
-                result.data.allPersons &&
-                result.data.allPersons.map((person) => (
-                    <div key={person.id}>{person.name}</div>
-                ))}  */}
-        </div>
-      {/* <Recipe /> */}
+      <div>
+        <React.StrictMode>
+          <RouterProvider router={router} />
+        </React.StrictMode>
+      </div>
     </div>
   );
 };

@@ -41,7 +41,7 @@
 }
 
 .body {
-  background-color: #c8a2c8;
+  /* background-color: #c8a2c8; */
   display: flex;
   justify-content: center;
 }
