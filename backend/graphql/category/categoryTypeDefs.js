@@ -11,7 +11,9 @@ const categoryTypeDefs = `#graphql
   }
 
   extend type Mutation {
-    createCategory(name: String!): Category       
+    createCategory(name: String!): Category
+    deleteCategory(id: ID!): Category
+    updateCategory(id: ID!, name: String!): Category     
   }
 `;
 
