@@ -1,8 +1,8 @@
-import { useQuery } from "@apollo/client";
-import { ALL_PERSONS } from "./queries";
+// import { useQuery } from "@apollo/client";
+// import { ALL_PERSONS } from "./graphql/queries";
 import Home from "./pages/home/Home";
 import Category from "./pages/categories/Category";
-import { NavigationMenuApp } from "./pages/navbar/NavigationBar";
+// import { NavigationMenuApp } from "./pages/navbar/NavigationBar";
 import { SearchRes } from "./pages/search/SearchRes";
 import { Profile } from "./pages/profile/Profile";
 import { Recipes } from "./pages/recipes/Recipes";
@@ -15,8 +15,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import './App.css';
 
 const App = () => {
-  const result = useQuery(ALL_PERSONS);
-  console.log(result);
+  // const result = useQuery(ALL_PERSONS);
+  // console.log(result);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -48,9 +48,9 @@ const App = () => {
     },
   ]);
 
-  if (result.loading) {
-    return <div>loading...</div>;
-  }
+  // if (result.loading) {
+    // return <div>loading...</div>;
+  // }
 
   // return (
   //   <div>
