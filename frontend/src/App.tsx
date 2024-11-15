@@ -41,7 +41,11 @@ const App = () => {
     {
       path: "/login",
       element: <Login />,
-    }
+    },
+    {
+      path: "/recipepage", // TODO: should be recipe/:recipeID needs to be considered here
+      element: <Recipe />,
+    },
   ]);
 
   if (result.loading) {

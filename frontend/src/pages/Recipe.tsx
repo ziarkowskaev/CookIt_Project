@@ -14,9 +14,9 @@ const Recipe = () => {
   return (
     <div className="w-screen h-screen bg-lilac">
       <div className="w-screen px-8 py-4">
-        <div className="bg-cream border-none rounded-xl">
+        <div className="bg-cream border-none shadow-none rounded-xl">
           {/* Recipe image, name and amount of likes */}
-          <Card className="grid grid-cols-2 w-2/5 bg-cream border-none">
+          <Card className="grid grid-cols-2 w-2/5 bg-cream border-none shadow-none">
             {/* Recipe Image */}
             <Avatar className="w-52 h-52">
               <AvatarImage src="@/images/FoodImg.png" alt="Avatar" />
@@ -30,7 +30,7 @@ const Recipe = () => {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="shadow-none">
             <CardHeader>
               <CardTitle className="text-xl font-bold">Ingredients</CardTitle>
             </CardHeader>
@@ -68,8 +68,8 @@ const Recipe = () => {
           </Card>
 
           <Card>
-            <CardContent>
-              <CardTitle className="text-xl font-bold">Instructions</CardTitle>
+            <CardContent className="shadow-none">
+              <CardTitle className="text-xl font-bold shadow-none">Instructions</CardTitle>
               <CardDescription>
                 <ol className="list-decimal mt-4 ml-4">
                   <li>
