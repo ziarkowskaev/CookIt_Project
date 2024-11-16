@@ -20,12 +20,6 @@ interface Recipe {
   category: string;
   id: string;
 }
-
-// function to get the recipes # TODO change to suit our needs
-// const getRecipes(): Promise<Recipe[]> {
-//   const result =  await fetch
-// }
-
 export function CateogriesCarousel() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);

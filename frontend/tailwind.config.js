@@ -11,12 +11,14 @@ export default {
       },
       colors: {
         lilac: "#c8a2c8",
-        slate: "F1F5F9",
+        slate: "#F1F5F9",
+        cream: "#FDF8E2",
+        beige: "#FCDD9D",
         button_green: "A3B565",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
-          DEFAULT: "F1F5F9",
+          DEFAULT: "hsl(var(--background))",
           foreground: "hsl(var(--card-foreground))",
         },
         popover: {

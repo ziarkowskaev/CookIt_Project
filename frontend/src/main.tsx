@@ -4,7 +4,7 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  gql,
+  // gql,
 } from "@apollo/client";
 import App from "./App";
 import "./index.css";

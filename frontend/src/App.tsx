@@ -7,8 +7,8 @@ import { SearchRes } from "./pages/search/SearchRes";
 import { Profile } from "./pages/profile/Profile";
 import { Recipes } from "./pages/recipes/Recipes";
 import * as React from "react";
-
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import AddRecipe from "./pages/addRecipe/Add";
 
 const App = () => {
   const result = useQuery(ALL_PERSONS);
@@ -34,32 +34,21 @@ const App = () => {
       path: "/search",
       element: <SearchRes />,
     },
+    {
+      path: "/addRecipe",
+      element: <AddRecipe />,
+    },
   ]);
 
   if (result.loading) {
     return <div>loading...</div>;
   }
-
   return (
     <div className="flex flex-col lg:w-screen justify-around">
-      <div>
-        <NavigationMenuApp />
-      </div>
-      <div>
-        {/* ReactDOM.createRoot(document.getElementById("root")).render( */}
-        <React.StrictMode>
-          <RouterProvider router={router} />
-        </React.StrictMode>
-      </div>
-      {/* <Category /> */}
-      {/* <Home /> */}
-      {/* <Profile /> */}
-      {/* <Recipes /> */}
-      {/* {result.data &&
-        result.data.allPersons &&
-        result.data.allPersons.map((person) => (
-          <div key={person.id}>{person.name}</div>
-        ))} */}
+      <NavigationMenuApp />
+      <React.StrictMode>
+        <RouterProvider router={router} />
+      </React.StrictMode>
     </div>
   );
 };
