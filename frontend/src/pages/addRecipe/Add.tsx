@@ -1,33 +1,24 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@radix-ui/react-checkbox";
-import { useState } from "react";
-// import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
+// TODO: add destination to post recipe
 const AddRecipe = () => {
   return (
     <div className="w-screen h-screen bg-lilac">
       <div className="w-screen h-screen px-8 py-4">
-        <form className="flex w-full h-full">
+        <form className="flex w-full h-full" method="GET" action="/">
           {/* Recipe image and Recipe Name */}
           <Card className="flex flex-col w-full h-full rounded-2xl bg-cream">
             <CardHeader className="font-bold">Add a recipe</CardHeader>
             <CardContent className="flex h-1/3 gap-10 items-center">
-              <Input
-                className="bg-white w-1/3 h-10 mt-10 rounded-full"
+              <input
+                className="bg-white px-2 w-1/3 h-10 mt-10 rounded-none"
                 id="picture"
                 type="file"
               />
-              <Input
-                className="bg-white w-1/3 h-10 mt-10"
+              <input
+                className="bg-white px-3 w-1/3 h-10 mt-10"
+                id="recipeName"
                 type="text"
                 placeholder="Recipe Name"
               />
@@ -53,6 +44,28 @@ const AddRecipe = () => {
                     id="instructions"
                     placeholder="Describe instructions for your recipe here"
                   ></textarea>
+                </div>
+                {/* Public and Creating buttons */}
+                <div className="flex gap-4 mt-5">
+                  <div>
+                    <input
+                      type="checkbox"
+                      id="makePublic"
+                      className="mr-2 bg-white"
+                    />
+                    <label
+                      htmlFor="makePublic"
+                      className="text-sm font-medium leading-none"
+                    >
+                      Make it public
+                    </label>
+                  </div>
+                  <button
+                    type="submit"
+                    className="bg-black hover:bg-gray-400 active:bg-gray-500 text-white px-4 py-2 text-sm rounded-md"
+                  >
+                    Create Recipe
+                  </button>
                 </div>
               </Card>
             </CardContent>

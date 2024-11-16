@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export const Recipes = () => {
   return (
-    <div className="flex border-8 border-black font-sans flex-col items-center">
+    <div className="flex font-sans flex-col items-center">
       <div className="w-full max-w-screen-lg px-8">
         <div className="mt-20">
           <h2 className="font-semibold text-2xl">MOST POPULAR RECIPES</h2>
