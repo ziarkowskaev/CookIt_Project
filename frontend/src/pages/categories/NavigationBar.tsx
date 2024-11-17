@@ -22,10 +22,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
 export function NavigationMenuApp() {
   return (
     <NavigationMenu>
-      <NavigationMenuList className="flex w-screen m-8 justify-around">
+      <NavigationMenuList className="flex items-center justify-between w-full px-8 py-4 fixed top-0 left-0">
         <NavigationMenuItem>
-          <h1>CookIt</h1>
+          <h1 className="font-bold">CookIt</h1>
         </NavigationMenuItem>
+
+        <div className="flex items-center space-x-6">
         
         <NavigationMenuItem>
           <button className="bg-black text-white text-sm rounded-md">Create Recipe</button>
@@ -40,16 +42,16 @@ export function NavigationMenuApp() {
         </NavigationMenuItem>
           
         <NavigationMenuItem >
-          <Input className='bg-white w-30' type='text' placeholder="Search"/>
+          <Input className='bg-white' type='text' placeholder="Search"/>
         </NavigationMenuItem>
           
         <NavigationMenuItem>
-          <Avatar>
+          <Avatar className="w-20 h-20 bg-gray-300 rounded-full hover:ring-2 hover:ring-black">
             <AvatarImage/>
               <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </NavigationMenuItem>
-          
+          </div>
       </NavigationMenuList>
     </NavigationMenu>
   )
