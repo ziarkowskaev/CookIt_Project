@@ -61,7 +61,6 @@ const NavigationMenuApp = () => {
           <NavigationMenuItem className="">
             <Input className="bg-white" type="text" placeholder="Search" />
           </NavigationMenuItem>
-
           <NavigationMenuItem>
             <Avatar>
               <AvatarImage />
