@@ -39,7 +39,8 @@ export function RecipesCarousel() {
               <CarouselItem key={index} className="lg:basis-1/5">
                 <div className="p-1">
                   <Card className="flex rounded-3xl aspect-square">
-                    <CardContent className="flex aspect-square items-center justify-center p-6">
+                    {/* aspect square below centers the elements in the square */}
+                    <CardContent className="flex items-center justify-center p-6">
                       <span className="text-l font-semibold">
                         Dish {index + 1}
                       </span>

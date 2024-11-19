@@ -8,7 +8,7 @@ const Home = () => {
       <div className="w-full max-w-screen-lg px-8">
         <div className="mt-20">
           <h2 className="font-semibold text-2xl">CATEGORIES</h2>
-          <div className="grid grid-cols-4 grid-flow-row gap-8 py-10">
+          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 grid-flow-row gap-8 py-10">
             {Array.from({ length: 8 }).map((_, index) => (
               <Card className="flex rounded-custom items-center justify-center aspect-square ">
                 <CardContent className="p-6">

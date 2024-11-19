@@ -17,7 +17,7 @@ const NavigationMenuApp = () => {
   return (
     <>
       <NavigationMenu>
-        <NavigationMenuList className="flex w-screen mt-8 justify-around">
+        <NavigationMenuList className="flex flex-wrap w-screen mt-8 justify-around">
           <NavigationMenuItem>
             <Link to="/" className="text-black">
               <h1>CookIt</h1>
@@ -59,13 +59,21 @@ const NavigationMenuApp = () => {
             </NavigationMenuItem>
           </div>
           <NavigationMenuItem className="">
-            <Input className="bg-white" type="text" placeholder="Search" />
+            <Input className="flex bg-white" type="text" placeholder="Search" />
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Avatar>
-              <AvatarImage />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+            {/* goes to profile page on clicking */}
+            <button
+              className="bg-transparent w-full h-full rounded-full hover-none"
+              onClick={() => {
+                navigate("/profile");
+              }}
+            >
+              <Avatar>
+                <AvatarImage />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            </button>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
