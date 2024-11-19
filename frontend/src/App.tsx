@@ -50,7 +50,7 @@ const App = () => {
   }
 
   return (
-    <div className="flex flex-col lg:w-screen justify-around">
+    <div className="flex flex-col">
       <RouterProvider router={router} />
       <Outlet />
     </div>

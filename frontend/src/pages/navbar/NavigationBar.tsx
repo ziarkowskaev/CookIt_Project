@@ -16,8 +16,8 @@ const NavigationMenuApp = () => {
   const navigate = useNavigate();
   return (
     <>
-      <NavigationMenu className="border-4 border-black">
-        <NavigationMenuList className="flex w-screen m-8 justify-between">
+      <NavigationMenu>
+        <NavigationMenuList className="flex w-screen mt-8 justify-around">
           <NavigationMenuItem>
             <Link to="/" className="text-black">
               <h1>CookIt</h1>
