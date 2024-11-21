@@ -12,15 +12,23 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "@/graphql/mutations";
+import { CREATE_USER, LOGIN_USER } from "@/graphql/mutations";
 import { Dispatch, SetStateAction, useEffect } from "react";
 
-const validationSchema = z.object({
-  username: z.string().min(1, {
-    message: "Username is required",
-  }),
-  password: z.string().min(8, {message: "Password is required and must contain at least 8 characters"}),
-});
+const validationSchema = z
+  .object({
+    username: z.string().min(1, {
+      message: "Username is required",
+    }),
+    email: z.string().email().min(1, {
+      message: "Must be a valid email",
+    }),
+    password: z.string().min(8, {message: "Password is required and must contain at least 8 characters"}),
+    confirmPassword: z.string().min(8, {message: "Password is required and must contain at least 8 characters"})
+  }).refine(( data ) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 type FormValues = z.infer<typeof validationSchema>;
 
@@ -29,7 +37,13 @@ interface ILoginParams {
   setShowLogin: Dispatch<SetStateAction<boolean>>
 }
 
-const Login = ({setToken, setShowLogin}: ILoginParams) => {
+const Signup = ({setToken, setShowLogin}: ILoginParams) => {
+
+  const [ createUser ] = useMutation(CREATE_USER, {
+    onError: (error) => {
+      console.error('Error has occured:', error);
+    }
+  });
 
   const [ loginUser, result ] = useMutation(LOGIN_USER, {
     onError: (error) => {
@@ -38,7 +52,7 @@ const Login = ({setToken, setShowLogin}: ILoginParams) => {
   });
 
   useEffect(() => {
-    if ( result.data ) {
+    if ( result.data && result.data.login ) {
       const token = result.data.login.value
       setToken(token)
       localStorage.setItem('user-auth-token', "Bearer " + token)
@@ -51,19 +65,24 @@ const Login = ({setToken, setShowLogin}: ILoginParams) => {
       mode: "onBlur",
       defaultValues: {
         username: "",
-        password: ""
+        email: "",
+        password: "",
+        confirmPassword: ""
       },
     });
-
+  
   const onSubmit = (values: FormValues) => {
     const username = values.username;
+    const email = values.email;
     const password = values.password;
-    loginUser({variables: { username, password } })
+    createUser({variables: { username, email, password } })
+    // after successfully creating user, run mutation to login user
+    loginUser({variables: { username,password } })
   };
 
-  const handleSignup: React.FormEventHandler = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleLogin: React.FormEventHandler = (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault();
-    setShowLogin(false);
+    setShowLogin(true);
   };
 
   return (
@@ -94,6 +113,27 @@ const Login = ({setToken, setShowLogin}: ILoginParams) => {
             />
           </div>
 
+          <div className="relative email">
+            <FormField
+              name="email"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-base">Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your email"
+                      type="email"
+                      className="mt-3"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500 capitalize" />
+                </FormItem>
+              )}
+            />
+          </div>
+
           <div className="relative password">
             <FormField
               name="password"
@@ -115,12 +155,31 @@ const Login = ({setToken, setShowLogin}: ILoginParams) => {
             />
           </div>
 
+          <div className="relative password">
+            <FormField
+              name="confirmPassword"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-base">Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Confirm your password"
+                      type="password"
+                      className="mt-3"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage/>
+                </FormItem>
+              )}
+            />
+          </div>
           <Button type="submit" className="mt-8 w-full" >
-            Login
-          </Button>
-
-          <Button type="submit" className="mt-8 w-full" onClick={handleSignup}>
             Signup
+          </Button>
+          <Button type="submit" className="mt-8 w-full" onClick={handleLogin}>
+            Login
           </Button>
         </form>
       </Form>
@@ -128,4 +187,4 @@ const Login = ({setToken, setShowLogin}: ILoginParams) => {
   );
 }
 
-export default Login;
+export default Signup;
