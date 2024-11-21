@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input.tsx";
-import { Card, CardContent, CardTitle } from "../../components/ui/card.tsx";
+import { Card, CardContent } from "../../components/ui/card.tsx";
 import { RecipesCarousel } from "./CarouselComp.tsx";
 
 const Home = () => {

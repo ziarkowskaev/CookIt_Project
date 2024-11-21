@@ -6,8 +6,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { Link, Outlet } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, Outlet } from "react-router-dom";
 
 // TODO: navigate to create recipe page
 // A COMPONENT

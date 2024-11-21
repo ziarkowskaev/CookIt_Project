@@ -1,26 +1,22 @@
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "@/components/ui/card";
 import { ALL_RECIPES } from "@/graphql/queries";
 
 import { useQuery } from "@apollo/client";
-import { useNavigate } from "react-router-dom";
+import { TypeSystemDefinitionNode } from "graphql";
+// import { useNavigate } from "react-router-dom";
 
-interface Recipe {
-  name: string;
-  image: string;
-  time: number;
-  ingredients: string[];
-  description: string;
-  category: string;
-  id: string;
-}
+import { Recipe } from "../../utils/types";
 
 // TODO: navigation to recipe page
 
 const Recipes = () => {
   const result = useQuery(ALL_RECIPES);
   // const navigate = useNavigate(); // should be used to go to recipe page
-
-  console.log(result.data);
   return (
     <div className="flex flex-wrap font-sans flex-col items-center">
       <div className="w-full max-w-screen-lg px-8">
@@ -35,9 +31,14 @@ const Recipes = () => {
                 <div key={recipe.id}>
                   <Card className="flex rounded-custom items-center justify-around aspect-square">
                     <CardContent className="p-6">
-                      <span className="text-l font-semibold">
-                        {recipe.name}
-                      </span>
+                      <CardTitle>
+                        <span className="text-l font-semibold">
+                          {recipe.name}
+                        </span>
+                      </CardTitle>
+                      <CardDescription className="">
+                        {recipe.description}
+                      </CardDescription>
                     </CardContent>
                   </Card>
                 </div>

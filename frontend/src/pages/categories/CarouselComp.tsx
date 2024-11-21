@@ -1,19 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "../../components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
 import { type CarouselApi } from "../../components/ui/carousel";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { ALL_CATEGORIES } from "@/graphql/queries";
 
-interface Recipe {
-  name: string;
-  image: string;
-  time: number;
-  ingredients: string[];
-  description: string;
-  category: string;
-  id: string;
-}
+import { Recipe } from "../../utils/types";
 import {
   Carousel,
   CarouselContent,
@@ -54,18 +52,25 @@ const CateogriesCarousel = () => {
                   <ArrowLeft className="size-6 text-black"></ArrowLeft>
                 </Button>
                 <Carousel setApi={setApi} opts={{ loop: true }}>
-                  <CarouselContent className="-ml-1">
+                  <CarouselContent>
                     {category.recipes.map((recipe: Recipe) => (
                       <div key={recipe.id}>
-                        <CarouselItem className="lg:basis-1/5">
+                        <CarouselItem>
                           <div key={recipe.id}>
-                            <Card className="flex rounded-3xl aspect-square">
+                            <Card className="flex flex-col justify-between w-full h-full rounded-3xl shadow-lg bg-white">
                               {/* aspect square below centers the elements in the square */}
-                              <CardContent className="flex items-center justify-center p-6">
-                                <span className="text-l font-semibold">
+                              <CardHeader className="flex gap-4 items-center">
+                                {" "}
+                                <CardTitle className="px-4 ">
                                   {recipe.name}
+                                </CardTitle>
+                              </CardHeader>
+                              <CardContent className="flex-grow p-4">
+                                <span className="text-l font-light">
+                                  {recipe.description}
                                 </span>
                               </CardContent>
+                              <CardFooter></CardFooter>
                             </Card>
                           </div>
                         </CarouselItem>

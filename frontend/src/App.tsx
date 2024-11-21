@@ -1,18 +1,14 @@
-import { useQuery } from "@apollo/client";
-// import { ALL_PERSONS } from "./graphql/queries";
 import Home from "./pages/home/Home";
 import Category from "./pages/categories/Category";
 import NavigationMenuApp from "./pages/navbar/NavigationBar";
 import { SearchRes } from "./pages/search/SearchRes";
 import { Profile } from "./pages/profile/Profile";
 import Recipes from "./pages/recipes/Recipes";
-import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AddRecipe from "./pages/addRecipe/Add";
-import { ALL_RECIPES } from "./graphql/queries";
 
+// TODO: move routing to own file
 const App = () => {
-  const result = useQuery(ALL_RECIPES);
-  console.log(result);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -51,9 +47,8 @@ const App = () => {
   // }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-screen h-screen">
       <RouterProvider router={router} />
-      <Outlet />
     </div>
   );
 };
