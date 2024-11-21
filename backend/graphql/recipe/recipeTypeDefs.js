@@ -16,7 +16,7 @@ const recipeTypeDefs = `#graphql
 
   extend type Query {
     allRecipes: [Recipe]
-    recipe: Recipe
+    recipe(id: ID!): Recipe
   }
 
   extend type Mutation {
