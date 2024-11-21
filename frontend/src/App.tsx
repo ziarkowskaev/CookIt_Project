@@ -6,9 +6,20 @@ import { Profile } from "./pages/profile/Profile";
 import Recipes from "./pages/recipes/Recipes";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AddRecipe from "./pages/addRecipe/Add";
+import {useQuery} from "@apollo/client"
+import { ALL_RECIPES } from "./graphql/queries";
 
 // TODO: move routing to own file
 const App = () => {
+
+  const resultRecipes = useQuery(ALL_RECIPES)
+
+  if(resultRecipes.loading){
+    return(
+      <div>loading...</div>
+    )
+  }
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -24,7 +35,7 @@ const App = () => {
         },
         {
           path: "/recipes", // TODO: should be recipe/:recipeID needs to be considered here
-          element: <Recipes />,
+          element: <Recipes recipes={resultRecipes.data.allRecipes}/>,
         },
         {
           path: "/profile", // TODO:  / profile/:id user ID needs to be used here

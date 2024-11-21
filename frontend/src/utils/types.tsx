@@ -7,3 +7,7 @@ export interface Recipe {
   category: string;
   id: string;
 }
+
+export interface IRecipeParams {
+  recipes: Recipe[];
+}
