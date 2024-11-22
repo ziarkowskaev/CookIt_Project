@@ -10,15 +10,35 @@ export const SearchRes = ({recipes}) => {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get("query");
+  const tags = searchParams.get("tags")
 
   useEffect(() => {
     if (query) {
       const fuse = new Fuse(recipes, {
         keys: ["name", "description"], 
-        threshold: 0.3, 
+        threshold: 0.4, 
       });
       const result = fuse.search(query).map((res) => res.item);
       setFilteredRecipes(result);
+    } else if (tags){
+
+      const tagsResult = tags.split(/%/).map((tag) => tag.trim().toLowerCase()).filter(Boolean);
+      
+      if (tagsResult.length > 0) {
+        const results = recipes.filter((recipe) =>
+        tagsResult.some(
+          (tag) =>
+            recipe.tags?.map((t) => t.toLowerCase()).includes(tag) &&
+            recipe.ingredients?.map((i) => i.toLowerCase()).includes(tag)
+        )
+      );
+
+      setFilteredRecipes(results);
+      }else{
+        setFilteredRecipes(recipes);
+      }
+
+
     } else {
       setFilteredRecipes(recipes); // Show all if no query
     }
@@ -29,7 +49,7 @@ export const SearchRes = ({recipes}) => {
     <div className="flex font-sans flex-col items-center">
       <div className="w-full max-w-screen-lg px-8">
         <div className="mt-20">
-          <h2 className="font-semibold text-2xl">Search For: {query}</h2>
+          <h2 className="font-semibold text-2xl">Search For: {query? query : tags? tags .replace(/%/g, ', ') : ""}</h2>
           <div className="grid grid-cols-4 grid-flow-row gap-8 py-10">
             
 
