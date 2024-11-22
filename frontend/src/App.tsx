@@ -20,6 +20,8 @@ const App = () => {
     )
   }
 
+  console.log(resultRecipes)
+
   const router = createBrowserRouter([
     {
       path: "/",
