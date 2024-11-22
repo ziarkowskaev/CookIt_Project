@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { ALL_RECIPES } from "./graphql/queries";
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import AddRecipe from './pages/addRecipe/Add';
+import AddRecipe from "./pages/addRecipe/AddRecipe";
 
 // TODO: move routing to own file
 import './App.css';
@@ -37,10 +37,18 @@ const App = () => {
     client.resetStore();
   };
 
-  const recipesResult = useQuery(ALL_RECIPES);
-  console.log(recipesResult.data);
-
   // TODO: extract to separate component
+
+  const resultRecipes = useQuery(ALL_RECIPES)
+
+  if(resultRecipes.loading){
+    return(
+      <div>loading...</div>
+    )
+  }
+
+  console.log(resultRecipes)
+
   const router = createBrowserRouter([
     {
       path: '/',
@@ -55,8 +63,8 @@ const App = () => {
           element: <Category />,
         },
         {
-          path: '/recipes', // TODO: should be recipe/:recipeID needs to be considered here
-          element: <Recipes recipes={recipesResult.data.allRecipes}/>,
+          path: "/recipes", // TODO: should be recipe/:recipeID needs to be considered here
+          element: <Recipes recipes={resultRecipes.data?.allRecipes || []}/>,
         },
         {
           path: '/profile', // TODO:  / profile/:id user ID needs to be used here
