@@ -5,7 +5,7 @@ import { SearchRes } from "./pages/search/SearchRes";
 import { Profile } from "./pages/profile/Profile";
 import Recipes from "./pages/recipes/Recipes";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import AddRecipe from "./pages/addRecipe/Add";
+import AddRecipe from "./pages/addRecipe/AddRecipe";
 import {useQuery} from "@apollo/client"
 import { ALL_RECIPES } from "./graphql/queries";
 
@@ -35,7 +35,7 @@ const App = () => {
         },
         {
           path: "/recipes", // TODO: should be recipe/:recipeID needs to be considered here
-          element: <Recipes recipes={resultRecipes.data.allRecipes}/>,
+          element: <Recipes recipes={resultRecipes.data?.allRecipes || []}/>,
         },
         {
           path: "/profile", // TODO:  / profile/:id user ID needs to be used here
