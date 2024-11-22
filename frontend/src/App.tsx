@@ -45,7 +45,7 @@ const App = () => {
         },
         {
           path: "/search",
-          element: <SearchRes />,
+          element: <SearchRes recipes={resultRecipes.data?.allRecipes || []}/>,
         },
         {
           path: "/addRecipe",
