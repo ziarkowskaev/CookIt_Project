@@ -4,11 +4,12 @@ import NavigationMenuApp from './pages/navbar/NavigationBar';
 import { SearchRes } from './pages/search/SearchRes';
 import { Profile } from './pages/profile/Profile';
 import Recipes from './pages/recipes/Recipes';
-import { useApolloClient } from '@apollo/client';
+import { useApolloClient, useQuery } from '@apollo/client';
 import Signup from './pages/login/Signup';
 import Login from './pages/login/Login';
 import Recipe from './pages/Recipe';
 import React, { useEffect, useState } from 'react';
+import { ALL_RECIPES } from "./graphql/queries";
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AddRecipe from './pages/addRecipe/Add';
@@ -36,6 +37,9 @@ const App = () => {
     client.resetStore();
   };
 
+  const recipesResult = useQuery(ALL_RECIPES);
+  console.log(recipesResult.data);
+
   // TODO: extract to separate component
   const router = createBrowserRouter([
     {
@@ -52,7 +56,7 @@ const App = () => {
         },
         {
           path: '/recipes', // TODO: should be recipe/:recipeID needs to be considered here
-          element: <Recipes />,
+          element: <Recipes recipes={recipesResult.data.allRecipes}/>,
         },
         {
           path: '/profile', // TODO:  / profile/:id user ID needs to be used here
@@ -102,11 +106,7 @@ const App = () => {
 
   return (
     <div>
-      <div>
-        <React.StrictMode>
-          <RouterProvider router={router} />
-        </React.StrictMode>
-      </div>
+      <RouterProvider router={router} />
     </div>
   );
 };

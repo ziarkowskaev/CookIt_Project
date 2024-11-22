@@ -14,8 +14,13 @@ import { Recipe } from "../../utils/types";
 
 // TODO: navigation to recipe page
 
-const Recipes = () => {
-  const result = useQuery(ALL_RECIPES);
+interface IRecipesParams {
+  recipes: Recipe[],
+}
+
+const Recipes = ({recipes}: IRecipesParams) => {
+  // const result = useQuery(ALL_RECIPES);
+  // console.log(result.data);
   // const navigate = useNavigate(); // should be used to go to recipe page
   return (
     <div className="flex flex-wrap font-sans flex-col items-center">
