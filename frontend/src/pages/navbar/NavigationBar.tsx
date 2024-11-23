@@ -7,6 +7,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useNavigate, Link, Outlet } from "react-router-dom";
+import AddFolder from "../folders/AddFolder";
 
 // TODO: navigate to create recipe page
 // A COMPONENT
@@ -33,6 +34,10 @@ const NavigationMenuApp = () => {
               >
                 Create Recipe
               </button>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+             <AddFolder />
             </NavigationMenuItem>
 
             <NavigationMenuItem>
