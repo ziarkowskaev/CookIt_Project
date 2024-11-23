@@ -4,6 +4,15 @@ import {
   NavigationMenuItem,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useNavigate, Link, Outlet } from "react-router-dom";
@@ -83,18 +92,35 @@ const NavigationMenuApp = () => {
           
           </NavigationMenuItem>
           <NavigationMenuItem>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Avatar >
+                <AvatarImage />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                  onClick={() => {
+                    navigate("/profile");
+                  }}
+                >
+                  Profile
+                </DropdownMenuItem>
+              <DropdownMenuItem>Folders</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
             {/* goes to profile page on clicking */}
-            <button
+            {/* <button
               className="bg-transparent rounded-full"
               onClick={() => {
                 navigate("/profile");
               }}
             >
-              <Avatar >
-                <AvatarImage />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-            </button>
+            </button> */}
           </NavigationMenuItem>
           </div>
         </NavigationMenuList>
