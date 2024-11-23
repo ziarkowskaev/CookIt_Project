@@ -1,7 +1,6 @@
 const userTypeDefs = `#graphql
   type User {
     username: String!
-    favoriteGenre: String!
     id: ID!
   }
 
@@ -14,7 +13,7 @@ const userTypeDefs = `#graphql
   }
 
   extend type Mutation {
-    createUser(username: String!, favoriteGenre: String!): User
+    createUser(username: String!, password:String!, email: String!): User
     login(username: String!, password: String!): Token
   }
 `;
