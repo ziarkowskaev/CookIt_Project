@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import {useMutation} from '@apollo/client'
+import { useMutation } from "@apollo/client";
 import { CREATE_RECIPE } from "@/graphql/mutations";
 
 // TODO: add destination to post recipe
@@ -20,12 +20,15 @@ const AddRecipe = () => {
     const { name, value } = e.target;
     setRecipeData({
       ...recipeData,
-      [name]: name === "tags" || name === "ingredients" ? value.split(",") : value,
+      [name]:
+        name === "tags" || name === "ingredients" ? value.split(",") : value,
     });
   };
 
   const handleFileUpload = (e) => {
-    const files = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
+    const files = Array.from(e.target.files).map((file) =>
+      URL.createObjectURL(file)
+    );
     setRecipeData({
       ...recipeData,
       images: files,
@@ -42,10 +45,9 @@ const AddRecipe = () => {
     }
   };
 
-  
   return (
-    <div className="w-screen h-screen bg-lilac">
-      <div className="w-screen h-screen px-8 py-4">
+    <div className="w-full h-full mt-20">
+      <div className="px-8 py-4">
         <form className="flex w-full h-full" onSubmit={handleSubmit}>
           <Card className="flex flex-col w-full h-full rounded-2xl bg-cream">
             <CardHeader className="font-bold">Add a recipe</CardHeader>
@@ -116,14 +118,20 @@ const AddRecipe = () => {
                 <div className="flex gap-4 mt-5">
                   <button
                     type="submit"
-                    className="bg-black hover:bg-gray-400 active:bg-gray-500 text-white px-4 py-2 text-sm rounded-md"
+                    className="bg-black hover:bg-gray-400 active:bg-gray-500 text-white px-4 py-2 mb-3 text-sm rounded-md"
                     disabled={loading}
                   >
                     {loading ? "Creating..." : "Create Recipe"}
                   </button>
                 </div>
-                {error && <p className="text-red-500 mt-2">Error: {error.message}</p>}
-                {data && <p className="text-green-500 mt-2">Recipe created successfully!</p>}
+                {error && (
+                  <p className="text-red-500 mt-2">Error: {error.message}</p>
+                )}
+                {data && (
+                  <p className="text-green-500 mt-2">
+                    Recipe created successfully!
+                  </p>
+                )}
               </Card>
             </CardContent>
           </Card>
@@ -132,6 +140,5 @@ const AddRecipe = () => {
     </div>
   );
 };
-
 
 export default AddRecipe;
