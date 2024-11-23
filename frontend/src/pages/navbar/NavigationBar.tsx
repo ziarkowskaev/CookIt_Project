@@ -27,14 +27,14 @@ const NavigationMenuApp = () => {
   return (
     <>
       <NavigationMenu>
-        <NavigationMenuList className="flex items-center justify-between w-full px-8 py-4 fixed">
+        <NavigationMenuList className="flex items-center justify-between w-full px-8 py-2 fixed bg-gray-500 ">
           <NavigationMenuItem>
             <Link to="/" className="text-black">
             <h1 className="font-bold">CookIt</h1>
             </Link>
           </NavigationMenuItem>
           {/* container for create, categories and recipes buttons */}
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-4">
           
             <NavigationMenuItem>
               <button
