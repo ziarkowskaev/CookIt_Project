@@ -3,18 +3,18 @@ import {
   CardContent,
   CardDescription,
   CardTitle,
-} from "@/components/ui/card";
-import { ALL_RECIPES } from "@/graphql/queries";
+} from '@/components/ui/card';
+import { ALL_RECIPES } from '@/graphql/queries';
 
-import { useQuery } from "@apollo/client";
-import { TypeSystemDefinitionNode } from "graphql";
+import { useQuery } from '@apollo/client';
+import { TypeSystemDefinitionNode } from 'graphql';
 // import { useNavigate } from "react-router-dom";
 
-import { Recipe, IRecipeParams } from "../../utils/types";
+import { Recipe, IRecipeParams } from '../../utils/types';
 
 // TODO: navigation to recipe page
 
-const Recipes = ({recipes}: IRecipeParams) => {
+const Recipes = ({ recipes }: IRecipeParams) => {
   // const navigate = useNavigate(); // should be used to go to recipe page
   return (
     <div className="flex flex-wrap font-sans flex-col items-center">
@@ -25,21 +25,21 @@ const Recipes = ({recipes}: IRecipeParams) => {
           <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-8 mt-8">
             {/* recipe names shown, needs to be clickable */}
             {recipes.map((recipe: Recipe) => (
-                <div key={recipe.id}>
-                  <Card className="flex rounded-custom items-center justify-around aspect-square">
-                    <CardContent className="p-6">
-                      <CardTitle>
-                        <span className="text-l font-semibold">
-                          {recipe.name}
-                        </span>
-                      </CardTitle>
-                      <CardDescription className="">
-                        {recipe.description}
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
+              <div key={recipe.id}>
+                <Card className="flex rounded-custom items-center justify-around aspect-square">
+                  <CardContent className="p-6">
+                    <CardTitle>
+                      <span className="text-l font-semibold">
+                        {recipe.name}
+                      </span>
+                    </CardTitle>
+                    <CardDescription className="">
+                      {recipe.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -1,25 +1,31 @@
 const { GraphQLError } = require("graphql");
 const authService = require("../../services/auth");
+const bcrypt = require("bcrypt");
 const User = require("../../models/User");
 
 const userMutations = {
-  createUser: async (root, args) => {
+  createUser: async (root, { username, password, email }) => {
+
+    const passwordHash = await bcrypt.hash(password, 10);
+    console.log(passwordHash);
     const user = new User({
-      username: args.username,
-      favoriteGenre: args.favoriteGenre,
-    });
+      username: username,
+      passwordHash: passwordHash,
+      email: email
+    })
+    console.log(user)
 
     return user.save().catch((error) => {
       throw new GraphQLError("Creating the user failed", {
         extensions: {
           code: "BAD_USER_INPUT",
-          invalidArgs: args.username,
+          invalidArgs: username,
           error,
         },
       });
     });
   },
-  login: async (root, args) => authService.login(args),
+  login: async (root, args, { res }) => authService.login(args, res),
 };
 
 module.exports = userMutations;
