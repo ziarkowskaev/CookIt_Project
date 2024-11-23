@@ -4,23 +4,23 @@ import NavigationMenuApp from "./pages/navbar/NavigationBar";
 import { SearchRes } from "./pages/search/SearchRes";
 import { Profile } from "./pages/profile/Profile";
 import Recipes from "./pages/recipes/Recipes";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  useParams,
+} from "react-router-dom";
 import AddRecipe from "./pages/addRecipe/AddRecipe";
-import {useQuery} from "@apollo/client"
+import { useQuery } from "@apollo/client";
 import { ALL_RECIPES } from "./graphql/queries";
+import { Recipe } from "./utils/types";
 
 // TODO: move routing to own file
 const App = () => {
+  const resultRecipes = useQuery(ALL_RECIPES);
 
-  const resultRecipes = useQuery(ALL_RECIPES)
-
-  if(resultRecipes.loading){
-    return(
-      <div>loading...</div>
-    )
+  if (resultRecipes.loading) {
+    return <div>loading...</div>;
   }
-
-  console.log(resultRecipes)
 
   const router = createBrowserRouter([
     {
@@ -28,7 +28,8 @@ const App = () => {
       element: <NavigationMenuApp />,
       children: [
         {
-          path: "/",
+          // path: "/",
+          index: true,
           element: <Home />,
         },
         {
@@ -37,7 +38,8 @@ const App = () => {
         },
         {
           path: "/recipes", // TODO: should be recipe/:recipeID needs to be considered here
-          element: <Recipes recipes={resultRecipes.data?.allRecipes || []}/>,
+          element: <Recipes recipes={resultRecipes.data?.allRecipes || []} />,
+          children: [],
         },
         {
           path: "/profile", // TODO:  / profile/:id user ID needs to be used here
@@ -45,11 +47,15 @@ const App = () => {
         },
         {
           path: "/search",
-          element: <SearchRes recipes={resultRecipes.data?.allRecipes || []}/>,
+          element: <SearchRes recipes={resultRecipes.data?.allRecipes || []} />,
         },
         {
           path: "/addRecipe",
           element: <AddRecipe />,
+        },
+        {
+          path: "/category/:categoryName",
+          element: <Recipes recipes={resultRecipes.data?.allRecipes || []} />,
         },
       ],
     },
@@ -60,7 +66,7 @@ const App = () => {
   // }
 
   return (
-    <div className="flex flex-col w-screen h-screen">
+    <div className="flex flex-col w-screen">
       <RouterProvider router={router} />
     </div>
   );

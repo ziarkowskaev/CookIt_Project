@@ -28,11 +28,14 @@ interface CreateFolderResponse {
 
 // Component definition
 const AddFolder: React.FC = () => {
-  const [folderData, setFolderData] = useState<CreateFolderVariables>({ name: "" });
+  const [folderData, setFolderData] = useState<CreateFolderVariables>({
+    name: "",
+  });
 
-  const [addFolder, { loading, error }] = useMutation<CreateFolderResponse, CreateFolderVariables>(
-    CREATE_FOLDER
-  );
+  const [addFolder, { loading, error }] = useMutation<
+    CreateFolderResponse,
+    CreateFolderVariables
+  >(CREATE_FOLDER);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -80,7 +83,9 @@ const AddFolder: React.FC = () => {
               />
             </div>
           </div>
-          {error && <p className="text-red-500 text-sm">Error: {error.message}</p>}
+          {error && (
+            <p className="text-red-500 text-sm">Error: {error.message}</p>
+          )}
           <DialogFooter>
             <Button type="submit" disabled={loading}>
               {loading ? "Creating..." : "Create"}
