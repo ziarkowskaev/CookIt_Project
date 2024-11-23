@@ -7,20 +7,29 @@ import Recipes from "./pages/recipes/Recipes";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AddRecipe from "./pages/addRecipe/AddRecipe";
 import {useQuery} from "@apollo/client"
-import { ALL_RECIPES } from "./graphql/queries";
+import { ALL_RECIPES, FOLDERS_BY_USER } from "./graphql/queries";
+import Folders from "./pages/folders/Folders";
 
 // TODO: move routing to own file
 const App = () => {
 
   const resultRecipes = useQuery(ALL_RECIPES)
 
-  if(resultRecipes.loading){
+  //should be used with context by the auth user
+
+  const userId = "172a6cca80225447bec329b7"; 
+
+  const resultFolders = useQuery(FOLDERS_BY_USER, {
+    variables: { userId },
+  });
+
+  if(resultRecipes.loading || resultFolders.loading){
     return(
       <div>loading...</div>
     )
   }
 
-  console.log(resultRecipes)
+  console.log("FOLDERS", resultFolders)
 
   const router = createBrowserRouter([
     {
@@ -51,6 +60,10 @@ const App = () => {
           path: "/addRecipe",
           element: <AddRecipe />,
         },
+        {
+          path:"folders",
+          element: <Folders folders={resultFolders.data?.foldersByUser || []}/>
+        }
       ],
     },
   ]);

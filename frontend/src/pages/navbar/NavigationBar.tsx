@@ -109,18 +109,14 @@ const NavigationMenuApp = () => {
                 >
                   Profile
                 </DropdownMenuItem>
-              <DropdownMenuItem>Folders</DropdownMenuItem>
+              <DropdownMenuItem
+              onClick={() => {
+                navigate("/folders");
+              }}
+              >
+                Folders</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
-            {/* goes to profile page on clicking */}
-            {/* <button
-              className="bg-transparent rounded-full"
-              onClick={() => {
-                navigate("/profile");
-              }}
-            >
-            </button> */}
           </NavigationMenuItem>
           </div>
         </NavigationMenuList>
