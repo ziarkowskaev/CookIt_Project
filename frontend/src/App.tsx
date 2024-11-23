@@ -35,7 +35,7 @@ const App = () => {
         },
         {
           path: "/recipes", // TODO: should be recipe/:recipeID needs to be considered here
-          element: <Recipes recipes={resultRecipes.data.allRecipes}/>,
+          element: <Recipes recipes={resultRecipes.data?.allRecipes || []}/>,
         },
         {
           path: "/profile", // TODO:  / profile/:id user ID needs to be used here
