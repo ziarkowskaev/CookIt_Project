@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "@/graphql/mutations";
 import { Dispatch, SetStateAction, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { IAuthParams } from "@/utils/types";
 
 const validationSchema = z.object({
   username: z.string().min(1, {
@@ -24,12 +26,8 @@ const validationSchema = z.object({
 
 type FormValues = z.infer<typeof validationSchema>;
 
-interface ILoginParams {
-  setToken: Dispatch<SetStateAction<string>>,
-  setShowLogin: Dispatch<SetStateAction<boolean>>
-}
-
-const Login = ({setToken, setShowLogin}: ILoginParams) => {
+const Login = ({setToken}: IAuthParams) => {
+  const navigate = useNavigate();
 
   const [ loginUser, result ] = useMutation(LOGIN_USER, {
     onError: (error) => {
@@ -42,6 +40,7 @@ const Login = ({setToken, setShowLogin}: ILoginParams) => {
       const token = result.data.login.value
       setToken(token)
       localStorage.setItem('user-auth-token', "Bearer " + token)
+      navigate("/")
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result.data])
@@ -59,11 +58,6 @@ const Login = ({setToken, setShowLogin}: ILoginParams) => {
     const username = values.username;
     const password = values.password;
     loginUser({variables: { username, password } })
-  };
-
-  const handleSignup: React.FormEventHandler = (event: React.FormEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    setShowLogin(false);
   };
 
   return (
@@ -119,7 +113,7 @@ const Login = ({setToken, setShowLogin}: ILoginParams) => {
             Login
           </Button>
 
-          <Button type="submit" className="mt-8 w-full" onClick={handleSignup}>
+          <Button type="submit" className="mt-8 w-full" onClick={() => { navigate("/signup") }}>
             Signup
           </Button>
         </form>

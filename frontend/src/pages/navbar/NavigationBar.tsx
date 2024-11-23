@@ -12,17 +12,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
+import { INavigationParams } from "@/utils/types";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useNavigate, Link, Outlet } from "react-router-dom";
 import AddFolder from "../folders/AddFolder";
 import { useState } from "react";
+import { logout } from "@/utils/auth";
 
 // TODO: navigate to create recipe page
 // A COMPONENT
 
-const NavigationMenuApp = () => {
+const NavigationMenuApp = ({userLoggedIn, setToken, client} : INavigationParams) => {
   const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -92,26 +93,41 @@ const NavigationMenuApp = () => {
           
           </NavigationMenuItem>
           <NavigationMenuItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Avatar >
-                <AvatarImage />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                  onClick={() => {
-                    navigate("/profile");
-                  }}
-                >
-                  Profile
-                </DropdownMenuItem>
-              <DropdownMenuItem>Folders</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+
+          { userLoggedIn
+            ? <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar >
+                    <AvatarImage />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                      onClick={() => {
+                        navigate("/profile");
+                      }}
+                    >
+                      Profile
+                    </DropdownMenuItem>
+                  <DropdownMenuItem>Folders</DropdownMenuItem>
+                  <DropdownMenuItem
+                      onClick={() => logout({setToken, client})}
+                    >
+                      Logout
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            : <button
+                className="bg-white border-2 border-blue text-md rounded"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              > Login/Signup
+              </button>
+          }
 
             {/* goes to profile page on clicking */}
             {/* <button
