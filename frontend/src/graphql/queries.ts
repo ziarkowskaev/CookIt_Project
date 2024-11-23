@@ -56,7 +56,6 @@ export const CATEGORY = gql`
 export const ALL_RECIPES = gql`
   query AllRecipes {
     allRecipes {
-      id
       name
       description
       ingredients
@@ -70,7 +69,6 @@ export const ALL_RECIPES = gql`
       }
       tags
       createdOn
-      createdBy
     }
   }
 `

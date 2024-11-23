@@ -1,8 +1,23 @@
 import { Input } from "@/components/ui/input.tsx";
 import { Card, CardContent } from "../../components/ui/card.tsx";
 import { RecipesCarousel } from "./CarouselComp.tsx";
-
+import { useState } from "react";
+import {useNavigate} from "react-router-dom"
 const Home = () => {
+
+  const navigate = useNavigate();
+  const [searchTags, setSearchTags] = useState("");
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      const processedTags = searchTags.replace(/[^a-zA-Z,]/g, "") // Removes everything except alphabetic characters and commas
+      .replace(/\s+/g, "").replace(/[, ]+/g, '%');
+      if (processedTags) {
+        navigate(`/search?tags=${processedTags}`);
+      }
+    }
+  };
+
   return (
     <div className="flex font-sans flex-col items-center">
       <div className="w-full max-w-screen-lg px-8">
@@ -25,7 +40,9 @@ const Home = () => {
             className="m-3 mx-auto bg-white"
             type="text"
             placeholder="Search by tags..."
-          />
+            value={searchTags}
+            onChange={(e) => setSearchTags(e.target.value)}
+            onKeyDown={handleSearch} />
           <p className="font-light">
             Tags may include: ingredients, diet, country, etc...
           </p>
