@@ -16,6 +16,7 @@ import AddRecipe from './pages/addRecipe/AddRecipe';
 
 // TODO: move routing to own file
 import './App.css';
+import { setUserToken } from './utils/auth';
 
 const App = () => {
   // TODO: change to using context instead of token for authenticating user
@@ -24,18 +25,15 @@ const App = () => {
   const client = useApolloClient();
 
   useEffect(() => {
-    const userAuthToken = window.localStorage.getItem('user-auth-token');
-    if (userAuthToken) {
-      setToken(userAuthToken);
-    }
+    setUserToken({setToken});
   }, []);
 
   // TODO: extract to same component/dir as login and signup
-  const logout = () => {
-    setToken(null);
-    localStorage.clear();
-    client.resetStore();
-  };
+  // const logout = () => {
+  //   setToken(null);
+  //   localStorage.clear();
+  //   client.resetStore();
+  // };
 
   // TODO: extract to separate component
 
@@ -50,7 +48,7 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <NavigationMenuApp />,
+      element: <NavigationMenuApp userLoggedIn={token === '' ? false : true} setToken={setToken} client={client}/>,
       children: [
         {
           path: '/',
@@ -78,10 +76,14 @@ const App = () => {
         },
       ],
     },
-    // {
-    //   path: "/login",
-    //   element: <Login setToken={setToken}/>,
-    // },
+    {
+      path: "/login",
+      element: <Login setToken={setToken} setShowLogin={setShowLogin} />,
+    },
+    {
+      path: "/signup",
+      element: <Signup setToken={setToken} setShowLogin={setShowLogin} />,
+    },
     {
       path: '/recipepage', // TODO: should be recipe/:recipeID needs to be considered here
       element: <Recipe />,
@@ -91,24 +93,6 @@ const App = () => {
   // if (result.loading) {
   //   return <div>loading...</div>;
   // }
-
-  // TODO: extract to separate component
-  if (!token) {
-    // return (
-    // <>
-    //   <LoginForm setToken={setToken}/>
-    // </>
-    // )
-    return (
-      <>
-        {showLogin ? (
-          <Login setToken={setToken} setShowLogin={setShowLogin} />
-        ) : (
-          <Signup setToken={setToken} setShowLogin={setShowLogin} />
-        )}
-      </>
-    );
-  }
 
   return (
     <div>

@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER, LOGIN_USER } from "@/graphql/mutations";
 import { Dispatch, SetStateAction, useEffect } from "react";
+import { IAuthParams } from "@/utils/types";
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = z
   .object({
@@ -37,7 +39,8 @@ interface ILoginParams {
   setShowLogin: Dispatch<SetStateAction<boolean>>
 }
 
-const Signup = ({setToken, setShowLogin}: ILoginParams) => {
+const Signup = ({setToken}: IAuthParams) => {
+  const navigate = useNavigate();
 
   const [ createUser ] = useMutation(CREATE_USER, {
     onError: (error) => {
@@ -78,11 +81,6 @@ const Signup = ({setToken, setShowLogin}: ILoginParams) => {
     createUser({variables: { username, email, password } })
     // after successfully creating user, run mutation to login user
     loginUser({variables: { username,password } })
-  };
-
-  const handleLogin: React.FormEventHandler = (event: React.FormEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    setShowLogin(true);
   };
 
   return (
@@ -178,7 +176,7 @@ const Signup = ({setToken, setShowLogin}: ILoginParams) => {
           <Button type="submit" className="mt-8 w-full" >
             Signup
           </Button>
-          <Button type="submit" className="mt-8 w-full" onClick={handleLogin}>
+          <Button type="submit" className="mt-8 w-full" onClick={() => { navigate("/login") }}>
             Login
           </Button>
         </form>
