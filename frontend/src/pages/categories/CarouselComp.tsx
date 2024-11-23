@@ -20,7 +20,6 @@ import {
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 // TODO: add more mock data to check scaling of cards
-// TODO: better way to write the Recipe interface
 const CateogriesCarousel = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -37,13 +36,13 @@ const CateogriesCarousel = () => {
     });
   }, [api]);
   return (
-    <div className="flex flex-col justify-between">
+    <div className="flex flex-col justify-between mt-20">
       {categories.data &&
         categories.data.allCategories &&
         categories.data.allCategories.map(
           (category: { id: string; name: string; recipes: Recipe[] }) => (
             <div key={category.id} className="flex flex-col px-9 py-9">
-              <h2 className="flex mb-8 font-bold">{category.name}</h2>
+              <h2 className="font-semibold text-2xl mb-8">{category.name}</h2>
               <div className="flex flex-row items-center justify-between">
                 <Button
                   className="flex bg-transparent rounded-full w-12 h-12 border-black"

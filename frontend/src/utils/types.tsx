@@ -1,18 +1,24 @@
-import { ApolloClient } from "@apollo/client";
-import React from "react";
+import { ApolloClient } from '@apollo/client';
+import React from 'react';
 
-export interface Recipe {
+export interface IRecipe {
   name: string;
   image: string;
   time: number;
   ingredients: string[];
   description: string;
+  tags: string[];
   category: string;
   id: string;
 }
 
+export interface ICategory {
+  id: string;
+  name: string;
+  recipes: IRecipe[];
+}
 export interface IRecipeParams {
-  recipes: Recipe[];
+  recipes: IRecipe[];
 }
 
 export interface IAuthParams {
@@ -26,4 +32,3 @@ export interface ILogoutParams extends IAuthParams {
 export interface INavigationParams extends ILogoutParams {
   userLoggedIn: boolean;
 }
-

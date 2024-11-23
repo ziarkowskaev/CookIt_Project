@@ -4,28 +4,38 @@ import {
   CardDescription,
   CardTitle,
 } from '@/components/ui/card';
-import { ALL_RECIPES } from '@/graphql/queries';
-
-import { useQuery } from '@apollo/client';
-import { TypeSystemDefinitionNode } from 'graphql';
+// import { ALL_RECIPES } from "@/graphql/queries";
+// import { useQuery } from "@apollo/client";
 // import { useNavigate } from "react-router-dom";
 
-import { Recipe, IRecipeParams } from '../../utils/types';
-
-// TODO: navigation to recipe page
-
+import { IRecipe, IRecipeParams } from '../../utils/types';
+import { Outlet, useParams } from 'react-router-dom';
 const Recipes = ({ recipes }: IRecipeParams) => {
-  // const navigate = useNavigate(); // should be used to go to recipe page
+  const params = useParams();
+  let recipes_updated: IRecipe[] = [];
+  const categoryName = params?.categoryName || '';
+  if (categoryName != '') {
+    recipes_updated = recipes.filter((recipe: IRecipe) =>
+      recipe.tags
+        .map((tag) => tag.toLowerCase())
+        .includes(categoryName.toLowerCase())
+    );
+  } else {
+    recipes_updated = recipes;
+  }
   return (
     <div className="flex flex-wrap font-sans flex-col items-center">
       <div className="w-full max-w-screen-lg px-8">
         <div className="mt-20">
-          <h2 className="font-semibold text-2xl">MOST POPULAR RECIPES</h2>
+          <h2 className="font-semi-bold text-2xl">
+            {categoryName || 'MOST POPULAR RECIPES'}
+          </h2>
           {/* grids shrink based on the screen for now */}
           <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-8 mt-8">
             {/* recipe names shown, needs to be clickable */}
-            {recipes.map((recipe: Recipe) => (
+            {recipes_updated.map((recipe: IRecipe) => (
               <div key={recipe.id}>
+                {/* TODO: navigate to recipe info page on clicking cards*/}
                 <Card className="flex rounded-custom items-center justify-around aspect-square">
                   <CardContent className="p-6">
                     <CardTitle>
@@ -33,9 +43,7 @@ const Recipes = ({ recipes }: IRecipeParams) => {
                         {recipe.name}
                       </span>
                     </CardTitle>
-                    <CardDescription className="">
-                      {recipe.description}
-                    </CardDescription>
+                    <CardDescription>{recipe.description}</CardDescription>
                   </CardContent>
                 </Card>
               </div>
@@ -43,6 +51,7 @@ const Recipes = ({ recipes }: IRecipeParams) => {
           </div>
         </div>
       </div>
+      <Outlet />
     </div>
   );
 };

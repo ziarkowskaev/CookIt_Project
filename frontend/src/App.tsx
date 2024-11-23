@@ -13,29 +13,19 @@ import { ALL_RECIPES } from './graphql/queries';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AddRecipe from './pages/addRecipe/AddRecipe';
+import { IRecipe } from './utils/types';
 
 // TODO: move routing to own file
 import './App.css';
 import { setUserToken } from './utils/auth';
 
 const App = () => {
-  // TODO: change to using context instead of token for authenticating user
   const [token, setToken] = useState('');
-  const [showLogin, setShowLogin] = useState(true);
   const client = useApolloClient();
 
   useEffect(() => {
-    setUserToken({setToken});
+    setUserToken({ setToken });
   }, []);
-
-  // TODO: extract to same component/dir as login and signup
-  // const logout = () => {
-  //   setToken(null);
-  //   localStorage.clear();
-  //   client.resetStore();
-  // };
-
-  // TODO: extract to separate component
 
   const resultRecipes = useQuery(ALL_RECIPES);
 
@@ -43,15 +33,20 @@ const App = () => {
     return <div>loading...</div>;
   }
 
-  console.log(resultRecipes);
-
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <NavigationMenuApp userLoggedIn={token === '' ? false : true} setToken={setToken} client={client}/>,
+      element: (
+        <NavigationMenuApp
+          userLoggedIn={token === '' ? false : true}
+          setToken={setToken}
+          client={client}
+        />
+      ),
       children: [
         {
-          path: '/',
+          // path: "/",
+          index: true,
           element: <Home />,
         },
         {
@@ -61,6 +56,7 @@ const App = () => {
         {
           path: '/recipes', // TODO: should be recipe/:recipeID needs to be considered here
           element: <Recipes recipes={resultRecipes.data?.allRecipes || []} />,
+          children: [],
         },
         {
           path: '/profile', // TODO:  / profile/:id user ID needs to be used here
@@ -74,15 +70,19 @@ const App = () => {
           path: '/addRecipe',
           element: <AddRecipe />,
         },
+        {
+          path: '/category/:categoryName',
+          element: <Recipes recipes={resultRecipes.data?.allRecipes || []} />,
+        },
       ],
     },
     {
-      path: "/login",
-      element: <Login setToken={setToken} setShowLogin={setShowLogin} />,
+      path: '/login',
+      element: <Login setToken={setToken} />,
     },
     {
-      path: "/signup",
-      element: <Signup setToken={setToken} setShowLogin={setShowLogin} />,
+      path: '/signup',
+      element: <Signup setToken={setToken} />,
     },
     {
       path: '/recipepage', // TODO: should be recipe/:recipeID needs to be considered here
@@ -90,12 +90,8 @@ const App = () => {
     },
   ]);
 
-  // if (result.loading) {
-  //   return <div>loading...</div>;
-  // }
-
   return (
-    <div>
+    <div className="flex flex-col w-screen">
       <RouterProvider router={router} />
     </div>
   );

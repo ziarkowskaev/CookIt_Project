@@ -9,9 +9,10 @@ import {
   CarouselItem,
 } from "../../components/ui/carousel";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Recipe } from "@/utils/types";
 
 // TODO: change to suit our needs
-export function RecipesCarousel() {
+export function RecipesCarousel({ recipes }: IRecipeParams) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
 
@@ -35,14 +36,14 @@ export function RecipesCarousel() {
       <div className="px-3">
         <Carousel setApi={setApi} opts={{ loop: true }}>
           <CarouselContent className="-ml-1">
-            {Array.from({ length: 10 }).map((_, index) => (
-              <CarouselItem key={index} className="lg:basis-1/5">
+            {recipes.slice(0, 12).map((recipe: Recipe) => (
+              <CarouselItem key={recipe.id} className="sm:basis-1/5">
                 <div className="p-1">
                   <Card className="flex rounded-3xl aspect-square">
                     {/* aspect square below centers the elements in the square */}
                     <CardContent className="flex items-center justify-center p-6">
                       <span className="text-l font-semibold">
-                        Dish {index + 1}
+                        {recipe.name}
                       </span>
                     </CardContent>
                   </Card>
