@@ -34,11 +34,6 @@ const validationSchema = z
 
 type FormValues = z.infer<typeof validationSchema>;
 
-interface ILoginParams {
-  setToken: Dispatch<SetStateAction<string>>,
-  setShowLogin: Dispatch<SetStateAction<boolean>>
-}
-
 const Signup = ({setToken}: IAuthParams) => {
   const navigate = useNavigate();
 
@@ -54,11 +49,13 @@ const Signup = ({setToken}: IAuthParams) => {
     }
   });
 
+  // TODO: Fix this shit: not sure what result it. Page should redirect to home or login when user successfully signs up.
   useEffect(() => {
     if ( result.data && result.data.login ) {
       const token = result.data.login.value
       setToken(token)
       localStorage.setItem('user-auth-token', "Bearer " + token)
+      navigate("/");
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result.data])
