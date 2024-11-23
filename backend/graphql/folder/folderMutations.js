@@ -2,8 +2,8 @@ const Folder = require("../../models/Folder");
 
 const folderMutations = {
   // Create a new folder
-  createFolder: async (_, { name, usersId }) => {
-    const newFolder = new Folder({ name, usersId });
+  createFolder: async (_, { name }) => {
+    const newFolder = new Folder({ name });
     return await newFolder.save();
   },
   deleteFolder: async (_, { id }) => {
