@@ -1,15 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "../../components/ui/card";
-import { type CarouselApi } from "../../components/ui/carousel";
-import { useEffect, useState } from "react";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '../../components/ui/card';
+import { type CarouselApi } from '../../components/ui/carousel';
+import { useEffect, useState } from 'react';
 
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from "../../components/ui/carousel";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Recipe } from "@/utils/types";
+} from '../../components/ui/carousel';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { IRecipe, IRecipeParams } from '@/utils/types';
 
 // TODO: change to suit our needs
 export function RecipesCarousel({ recipes }: IRecipeParams) {
@@ -21,7 +21,7 @@ export function RecipesCarousel({ recipes }: IRecipeParams) {
       return;
     }
     setCurrent(api.selectedScrollSnap());
-    api.on("select", () => {
+    api.on('select', () => {
       setCurrent(api.selectedScrollSnap());
     });
   }, [api]);
@@ -36,7 +36,7 @@ export function RecipesCarousel({ recipes }: IRecipeParams) {
       <div className="px-3">
         <Carousel setApi={setApi} opts={{ loop: true }}>
           <CarouselContent className="-ml-1">
-            {recipes.slice(0, 12).map((recipe: Recipe) => (
+            {recipes.slice(0, 12).map((recipe: IRecipe) => (
               <CarouselItem key={recipe.id} className="sm:basis-1/5">
                 <div className="p-1">
                   <Card className="flex rounded-3xl aspect-square">
