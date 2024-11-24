@@ -1,4 +1,5 @@
 'use client';
+'use client';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -35,9 +36,11 @@ const NavigationMenuApp = ({
 
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
+    if (e.key === 'Enter') {
       navigate(`/search?query=${searchQuery}`);
     }
   };
+
 
   return (
     <>
@@ -45,6 +48,7 @@ const NavigationMenuApp = ({
         <NavigationMenuList className="flex items-center justify-between w-full px-8 py-2 fixed bg-gray-500 ">
           <NavigationMenuItem>
             <Link to="/" className="text-black">
+              <h1 className="font-bold">CookIt</h1>
               <h1 className="font-bold">CookIt</h1>
             </Link>
           </NavigationMenuItem>
@@ -55,6 +59,7 @@ const NavigationMenuApp = ({
                 className="bg-black text-white text-sm rounded-md"
                 onClick={() => {
                   navigate('/addRecipe');
+                  navigate('/addRecipe');
                 }}
               >
                 Create Recipe
@@ -63,12 +68,14 @@ const NavigationMenuApp = ({
 
             <NavigationMenuItem>
               <AddFolder />
+              <AddFolder />
             </NavigationMenuItem>
 
             <NavigationMenuItem>
               <button
                 className="bg-white text-sm rounded"
                 onClick={() => {
+                  navigate('/categories');
                   navigate('/categories');
                 }}
               >
@@ -80,6 +87,7 @@ const NavigationMenuApp = ({
               <button
                 className="bg-white text-sm rounded"
                 onClick={() => {
+                  navigate('/recipes');
                   navigate('/recipes');
                 }}
               >
@@ -116,7 +124,12 @@ const NavigationMenuApp = ({
                     >
                       Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem>Folders</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {
+                      navigate('/folders');
+                    }}
+                  >
+                    Folders
+                  </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => logout({ setToken, client })}
                     >
@@ -139,7 +152,7 @@ const NavigationMenuApp = ({
           </div>
         </NavigationMenuList>
       </NavigationMenu>
-      <main>
+      <main className="mt-8">
         <Outlet />
       </main>
     </>

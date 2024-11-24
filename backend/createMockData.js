@@ -452,8 +452,32 @@ const mockData = async () => {
 
   const folders = [
     {
-      name: 'Folder 1',
-      userId: toObjectId('172a6cca80225447bec329b7'),
+      name: "Folder 1",
+      usersId: [toObjectId("172a6cca80225447bec329b7")],
+      recipes: [
+        toObjectId("172a70ec86b1909118c87d54"),
+        toObjectId("372a70ec86b1909118c87d54"),
+      ],
+    },
+    {
+      name: "Folder 2",
+      usersId: [toObjectId("172a6cca80225447bec329b7")],
+      recipes: [
+        toObjectId("172a70ec86b1909118c87d54"),
+        toObjectId("372a70ec86b1909118c87d54"),
+      ],
+    },
+    {
+      name: "Folder 3",
+      usersId: [toObjectId("172a6cca80225447bec329b7")],
+      recipes: [
+        toObjectId("172a70ec86b1909118c87d54"),
+        toObjectId("372a70ec86b1909118c87d54"),
+      ],
+    },
+    {
+      name: "Folder 4",
+      usersId: [toObjectId("172a6cca80225447bec329b7")],
       recipes: [
         toObjectId('172a70ec86b1909118c87d54'),
         toObjectId('372a70ec86b1909118c87d54'),

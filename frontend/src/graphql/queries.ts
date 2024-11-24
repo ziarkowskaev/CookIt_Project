@@ -109,29 +109,10 @@ export const GET_FOLDER = gql`
   }
 `
 
-export const USERS_FOLDER = gql`
+export const FOLDERS_BY_USER = gql`
   query FoldersByUser($userId: ID!) {
     foldersByUser(userId: $userId) {
-      id
       name
-      recipes {
-        id
-        name
-        description
-        ingredients
-        preparation
-        images
-        ratings {
-          id
-          timestamp
-          userId
-          value
-        }
-        tags
-        createdOn
-        createdBy
-      }
-      userId
     }
   }
 `

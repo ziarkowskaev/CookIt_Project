@@ -13,7 +13,8 @@ import { ALL_RECIPES } from './graphql/queries';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AddRecipe from './pages/addRecipe/AddRecipe';
-import { IRecipe } from './utils/types';
+import { IRecipe, FOLDERS_BY_USER } from './utils/types';
+import Folders from "./pages/folders/Folders";
 
 // TODO: move routing to own file
 import './App.css';
@@ -29,9 +30,21 @@ const App = () => {
 
   const resultRecipes = useQuery(ALL_RECIPES);
 
-  if (resultRecipes.loading) {
-    return <div>loading...</div>;
+  //should be used with context by the auth user
+
+  const userId = "172a6cca80225447bec329b7"; 
+
+  const resultFolders = useQuery(FOLDERS_BY_USER, {
+    variables: { userId },
+  });
+
+  if(resultRecipes.loading || resultFolders.loading){
+    return(
+      <div>loading...</div>
+    )
   }
+
+  console.log("FOLDERS", resultFolders)
 
   const router = createBrowserRouter([
     {
@@ -69,6 +82,10 @@ const App = () => {
         {
           path: '/addRecipe',
           element: <AddRecipe />,
+        },
+        {
+          path:"folders",
+          element: <Folders folders={resultFolders.data?.foldersByUser || []}/>
         },
         {
           path: '/category/:categoryName',
