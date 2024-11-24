@@ -9,11 +9,11 @@ import Signup from './pages/login/Signup';
 import Login from './pages/login/Login';
 import Recipe from './pages/Recipe';
 import React, { useEffect, useState } from 'react';
-import { ALL_RECIPES } from './graphql/queries';
+import { ALL_RECIPES, FOLDERS_BY_USER } from './graphql/queries';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AddRecipe from './pages/addRecipe/AddRecipe';
-import { IRecipe, FOLDERS_BY_USER } from './utils/types';
+import { IRecipe } from './utils/types';
 import Folders from "./pages/folders/Folders";
 
 // TODO: move routing to own file
