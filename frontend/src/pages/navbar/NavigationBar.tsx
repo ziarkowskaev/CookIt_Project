@@ -122,7 +122,7 @@ const NavigationMenuApp = () => {
           </div>
         </NavigationMenuList>
       </NavigationMenu>
-      <main>
+      <main className="mt-8">
         <Outlet />
       </main>
     </>

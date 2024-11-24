@@ -30,6 +30,8 @@ interface CreateFolderResponse {
 const AddFolder: React.FC = () => {
   const [folderData, setFolderData] = useState<CreateFolderVariables>({ name: "" });
 
+  //add variabled user Id so it saved the user that created the folder 
+
   const [addFolder, { loading, error }] = useMutation<CreateFolderResponse, CreateFolderVariables>(
     CREATE_FOLDER
   );
