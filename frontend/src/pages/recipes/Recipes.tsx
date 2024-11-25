@@ -7,11 +7,12 @@ import {
 // import { useNavigate } from "react-router-dom";
 
 import { ICategory, IRecipe, IRecipeParams } from "../../utils/types";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { ALL_CATEGORIES } from "@/graphql/queries";
-
+// TODO: link to each dish's recipe page
 const Recipes = ({ recipes }: IRecipeParams) => {
+  const navigate = useNavigate();
   const params = useParams();
   let recipes_updated: IRecipe[] = recipes;
   let categoryName = params?.categoryName || "";
@@ -40,7 +41,12 @@ const Recipes = ({ recipes }: IRecipeParams) => {
             {recipes_updated.map((recipe: IRecipe) => (
               <div key={recipe.id}>
                 {/* TODO: navigate to recipe info page on clicking cards*/}
-                <Card className="flex rounded-custom items-center justify-around aspect-square">
+                <Card
+                  onClick={() => {
+                    navigate("/recipepage");
+                  }}
+                  className="flex rounded-custom items-center justify-around aspect-square cursor-pointer"
+                >
                   <CardContent className="p-6">
                     <CardTitle>
                       <span className="text-l font-semibold">

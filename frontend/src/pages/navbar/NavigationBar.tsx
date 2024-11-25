@@ -43,7 +43,7 @@ const NavigationMenuApp = ({
   return (
     <>
       <NavigationMenu>
-        <NavigationMenuList className="flex items-center justify-between w-full px-8 py-2 fixed bg-gray-500 ">
+        <NavigationMenuList className="flex items-center justify-between w-full px-8 py-2 fixed bg-gray-500">
           <NavigationMenuItem>
             {/* cursor changes to pointer here */}
             <h1
@@ -152,7 +152,7 @@ const NavigationMenuApp = ({
           </div>
         </NavigationMenuList>
       </NavigationMenu>
-      <main className="mt-8">
+      <main className="mt-10">
         <Outlet />
       </main>
     </>

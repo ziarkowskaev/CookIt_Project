@@ -19,6 +19,7 @@ import Folders from "./pages/folders/Folders";
 // TODO: move routing to own file
 import "./App.css";
 import { setUserToken } from "./utils/auth";
+import Folder from "./pages/folders/Folder";
 
 const App = () => {
   const [token, setToken] = useState("172a6cca80225447bec329b7");
@@ -90,6 +91,10 @@ const App = () => {
         {
           path: "/category/:categoryName",
           element: <Recipes recipes={resultRecipes.data?.allRecipes || []} />,
+        },
+        {
+          path: "/folder",
+          element: <Folder />,
         },
       ],
     },

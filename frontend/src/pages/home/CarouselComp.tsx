@@ -1,63 +1,81 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "../../components/ui/card";
-import { type CarouselApi } from "../../components/ui/carousel";
-import { useEffect, useState } from "react";
-
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "../../components/ui/carousel";
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "../../components/ui/card";
+import { useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import SwiperCore from "swiper";
+
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { IRecipe, IRecipeParams } from "@/utils/types";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // TODO: change to suit our needs
 export function RecipesCarousel({ recipes }: IRecipeParams) {
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
+  // const [api, setApi] = useState<CarouselApi>();
+  // const [current, setCurrent] = useState(0);
+  // useEffect(() => {
+  //   if (!api) {
+  //     return;
+  //   }
+  //   setCurrent(api.selectedScrollSnap());
+  //   api.on("select", () => {
+  //     setCurrent(api.selectedScrollSnap());
+  //   });
+  // }, [api]);
 
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-    setCurrent(api.selectedScrollSnap());
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap());
-    });
-  }, [api]);
+  const swiperRef = useRef<SwiperCore | null>(null);
+  const navigate = useNavigate();
+  const handleNext = () => {
+    swiperRef.current?.slideNext(); // Move to the next slide
+  };
+
+  const handlePrev = () => {
+    swiperRef.current?.slidePrev(); // Move to the previous slide
+  };
   return (
-    <div className="flex flex-row items-center justify-between">
+    <div className="flex flex-row w-full items-center">
       <Button
         className="flex bg-transparent rounded-full w-12 h-12 border-black"
-        onClick={() => api?.scrollTo(current - 1)}
+        onClick={handlePrev}
       >
         <ArrowLeft className="size-6 text-black"></ArrowLeft>
       </Button>
-      <div className="px-3">
-        <Carousel setApi={setApi} opts={{ loop: true }}>
-          <CarouselContent className="-ml-1">
-            {recipes.slice(0, 12).map((recipe: IRecipe) => (
-              <CarouselItem key={recipe.id} className="sm:basis-1/5">
-                <div className="p-1">
-                  {/* onClick={() => Navigate("/recipe")} */}
-                  <Card className="flex rounded-3xl aspect-square cursor-pointer">
-                    {/* aspect square below centers the elements in the square */}
-                    <CardContent className="flex items-center justify-center p-6">
-                      <span className="text-l font-semibold">
-                        {recipe.name}
-                      </span>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </div>
+      <Swiper
+        onSwiper={(swiper) => (swiperRef.current = swiper)} // Set Swiper instance
+        spaceBetween={10}
+        slidesPerView={3} // Number of slides to show
+        breakpoints={{
+          640: { slidesPerView: 2 },
+          768: { slidesPerView: 3 },
+          1024: { slidesPerView: 4 },
+        }}
+      >
+        {recipes.map((recipe: IRecipe) => (
+          <SwiperSlide key={recipe.id}>
+            <Card
+              onClick={() => {
+                navigate("/recipepage");
+              }}
+              className="flex rounded-custom items-center justify-around aspect-square cursor-pointer"
+            >
+              <CardContent className="p-6">
+                <CardTitle className="mb-2">
+                  <span className="text-l font-semibold">{recipe.name}</span>
+                </CardTitle>
+                <CardDescription>{recipe.description}</CardDescription>
+              </CardContent>
+            </Card>
+          </SwiperSlide>
+        ))}
+      </Swiper>
       <Button
         className="flex bg-transparent rounded-full w-12 h-12 border-black"
-        onClick={() => api?.scrollTo(current + 1)}
+        onClick={handleNext}
       >
         <ArrowRight className="size-6 text-black"></ArrowRight>
       </Button>
