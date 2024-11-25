@@ -1,15 +1,16 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '../../components/ui/card';
-import { type CarouselApi } from '../../components/ui/carousel';
-import { useEffect, useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "../../components/ui/card";
+import { type CarouselApi } from "../../components/ui/carousel";
+import { useEffect, useState } from "react";
 
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from '../../components/ui/carousel';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { IRecipe, IRecipeParams } from '@/utils/types';
+} from "../../components/ui/carousel";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { IRecipe, IRecipeParams } from "@/utils/types";
+import { Navigate } from "react-router-dom";
 
 // TODO: change to suit our needs
 export function RecipesCarousel({ recipes }: IRecipeParams) {
@@ -21,7 +22,7 @@ export function RecipesCarousel({ recipes }: IRecipeParams) {
       return;
     }
     setCurrent(api.selectedScrollSnap());
-    api.on('select', () => {
+    api.on("select", () => {
       setCurrent(api.selectedScrollSnap());
     });
   }, [api]);
@@ -39,7 +40,8 @@ export function RecipesCarousel({ recipes }: IRecipeParams) {
             {recipes.slice(0, 12).map((recipe: IRecipe) => (
               <CarouselItem key={recipe.id} className="sm:basis-1/5">
                 <div className="p-1">
-                  <Card className="flex rounded-3xl aspect-square">
+                  {/* onClick={() => Navigate("/recipe")} */}
+                  <Card className="flex rounded-3xl aspect-square cursor-pointer">
                     {/* aspect square below centers the elements in the square */}
                     <CardContent className="flex items-center justify-center p-6">
                       <span className="text-l font-semibold">

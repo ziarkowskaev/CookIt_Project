@@ -3,10 +3,11 @@ import {
   CardContent,
   CardDescription,
   CardTitle,
-} from '../../components/ui/card.tsx';
+} from "../../components/ui/card.tsx";
 
 const Folders = ({ folders }) => {
   //Use List of Cards, but make cards the length of the page
+  console.log(folders);
   return (
     <div className="flex flex-col items-center font-sans px-6 py-10">
       {folders.map((folder) => (
