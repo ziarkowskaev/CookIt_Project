@@ -2,7 +2,7 @@ const folderTypeDefs = `#graphql
   type Folder {
     id: ID!
     name: String!
-    userId: ID!            
+    usersId: [ID]!            
     recipes: [Recipe]      
   }
 
@@ -17,7 +17,7 @@ const folderTypeDefs = `#graphql
     updateFolderName(id: ID!, name: String!): Folder
     removeRecipeFromFolder(folderId:ID!, recipeId: ID!): Folder
     addRecipeToFolder(folderId:ID!, recipeId: ID!): Folder
-    addUserToFolder(folderId:ID!, userId: ID!): Folder
+    addUsersToFolder(folderId:ID!, usersId: [ID]!): Folder
   }
 `;
 

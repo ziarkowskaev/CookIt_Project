@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_RECIPE } from '@/graphql/mutations';
-import { ALL_RECIPES } from "@/graphql/queries";
+import { ALL_RECIPES, AUTH_USER } from "@/graphql/queries";
 
 // TODO: add destination to post recipe
 const AddRecipe = () => {
@@ -20,6 +20,10 @@ const AddRecipe = () => {
       ALL_RECIPES,
     ]
   });
+
+  const user = useQuery(AUTH_USER);
+
+  console.log(user)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
