@@ -3,7 +3,7 @@ import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { CREATE_RECIPE } from '@/graphql/mutations';
-import { ALL_RECIPES } from "@/graphql/queries";
+import { ALL_RECIPES } from '@/graphql/queries';
 
 // TODO: add destination to post recipe
 const AddRecipe = () => {
@@ -16,13 +16,11 @@ const AddRecipe = () => {
     images: [],
   });
   const [addRecipe, { loading, error, data }] = useMutation(CREATE_RECIPE, {
-    refetchQueries: [
-      ALL_RECIPES,
-    ]
+    refetchQueries: [ALL_RECIPES],
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (e: React.ChangeEvent) => {
+    const { name, value } = e.target as HTMLInputElement;
     setRecipeData({
       ...recipeData,
       [name]:
@@ -30,17 +28,17 @@ const AddRecipe = () => {
     });
   };
 
-  const handleFileUpload = (e) => {
-    const files = Array.from(e.target.files).map((file) =>
-      URL.createObjectURL(file)
-    );
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files ? Array.from(e.target.files).map((file) =>
+      URL.createObjectURL(file)) : [];
     setRecipeData({
       ...recipeData,
+      // @ts-expect-error:next-line
       images: files,
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await addRecipe({ variables: { ...recipeData } });

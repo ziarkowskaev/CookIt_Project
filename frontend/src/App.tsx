@@ -8,12 +8,11 @@ import { useApolloClient, useQuery } from '@apollo/client';
 import Signup from './pages/login/Signup';
 import Login from './pages/login/Login';
 import Recipe from './pages/Recipe';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ALL_RECIPES, FOLDERS_BY_USER } from './graphql/queries';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AddRecipe from './pages/addRecipe/AddRecipe';
-import { IRecipe } from './utils/types';
 import Folders from "./pages/folders/Folders";
 
 // TODO: move routing to own file

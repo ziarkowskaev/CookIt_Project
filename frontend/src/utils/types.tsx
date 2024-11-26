@@ -32,3 +32,12 @@ export interface ILogoutParams extends IAuthParams {
 export interface INavigationParams extends ILogoutParams {
   userLoggedIn: boolean;
 }
+
+export interface IFolder {
+  id: string;
+  name: string;
+}
+
+export interface IFolderParams {
+  folders: IFolder[];
+}

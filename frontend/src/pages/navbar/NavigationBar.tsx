@@ -34,7 +34,7 @@ const NavigationMenuApp = ({
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       navigate(`/search?query=${searchQuery}`);
     }

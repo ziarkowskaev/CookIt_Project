@@ -1,11 +1,12 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardTitle,
 } from '../../components/ui/card.tsx';
 
-const Folders = ({ folders }) => {
+import { IFolderParams } from '../../utils/types.ts';
+
+const Folders = ({ folders }: IFolderParams) => {
   //Use List of Cards, but make cards the length of the page
   return (
     <div className="flex flex-col items-center font-sans px-6 py-10">
