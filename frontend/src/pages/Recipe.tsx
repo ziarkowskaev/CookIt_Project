@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 import {
   Card,
@@ -6,13 +6,30 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { IRecipe } from "@/utils/types";
+import { useLocation, useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { GET_RECIPE } from "@/graphql/queries";
+// TODO: check the path of the recipes
+// TODO: check if data received correct
+// TODO: ensure ingredients split at ','
 const Recipe = () => {
+  const location = useLocation();
+  // console.log(recipeId);
+  const params = useParams();
+  const recipeId = params?.recipeId;
+  const { data, loading, error } = useQuery(GET_RECIPE, {
+    variables: { recipeId },
+    skip: !recipeId, // Prevent the query from running if recipeId is undefined
+  });
+  const recipeInfo = data?.recipe;
+  // console.log("Recipe details:", recipeInfo);
+
   return (
-    <div className="w-screen h-screen bg-lilac">
+    <div className="w-full mt-20">
       <div className="w-screen px-8 py-4">
         <div className="bg-cream border-none shadow-none rounded-xl">
           {/* Recipe image, name and amount of likes */}
@@ -25,7 +42,7 @@ const Recipe = () => {
 
             {/* Recipe name and amount of likes */}
             <CardContent>
-              <CardTitle> Beef Burger</CardTitle>
+              <CardTitle className="mt-5">{recipeInfo?.name}</CardTitle>
               <CardDescription>1.6k likes</CardDescription>
             </CardContent>
           </Card>
@@ -35,25 +52,27 @@ const Recipe = () => {
               <CardTitle className="text-xl font-bold">Ingredients</CardTitle>
             </CardHeader>
             <CardContent className="grid grid-cols-2">
-              {/* Column 1 */}
+              {/* Column 1  TODO: check spacing*/}
               <CardDescription>
-                <p>For the burger patties:</p>
-                <ul className="list-disc mt-4">
-                  <li>1 lb ground beef</li>
-                  <li>1/2 cup bread crumbs</li>
-                  <li>1/4 cup chopped parsley</li>
-                  <li>1/4 cup chopped onion</li>
-                  <li>1/4 cup milk</li>
-                  <li>1 egg</li>
-                  <li>1 tbsp Worcestershire sauce</li>
-                  <li>1/2 tsp salt</li>
-                  <li>1/2 tsp pepper</li>
-                  <li>1/4 tsp garlic powder</li>
-                </ul>
+                {/* <p>For the burger patties:</p> */}
+                {recipeInfo?.ingredients.map((ing: string) => (
+                  <ul className="list-disc mt-4 space-y-1">
+                    <li>{ing}</li>
+                    {/* <li>1/2 cup bread crumbs</li>
+                    <li>1/4 cup chopped parsley</li>
+                    <li>1/4 cup chopped onion</li>
+                    <li>1/4 cup milk</li>
+                    <li>1 egg</li>
+                    <li>1 tbsp Worcestershire sauce</li>
+                    <li>1/2 tsp salt</li>
+                    <li>1/2 tsp pepper</li>
+                    <li>1/4 tsp garlic powder</li> */}
+                  </ul>
+                ))}
               </CardDescription>
 
               {/* Column 2 */}
-              <CardDescription>
+              {/* <CardDescription>
                 <p>For assembly:</p>
                 <ul className="list-disc mt-4">
                   <li>4 burger buns</li>
@@ -63,15 +82,24 @@ const Recipe = () => {
                   <li>Pickles</li>
                   <li>Ketchup, mustard, (optional condiments)</li>
                 </ul>
-              </CardDescription>
+              </CardDescription> */}
             </CardContent>
           </Card>
 
           <Card>
             <CardContent className="shadow-none">
-              <CardTitle className="text-xl font-bold shadow-none">Instructions</CardTitle>
+              <CardTitle className="text-xl font-bold shadow-none">
+                Instructions
+              </CardTitle>
               <CardDescription>
                 <ol className="list-decimal mt-4 ml-4">
+                  {recipeInfo?.preparation
+                    .split(",")
+                    .map((step: string, index: number) => (
+                      <li key={index}>{step.trim()}</li>
+                    ))}
+                </ol>
+                {/* <ol className="list-decimal mt-4 ml-4">
                   <li>
                     Prepare the burger patties:
                     <ul className="list-disc ml-4">
@@ -135,7 +163,7 @@ const Recipe = () => {
                       <li>Close the burger with the top bun and serve.</li>
                     </ul>
                   </li>
-                </ol>
+                </ol> */}
               </CardDescription>
             </CardContent>
           </Card>

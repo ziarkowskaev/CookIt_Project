@@ -16,18 +16,6 @@ import { useNavigate } from "react-router-dom";
 
 // TODO: change to suit our needs
 export function RecipesCarousel({ recipes }: IRecipeParams) {
-  // const [api, setApi] = useState<CarouselApi>();
-  // const [current, setCurrent] = useState(0);
-  // useEffect(() => {
-  //   if (!api) {
-  //     return;
-  //   }
-  //   setCurrent(api.selectedScrollSnap());
-  //   api.on("select", () => {
-  //     setCurrent(api.selectedScrollSnap());
-  //   });
-  // }, [api]);
-
   const swiperRef = useRef<SwiperCore | null>(null);
   const navigate = useNavigate();
   const handleNext = () => {

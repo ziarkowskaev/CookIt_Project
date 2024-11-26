@@ -10,24 +10,31 @@ import { ICategory, IRecipe, IRecipeParams } from "../../utils/types";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { ALL_CATEGORIES } from "@/graphql/queries";
+
 // TODO: link to each dish's recipe page
 const Recipes = ({ recipes }: IRecipeParams) => {
   const navigate = useNavigate();
   const params = useParams();
   let recipes_updated: IRecipe[] = recipes;
   let categoryName = params?.categoryName || "";
-  const result = useQuery(ALL_CATEGORIES);
-  const category = result.data.allCategories.find(
-    (category: ICategory) =>
-      category.name.toLowerCase() === categoryName.toLowerCase()
-  );
 
-  if (category) {
+  if (categoryName) {
+    const result = useQuery(ALL_CATEGORIES);
+    const category = result.data.allCategories.find(
+      (category: ICategory) =>
+        category.name.toLowerCase() === categoryName.toLowerCase()
+    );
     categoryName = category.name;
     console.log(categoryName);
 
     recipes_updated = category.recipes || []; // Assuming `category.recipes` holds the relevant recipes
   }
+  const handlRecipeClick = (recipeId: string) => {
+    navigate(`/recipepage/${recipeId}`),
+      {
+        state: { id: recipeId },
+      };
+  };
   return (
     <div className="flex flex-wrap font-sans flex-col items-center">
       <div className="w-full max-w-screen-lg px-8">
@@ -43,7 +50,7 @@ const Recipes = ({ recipes }: IRecipeParams) => {
                 {/* TODO: navigate to recipe info page on clicking cards*/}
                 <Card
                   onClick={() => {
-                    navigate("/recipepage");
+                    handlRecipeClick(recipe.id);
                   }}
                   className="flex rounded-custom items-center justify-around aspect-square cursor-pointer"
                 >

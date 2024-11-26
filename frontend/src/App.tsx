@@ -43,8 +43,7 @@ const App = () => {
     return <div>loading...</div>;
   }
 
-  console.log("FOLDERS", resultFolders);
-  console.log(token);
+  // console.log("FOLDERS", resultFolders);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -72,7 +71,7 @@ const App = () => {
         },
         {
           path: "/profile", // TODO:  / profile/:id user ID needs to be used here
-          element: <Profile />,
+          element: <Profile recipes={resultRecipes.data?.allRecipes || []} />,
         },
         {
           path: "/search",
@@ -96,6 +95,10 @@ const App = () => {
           path: "/folder",
           element: <Folder />,
         },
+        {
+          path: "/recipepage/:recipeId", // TODO: should be recipe/:recipeID needs to be considered here
+          element: <Recipe />,
+        },
       ],
     },
     {
@@ -105,10 +108,6 @@ const App = () => {
     {
       path: "/signup",
       element: <Signup setToken={setToken} />,
-    },
-    {
-      path: "/recipepage", // TODO: should be recipe/:recipeID needs to be considered here
-      element: <Recipe />,
     },
   ]);
 

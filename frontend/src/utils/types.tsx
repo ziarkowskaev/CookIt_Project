@@ -1,5 +1,5 @@
-import { ApolloClient } from '@apollo/client';
-import React from 'react';
+import { ApolloClient } from "@apollo/client";
+import React from "react";
 
 export interface IRecipe {
   name: string;
@@ -10,6 +10,8 @@ export interface IRecipe {
   tags: string[];
   category: string;
   id: string;
+  createdBy: string;
+  createdOn: Date;
 }
 
 export interface ICategory {
