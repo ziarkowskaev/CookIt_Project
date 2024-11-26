@@ -6,11 +6,13 @@ import { IRecipe } from "@/utils/types.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import EditFolder from "./EditFolder.tsx";
 import AddRecipe from "./AddRecipesFolder.tsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // TODO: the recipes need to be from the user folder; change the query
 // TODO: check responsiveness; reconisder inner div container
 const Folder = () => {
   const result = useQuery(ALL_RECIPES);
+  const params = useParams();
+  const folderName = params?.folderId;
   const navigate = useNavigate();
   const handlRecipeClick = (recipeId: string) => {
     navigate(`/recipepage/${recipeId}`),
@@ -28,7 +30,7 @@ const Folder = () => {
         }}
       >
         <div className="flex flex-row w-full jutstify-between">
-          <h2 className="font-bold text-xl">Folder name here</h2>
+          <h2 className="font-bold text-xl">{folderName}</h2>
           <EditFolder />
         </div>
         <Label>Users</Label>

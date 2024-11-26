@@ -33,7 +33,7 @@ const CateogriesCarousel = () => {
         categories.data.allCategories.map((category: ICategory) => {
           //swiper ref for each category
           const swiperRef = useRef<any>(null);
-
+          console.log(swiperRef);
           // Scoped navigation functions
           const handleNext = () => swiperRef.current?.slideNext();
           const handlePrev = () => swiperRef.current?.slidePrev();

@@ -93,7 +93,7 @@ const App = () => {
           element: <Recipes recipes={resultRecipes.data?.allRecipes || []} />,
         },
         {
-          path: "/folder",
+          path: "/folder/:folderId",
           element: <Folder />,
         },
         {

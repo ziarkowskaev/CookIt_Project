@@ -1,18 +1,20 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardTitle,
 } from "@/components/ui/card";
+import { AUTH_USER } from "@/graphql/queries";
 import { IRecipeParams, IRecipe } from "@/utils/types";
-// TODO: profile information needs to be changed
+import { useQuery } from "@apollo/client";
 // TODO: adjust spacing for grids
 // TODO: the recipes should have images; and profile details needs to be updated
 export const Profile = ({ recipes }: IRecipeParams) => {
   console.log(recipes);
+  const resultUser = useQuery(AUTH_USER);
+  const userDetails = resultUser?.data?.me;
+  console.log(userDetails);
   return (
     <div className="flex flex-col justify-between items-center mt-8">
       <div className="flex flex-col w-full items-center">
@@ -25,19 +27,17 @@ export const Profile = ({ recipes }: IRecipeParams) => {
         >
           <Avatar className="flex h-40 w-40 transform scale-125 -bottom-20">
             <AvatarImage
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg_HSB_gtlk4EHhc65xUBw6okNw6gkkrZsdiXSY_GDe80Ks1GY8Edr0s5y6lIuwwXNUpE&usqp=CAU"
+              // src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg_HSB_gtlk4EHhc65xUBw6okNw6gkkrZsdiXSY_GDe80Ks1GY8Edr0s5y6lIuwwXNUpE&usqp=CAU"
               alt="@shadcn"
             />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </div>
-        <h2 className="text-xl mt-2 font-semibold">Garfield the Cat</h2>
+        <h2 className="text-xl mt-2 font-semibold">{userDetails.username}</h2>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  grid-flow-row gap-8 w-4/6 mt-20 ">
         {recipes
-          .filter(
-            (recipe: IRecipe) => recipe.createdBy === "172a6cca80225447bec329b7"
-          )
+          .filter((recipe: IRecipe) => recipe.createdBy === userDetails.id)
           .map((recipe: IRecipe) => (
             <Card
               key={recipe.id}
