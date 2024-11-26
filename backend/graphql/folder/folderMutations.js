@@ -48,19 +48,25 @@ const folderMutations = {
     }
     return updatedFolder;
   },
-  addUserToFolder: async (_, { folderId, userId }) => {
+
+  addUsersToFolder: async (_, { folderId, usersId }) => {
+    // Validate that userIds is an array
+    if (!Array.isArray(usersId)) {
+        throw new Error("userIds must be an array");
+    }
+
     const updatedFolder = await Folder.findByIdAndUpdate(
-      folderId,
-      { $addToSet: { usersId: userId } }, 
-      { new: true }
+        folderId,
+        { $addToSet: { usersId: { $each: usersId } } }, 
+        { new: true } 
     );
 
     if (!updatedFolder) {
-      throw new Error("Folder not found");
+        throw new Error("Folder not found");
     }
 
     return updatedFolder;
-  },
+},
 };
 
 module.exports = folderMutations;
