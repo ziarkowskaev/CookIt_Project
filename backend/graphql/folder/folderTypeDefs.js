@@ -12,7 +12,7 @@ const folderTypeDefs = `#graphql
   }
 
   extend type Mutation {
-    createFolder(name: String!): Folder
+    createFolder(name: String!, userId: ID!): Folder
     deleteFolder(id: ID!): Folder
     updateFolderName(id: ID!, name: String!): Folder
     removeRecipeFromFolder(folderId:ID!, recipeId: ID!): Folder

@@ -23,7 +23,6 @@ const AddRecipe = () => {
 
   const user = useQuery(AUTH_USER);
 
-  console.log(user)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +46,7 @@ const AddRecipe = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addRecipe({ variables: { ...recipeData } });
+      await addRecipe({ variables: { ...recipeData, createdBy: user.data?.me.id || ""} });
       alert('Recipe created successfully!');
     } catch (err) {
       console.error(err);

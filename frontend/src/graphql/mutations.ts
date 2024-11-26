@@ -84,21 +84,17 @@ export const CREATE_FOLDER = gql`
 
 //BUG HERE TO FIX
 export const CREATE_RECIPE = gql`
-  mutation CreateRecipe(
-    $name: String!
-    $description: String!
-    $ingredients: [String]!
-    $preparation: String!
-    $tags: [String]!
-  ) {
-    createRecipe(
-      name: $name
-      description: $description
-      ingredients: $ingredients
-      preparation: $preparation
-      tags: $tags
-    ) {
+  mutation CreateRecipe($name: String!, $description: String!, $createdBy: ID!, $ingredients: [String], $preparation: String, $images: [String], $tags: [String]) {
+    createRecipe(name: $name, description: $description, createdBy: $createdBy, ingredients: $ingredients, preparation: $preparation, images: $images, tags: $tags) {
       name
+      description
+      ingredients
+      preparation
+      images
+      tags
+      createdBy
+      createdOn
+      id
     }
   }
 `;
