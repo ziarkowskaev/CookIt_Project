@@ -11,33 +11,28 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { CREATE_FOLDER } from "@/graphql/mutations";
-import { AUTH_USER } from "@/graphql/queries";
 
 // Define TypeScript types for mutation variables and response
 interface CreateFolderVariables {
   name: string;
-  userId: string;
 }
 
 interface CreateFolderResponse {
   createFolder: {
     id: string;
     name: string;
-    userId: string;
   };
 }
 
 // Component definition
-const AddFolder: React.FC = () => {
-  const resultUser = useQuery(AUTH_USER);
-  const userId = resultUser.data?.me.id;
+const AddRecipe: React.FC = () => {
   const [folderData, setFolderData] = useState<CreateFolderVariables>({
     name: "",
-    userId: "",
   });
-  //add variable user Id so it saved the user that created the folder
+
+  //add variabled user Id so it saved the user that created the folder
 
   const [addFolder, { loading, error }] = useMutation<
     CreateFolderResponse,
@@ -54,12 +49,10 @@ const AddFolder: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
-    folderData.userId = userId ? userId : "";
     try {
-      if (folderData.userId == "") console.log("no user id");
       await addFolder({ variables: { ...folderData } });
       alert("Folder created successfully!");
-      setFolderData({ name: "", userId: "" }); // Clear input after success
+      setFolderData({ name: "" }); // Clear input after success
     } catch (err) {
       console.error(err);
       alert("An error occurred while creating the folder.");
@@ -69,12 +62,12 @@ const AddFolder: React.FC = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Folder</Button>
+        <Button variant="ghost">Add Recipes</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Folder</DialogTitle>
-          <DialogDescription>Add a new folder</DialogDescription>
+          <DialogTitle>Add Recipes</DialogTitle>
+          {/* <DialogDescription>Add a new folder</DialogDescription> */}
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
@@ -106,4 +99,4 @@ const AddFolder: React.FC = () => {
   );
 };
 
-export default AddFolder;
+export default AddRecipe;

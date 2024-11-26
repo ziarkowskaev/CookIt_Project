@@ -19,9 +19,9 @@ export function RecipesCarousel({ recipes }: IRecipeParams) {
   const swiperRef = useRef<SwiperCore | null>(null);
   const navigate = useNavigate();
   const handleNext = () => {
+    console.log(swiperRef.current);
     swiperRef.current?.slideNext(); // Move to the next slide
   };
-
   const handlePrev = () => {
     swiperRef.current?.slidePrev(); // Move to the previous slide
   };
@@ -42,6 +42,7 @@ export function RecipesCarousel({ recipes }: IRecipeParams) {
           768: { slidesPerView: 3 },
           1024: { slidesPerView: 4 },
         }}
+        loop={true}
       >
         {recipes.map((recipe: IRecipe) => (
           <SwiperSlide key={recipe.id}>

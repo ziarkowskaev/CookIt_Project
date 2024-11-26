@@ -9,7 +9,7 @@ import Signup from "./pages/login/Signup";
 import Login from "./pages/login/Login";
 import Recipe from "./pages/Recipe";
 import React, { useEffect, useState } from "react";
-import { ALL_RECIPES, FOLDERS_BY_USER } from "./graphql/queries";
+import { ALL_RECIPES, AUTH_USER, FOLDERS_BY_USER } from "./graphql/queries";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AddRecipe from "./pages/addRecipe/AddRecipe";
@@ -22,7 +22,7 @@ import { setUserToken } from "./utils/auth";
 import Folder from "./pages/folders/Folder";
 
 const App = () => {
-  const [token, setToken] = useState("172a6cca80225447bec329b7");
+  const [token, setToken] = useState("");
   const client = useApolloClient();
 
   useEffect(() => {
@@ -33,7 +33,8 @@ const App = () => {
 
   //should be used with context by the auth user
 
-  const userId = "172a6cca80225447bec329b7";
+  const resultUser = useQuery(AUTH_USER);
+  const userId = resultUser.data?.me.id;
 
   const resultFolders = useQuery(FOLDERS_BY_USER, {
     variables: { userId },

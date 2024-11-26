@@ -1,6 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardTitle,
+} from "@/components/ui/card";
 import { IRecipeParams, IRecipe } from "@/utils/types";
 // TODO: profile information needs to be changed
 // TODO: adjust spacing for grids
@@ -27,7 +33,7 @@ export const Profile = ({ recipes }: IRecipeParams) => {
         </div>
         <h2 className="text-xl mt-2 font-semibold">Garfield the Cat</h2>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 grid-flow-row gap-8 w-4/6 mt-20 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  grid-flow-row gap-8 w-4/6 mt-20 ">
         {recipes
           .filter(
             (recipe: IRecipe) => recipe.createdBy === "172a6cca80225447bec329b7"
@@ -35,13 +41,13 @@ export const Profile = ({ recipes }: IRecipeParams) => {
           .map((recipe: IRecipe) => (
             <Card
               key={recipe.id}
-              className="flex flex-col rounded-custom items-center justify-center aspect-square"
+              className="flex flex-col rounded-custom items-center aspect-square"
             >
-              <CardTitle className="flex justify-start">
-                {recipe.name}
-              </CardTitle>
-              <CardContent className="p-6">
-                <span className="text-l font-light">{recipe.description}</span>
+              <CardContent className="mt-4">
+                <CardTitle className="font-semibold text-md">
+                  {recipe.name}
+                </CardTitle>
+                <CardDescription> {recipe.description}</CardDescription>
               </CardContent>
             </Card>
           ))}

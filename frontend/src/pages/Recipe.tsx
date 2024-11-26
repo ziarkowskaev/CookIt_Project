@@ -56,17 +56,8 @@ const Recipe = () => {
               <CardDescription>
                 {/* <p>For the burger patties:</p> */}
                 {recipeInfo?.ingredients.map((ing: string) => (
-                  <ul className="list-disc mt-4 space-y-1">
+                  <ul className="list-disc m-0 ml-4">
                     <li>{ing}</li>
-                    {/* <li>1/2 cup bread crumbs</li>
-                    <li>1/4 cup chopped parsley</li>
-                    <li>1/4 cup chopped onion</li>
-                    <li>1/4 cup milk</li>
-                    <li>1 egg</li>
-                    <li>1 tbsp Worcestershire sauce</li>
-                    <li>1/2 tsp salt</li>
-                    <li>1/2 tsp pepper</li>
-                    <li>1/4 tsp garlic powder</li> */}
                   </ul>
                 ))}
               </CardDescription>

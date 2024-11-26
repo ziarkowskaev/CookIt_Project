@@ -1,35 +1,33 @@
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { useState } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
-import { CREATE_RECIPE } from '@/graphql/mutations';
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { CREATE_RECIPE } from "@/graphql/mutations";
 import { ALL_RECIPES, AUTH_USER } from "@/graphql/queries";
 
 // TODO: add destination to post recipe
 const AddRecipe = () => {
   const [recipeData, setRecipeData] = useState({
-    name: '',
-    description: '',
+    name: "",
+    description: "",
     ingredients: [],
-    preparation: '',
+    preparation: "",
     tags: [],
     images: [],
   });
   const [addRecipe, { loading, error, data }] = useMutation(CREATE_RECIPE, {
-    refetchQueries: [
-      ALL_RECIPES,
-    ]
+    refetchQueries: [ALL_RECIPES],
   });
 
   const user = useQuery(AUTH_USER);
-
+  console.log(user);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRecipeData({
       ...recipeData,
       [name]:
-        name === 'tags' || name === 'ingredients' ? value.split(',') : value,
+        name === "tags" || name === "ingredients" ? value.split(",") : value,
     });
   };
 
@@ -46,8 +44,10 @@ const AddRecipe = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addRecipe({ variables: { ...recipeData, createdBy: user.data?.me.id || ""} });
-      alert('Recipe created successfully!');
+      await addRecipe({
+        variables: { ...recipeData, createdBy: user.data?.me.id || "" },
+      });
+      alert("Recipe created successfully!");
     } catch (err) {
       console.error(err);
     }
@@ -97,7 +97,7 @@ const AddRecipe = () => {
                     name="ingredients"
                     id="ingredients"
                     placeholder="List ingredients separated by commas"
-                    value={recipeData.ingredients.join(',')}
+                    value={recipeData.ingredients.join(",")}
                     onChange={handleChange}
                   ></textarea>
                 </div>
@@ -119,7 +119,7 @@ const AddRecipe = () => {
                     name="tags"
                     id="tags"
                     placeholder="Add tags for your recipe (e.g., vegan, quick)"
-                    value={recipeData.tags.join(',')}
+                    value={recipeData.tags.join(",")}
                     onChange={handleChange}
                   />
                 </div>
@@ -129,7 +129,7 @@ const AddRecipe = () => {
                     className="bg-black hover:bg-gray-400 active:bg-gray-500 text-white px-4 py-2 mb-3 text-sm rounded-md"
                     disabled={loading}
                   >
-                    {loading ? 'Creating...' : 'Create Recipe'}
+                    {loading ? "Creating..." : "Create Recipe"}
                   </button>
                 </div>
                 {error && (

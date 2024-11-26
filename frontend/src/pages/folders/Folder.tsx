@@ -1,19 +1,23 @@
-import { Input } from "@/components/ui/input.tsx";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../../components/ui/card.tsx";
+import { Card, CardContent } from "../../components/ui/card.tsx";
 // import { RecipesCarousel } from "./CarouselComp.tsx";
 import { useQuery } from "@apollo/client";
 import { ALL_RECIPES } from "@/graphql/queries.ts";
 import { IRecipe } from "@/utils/types.tsx";
-
+import { Label } from "@/components/ui/label.tsx";
+import EditFolder from "./EditFolder.tsx";
+import AddRecipe from "./AddRecipesFolder.tsx";
+import { useNavigate } from "react-router-dom";
 // TODO: the recipes need to be from the user folder; change the query
 // TODO: check responsiveness; reconisder inner div container
 const Folder = () => {
   const result = useQuery(ALL_RECIPES);
+  const navigate = useNavigate();
+  const handlRecipeClick = (recipeId: string) => {
+    navigate(`/recipepage/${recipeId}`),
+      {
+        state: { id: recipeId },
+      };
+  };
   return (
     <div className="flex font-sans mt-20 w-full justify-center">
       <div
@@ -23,12 +27,23 @@ const Folder = () => {
           scrollbarWidth: "thin", // Optional scrollbar styling
         }}
       >
-        <h2 className="font-bold text-xl mb-4">Folder name here</h2>
+        <div className="flex flex-row w-full jutstify-between">
+          <h2 className="font-bold text-xl">Folder name here</h2>
+          <EditFolder />
+        </div>
+        <Label>Users</Label>
+        <ul className="flex">
+          <li className="ml-1">user1 </li>
+          <li className="ml-1">user2</li>
+        </ul>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {result.data &&
             result.data.allRecipes.map((recipe: IRecipe) => (
               <Card
-                key={recipe.name}
+                onClick={() => {
+                  handlRecipeClick(recipe.id);
+                }}
+                key={recipe.id}
                 className="flex flex-col rounded-custom items-center justify-center aspect-square cursor-pointer "
               >
                 <CardContent className="p-6">
@@ -36,6 +51,11 @@ const Folder = () => {
                 </CardContent>
               </Card>
             ))}
+          <Card className="flex flex-col rounded-custom items-center justify-center aspect-square cursor-pointer">
+            <CardContent>
+              <AddRecipe />
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
