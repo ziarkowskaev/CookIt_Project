@@ -23,11 +23,13 @@ const recipeTypeDefs = `#graphql
     createRecipe(
       name: String!
       description: String!
-      ingredients: [String]!
-      preparation: String!
+      ingredients: [String]
+      preparation: String
       images: [String]
-      tags: [String]!
+      tags: [String]
+      createdBy: ID!
     ): Recipe
+
     deleteRecipe(
         id: ID!
     ): Recipe
