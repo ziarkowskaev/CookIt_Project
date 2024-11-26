@@ -16,33 +16,18 @@ import { CREATE_FOLDER } from "@/graphql/mutations";
 import { AUTH_USER } from "@/graphql/queries";
 
 // Define TypeScript types for mutation variables and response
-interface CreateFolderVariables {
-  name: string;
-  userId: string;
-}
-
-interface CreateFolderResponse {
-  createFolder: {
-    id: string;
-    name: string;
-    userId: string;
-  };
-}
 
 // Component definition
 const AddFolder: React.FC = () => {
   const resultUser = useQuery(AUTH_USER);
   const userId = resultUser.data?.me.id;
-  const [folderData, setFolderData] = useState<CreateFolderVariables>({
+  const [folderData, setFolderData] = useState({
     name: "",
-    userId: "",
   });
   //add variable user Id so it saved the user that created the folder
 
-  const [addFolder, { loading, error }] = useMutation<
-    CreateFolderResponse,
-    CreateFolderVariables
-  >(CREATE_FOLDER);
+  console.log(userId)
+  const [addFolder, { loading, error }] = useMutation(CREATE_FOLDER);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -54,17 +39,22 @@ const AddFolder: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
-    folderData.userId = userId ? userId : "";
+  
+    if (!userId) {
+      alert("User not authenticated!");
+      return;
+    }
+  
     try {
-      if (folderData.userId == "") console.log("no user id");
-      await addFolder({ variables: { ...folderData } });
+      await addFolder({ variables: { name: folderData.name, userId } });
       alert("Folder created successfully!");
-      setFolderData({ name: "", userId: "" }); // Clear input after success
+      setFolderData({ name: "" }); // Clear input after success
     } catch (err) {
       console.error(err);
       alert("An error occurred while creating the folder.");
     }
   };
+  
 
   return (
     <Dialog>

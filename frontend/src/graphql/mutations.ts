@@ -61,10 +61,11 @@ import { gql } from '@apollo/client';
 // `
 
 export const CREATE_FOLDER = gql`
-  mutation CreateFolder($name: String!) {
-    createFolder(name: $name) {
+  mutation CreateRecipe($name: String!, $userId: ID!) {
+    createFolder(name: $name, userId: $userId) {
       id
       name
+      usersId
     }
   }
 `;
