@@ -10,6 +10,7 @@ const userTypeDefs = `#graphql
 
   extend type Query {
     me: User
+    allUsers: [User]
   }
 
   extend type Mutation {
