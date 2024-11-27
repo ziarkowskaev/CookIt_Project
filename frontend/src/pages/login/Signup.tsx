@@ -83,6 +83,7 @@ const Signup = ({setToken}: IAuthParams) => {
   return (
     <div className="flex justify-center items-center w-screen h-screen">
       <Form {...form}>
+      <div className="p-10 bg-white rounded-lg">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex-1 max-w-md space-y-5"
@@ -177,6 +178,7 @@ const Signup = ({setToken}: IAuthParams) => {
             Login
           </Button>
         </form>
+        </ div>
       </Form>
     </div>
   );
