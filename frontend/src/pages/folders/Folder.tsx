@@ -15,7 +15,6 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 // TODO: the recipes need to be from the user folder; change the query
 // TODO: check responsiveness; reconisder inner div container
 const Folder = () => {
-  
   const params = useParams();
   const folderId = params?.folderId || "";
   // const userId = resultUser.data?.me?.id;
@@ -71,7 +70,7 @@ const Folder = () => {
               </Card>
             ))}
           <Card className="flex flex-col rounded-custom items-center justify-center aspect-square cursor-pointer">
-            <CardContent>
+            <CardContent className="w-full">
               <AddRecipe />
             </CardContent>
           </Card>
