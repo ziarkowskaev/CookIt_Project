@@ -4,43 +4,149 @@ import {
   NavigationMenuItem,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { INavigationParams } from "@/utils/types";
+
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { useNavigate, Link, Outlet } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
+import AddFolder from "../folders/AddFolder";
+import { useState } from "react";
+import { logout } from "@/utils/auth";
+import { Button } from "@/components/ui/button";
 
-// TODO: navigate to create recipe page
-// A COMPONENT
-
-const NavigationMenuApp = () => {
+const NavigationMenuApp = ({
+  userLoggedIn,
+  setToken,
+  client,
+}: INavigationParams) => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      navigate(`/search?query=${searchQuery}`);
+    }
+  };
+
   return (
     <>
       <NavigationMenu>
-        <NavigationMenuList className="flex flex-wrap w-screen mt-8 justify-around">
-          <NavigationMenuItem>
-            <Link to="/" className="text-black">
-              <h1>CookIt</h1>
-            </Link>
-          </NavigationMenuItem>
-          {/* container for create, categories and recipes buttons */}
-          <div className="flex gap-x-4">
-            <NavigationMenuItem>
-              <button
-                className="bg-black text-white text-sm rounded-md"
-                onClick={() => {
-                  navigate("/addRecipe");
-                }}
-              >
-                Create Recipe
-              </button>
-            </NavigationMenuItem>
+        <NavigationMenuList className="flex items-center justify-between w-full px-4 py-2 fixed bg-gray-500 shadow-lg z-50">
+          {/* Mobile View */}
+          <div className="sm:hidden flex items-center justify-between w-full">
+            {/* Logo */}
+            <h1
+              onClick={() => navigate("/")}
+              className="font-bold cursor-pointer text-lg"
+            >
+              CookIt
+            </h1>
+
+            {/* Search Bar and Hamburger Menu */}
+            <div className="flex items-center space-x-4">
+              <Input
+                className="bg-white w-28 sm:w-36" // Adjust width for mobile view
+                type="text"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleSearch}
+              />
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <svg
+                    className="w-6 h-6 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16m-7 6h7"
+                    />
+                  </svg>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {userLoggedIn && (
+                    <>
+                      <DropdownMenuItem onClick={() => navigate("/addRecipe")}>
+                        <Button variant="outline">Add Recipe</Button>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <AddFolder />
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                  <DropdownMenuItem onClick={() => navigate("/categories")}>
+                    Categories
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/recipes")}>
+                    Recipes
+                  </DropdownMenuItem>
+                  {userLoggedIn ? (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => navigate("/profile")}>
+                        Profile
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => navigate("/folders")}>
+                        Folders
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => logout({ setToken, client })}
+                      >
+                        Logout
+                      </DropdownMenuItem>
+                    </>
+                  ) : (
+                    <DropdownMenuItem onClick={() => navigate("/login")}>
+                      Login/Signup
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+
+          {/* Desktop View */}
+          <div className="hidden sm:flex items-center space-x-4">
+          <h1
+              onClick={() => navigate("/")}
+              className="font-bold cursor-pointer text-3xl"
+            >
+              CookIt
+            </h1>
+            <div className="flex items-center space-x-4">
+            {userLoggedIn && (
+              <>
+                <NavigationMenuItem>
+                  <button
+                    className="bg-black text-white text-sm rounded-md px-4 py-2"
+                    onClick={() => navigate("/addRecipe")}
+                  >
+                    Create Recipe
+                  </button>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <AddFolder />
+                </NavigationMenuItem>
+              </>
+            )}
 
             <NavigationMenuItem>
               <button
-                className="bg-white text-sm rounded"
-                onClick={() => {
-                  navigate("/categories");
-                }}
+                className="bg-white text-sm rounded px-4 py-2"
+                onClick={() => navigate("/categories")}
               >
                 Categories
               </button>
@@ -48,38 +154,67 @@ const NavigationMenuApp = () => {
 
             <NavigationMenuItem>
               <button
-                className="bg-white text-sm rounded"
-                onClick={() => {
-                  navigate("/recipes");
-                }}
+                className="bg-white text-sm rounded px-4 py-2"
+                onClick={() => navigate("/recipes")}
               >
                 Recipes
               </button>
             </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Input
+                className="bg-white"
+                type="text"
+                placeholder="Search for recipe by name"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleSearch}
+              />
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              {userLoggedIn ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Avatar>
+                      <AvatarImage />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem onClick={() => navigate("/profile")}>
+                      Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/folders")}>
+                      Folders
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => logout({ setToken, client })}
+                    >
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <button
+                  className="bg-white border-2 border-blue text-md rounded px-4 py-2"
+                  onClick={() => navigate("/login")}
+                >
+                  Login/Signup
+                </button>
+              )}
+            </NavigationMenuItem>
+
+            </div>
+            
           </div>
-          <NavigationMenuItem className="">
-            <Input className="flex bg-white" type="text" placeholder="Search" />
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            {/* goes to profile page on clicking */}
-            <button
-              className="bg-transparent w-full h-full rounded-full hover-none"
-              onClick={() => {
-                navigate("/profile");
-              }}
-            >
-              <Avatar>
-                <AvatarImage />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-            </button>
-          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      <main>
+      <main className="mt-16">
         <Outlet />
       </main>
     </>
   );
 };
+
 export default NavigationMenuApp;

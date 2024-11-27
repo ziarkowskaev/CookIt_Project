@@ -4,45 +4,71 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import { ALL_RECIPES } from "@/graphql/queries";
-
-import { useQuery } from "@apollo/client";
-import { TypeSystemDefinitionNode } from "graphql";
 // import { useNavigate } from "react-router-dom";
 
-import { Recipe, IRecipeParams } from "../../utils/types";
+import { ICategory, IRecipe, IRecipeParams } from "../../utils/types";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { ALL_CATEGORIES } from "@/graphql/queries";
 
-// TODO: navigation to recipe page
+// TODO: link to each dish's recipe page
+const Recipes = ({ recipes }: IRecipeParams) => {
+  const navigate = useNavigate();
+  const params = useParams();
+  let recipes_updated: IRecipe[] = recipes;
+  let categoryName = params?.categoryName || "";
 
-const Recipes = ({recipes}: IRecipeParams) => {
-  // const navigate = useNavigate(); // should be used to go to recipe page
+  if (categoryName) {
+    const result = useQuery(ALL_CATEGORIES);
+    const category = result.data.allCategories.find(
+      (category: ICategory) =>
+        category.name.toLowerCase() === categoryName.toLowerCase()
+    );
+    categoryName = category.name;
+    console.log(categoryName);
+
+    recipes_updated = category.recipes || []; // Assuming `category.recipes` holds the relevant recipes
+  }
+  const handlRecipeClick = (recipeId: string) => {
+    navigate(`/recipepage/${recipeId}`),
+      {
+        state: { id: recipeId },
+      };
+  };
   return (
     <div className="flex flex-wrap font-sans flex-col items-center">
       <div className="w-full max-w-screen-lg px-8">
         <div className="mt-20">
-          <h2 className="font-semibold text-2xl">MOST POPULAR RECIPES</h2>
+          <h2 className="font-semi-bold text-2xl">
+            {categoryName || "MOST POPULAR RECIPES"}
+          </h2>
           {/* grids shrink based on the screen for now */}
           <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-8 mt-8">
             {/* recipe names shown, needs to be clickable */}
-            {recipes.map((recipe: Recipe) => (
-                <div key={recipe.id}>
-                  <Card className="flex rounded-custom items-center justify-around aspect-square">
-                    <CardContent className="p-6">
-                      <CardTitle>
-                        <span className="text-l font-semibold">
-                          {recipe.name}
-                        </span>
-                      </CardTitle>
-                      <CardDescription className="">
-                        {recipe.description}
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
+            {recipes_updated.map((recipe: IRecipe) => (
+              <div key={recipe.id}>
+                {/* TODO: navigate to recipe info page on clicking cards*/}
+                <Card
+                  onClick={() => {
+                    handlRecipeClick(recipe.id);
+                  }}
+                  className="flex rounded-custom items-center justify-around aspect-square cursor-pointer"
+                >
+                  <CardContent className="p-6">
+                    <CardTitle>
+                      <span className="text-l font-semibold">
+                        {recipe.name}
+                      </span>
+                    </CardTitle>
+                    <CardDescription>{recipe.description}</CardDescription>
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
           </div>
         </div>
       </div>
+      <Outlet />
     </div>
   );
 };

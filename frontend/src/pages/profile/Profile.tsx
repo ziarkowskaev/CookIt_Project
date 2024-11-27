@@ -1,13 +1,29 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-// TODO: profile information needs to be changed
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "@/components/ui/card";
+import { AUTH_USER } from "@/graphql/queries";
+import { IRecipeParams, IRecipe } from "@/utils/types";
+import { useQuery } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
 // TODO: adjust spacing for grids
-// TODO: check if width of containers is ok
-// TODO: change array sizes based on database
-// TODO: followers need to be dynamic; change according to button
-
-export const Profile = () => {
+// TODO: the recipes should have images; and profile details needs to be updated
+export const Profile = ({ recipes }: IRecipeParams) => {
+  const resultUser = useQuery(AUTH_USER);
+  if (resultUser.loading) {
+    return <div>loading...</div>;
+  }
+  const navigate = useNavigate();
+  const userDetails = resultUser?.data?.me;
+  const handlRecipeClick = (recipeId: string) => {
+    navigate(`/recipepage/${recipeId}`),
+      {
+        state: { id: recipeId },
+      };
+  };
   return (
     <div className="flex flex-col justify-between items-center mt-8">
       <div className="flex flex-col w-full items-center">
@@ -20,26 +36,34 @@ export const Profile = () => {
         >
           <Avatar className="flex h-40 w-40 transform scale-125 -bottom-20">
             <AvatarImage
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg_HSB_gtlk4EHhc65xUBw6okNw6gkkrZsdiXSY_GDe80Ks1GY8Edr0s5y6lIuwwXNUpE&usqp=CAU"
+              // src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg_HSB_gtlk4EHhc65xUBw6okNw6gkkrZsdiXSY_GDe80Ks1GY8Edr0s5y6lIuwwXNUpE&usqp=CAU"
               alt="@shadcn"
             />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </div>
-        <h2 className="text-xl mt-2 font-semibold">Garfield the Cat</h2>
-        <h3 className="mt-3 font-semibold">100 followers 100 Following</h3>
-        <Button className="bg-lime-600 drop-shadow-md text-black mt-2 hover:bg-lime-700">
-          Follow
-        </Button>
+        <h2 className="text-xl mt-2 font-semibold">{userDetails?.username}</h2>
       </div>
-      <div className="flex flex-grow grid lg:grid-cols-4 w-4/6 mt-20 grid-flow-row gap-8">
-        {Array.from({ length: 12 }).map((_, index) => (
-          <Card className="flex rounded-custom items-center justify-center aspect-square ">
-            <CardContent className="p-6">
-              <span className="text-l font-semibold">Dish {index + 1}</span>
-            </CardContent>
-          </Card>
-        ))}
+      <h2>Created Recipes</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  grid-flow-row gap-8 w-4/6 mt-20 ">
+        {recipes
+          .filter((recipe: IRecipe) => recipe.createdBy === userDetails?.id)
+          .map((recipe: IRecipe) => (
+            <Card
+              key={recipe.id}
+              onClick={() => {
+                handlRecipeClick(recipe.id);
+              }}
+              className="flex flex-col rounded-custom items-center aspect-square cursor-pointer"
+            >
+              <CardContent className="mt-4">
+                <CardTitle className="font-semibold text-md">
+                  {recipe.name}
+                </CardTitle>
+                <CardDescription> {recipe.description}</CardDescription>
+              </CardContent>
+            </Card>
+          ))}
       </div>
     </div>
   );

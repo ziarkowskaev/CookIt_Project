@@ -6,7 +6,7 @@ const schema = new mongoose.Schema({
     required: true,
     minlength: 3,
   },
-  usersId: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Recipe" }],
 });
 

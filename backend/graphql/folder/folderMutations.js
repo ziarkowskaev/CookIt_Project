@@ -1,9 +1,14 @@
+const mongoose = require("mongoose");
 const Folder = require("../../models/Folder");
 
 const folderMutations = {
   // Create a new folder
-  createFolder: async (_, { name, usersId }) => {
-    const newFolder = new Folder({ name, usersId });
+  createFolder: async (_, { name, userId }) => {
+    const newFolder = new Folder({
+      name,
+      users: [userId], 
+    });
+
     return await newFolder.save();
   },
   deleteFolder: async (_, { id }) => {
@@ -37,10 +42,10 @@ const folderMutations = {
     return updatedFolder;
   },
 
-  addRecipeToFolder: async (_, { folderId, recipeId }) => {
+  addRecipesToFolder: async (_, { folderId, recipesId }) => {
     const updatedFolder = await Folder.findByIdAndUpdate(
       folderId,
-      { $addToSet: { recipes: recipeId } },
+      { $addToSet: { recipes: { $each: recipesId } } },
       { new: true }
     );
     if (!updatedFolder) {
@@ -48,11 +53,17 @@ const folderMutations = {
     }
     return updatedFolder;
   },
-  addUserToFolder: async (_, { folderId, userId }) => {
+
+  addUsersToFolder: async (_, { folderId, usersId }) => {
+    // Validate that userIds is an array
+    if (!Array.isArray(usersId)) {
+      throw new Error("userIds must be an array");
+    }
+
     const updatedFolder = await Folder.findByIdAndUpdate(
-      folderId,
-      { $addToSet: { usersId: userId } }, 
-      { new: true }
+        folderId,
+        { $addToSet: { users: { $each: usersId } } }, 
+        { new: true } 
     );
 
     if (!updatedFolder) {

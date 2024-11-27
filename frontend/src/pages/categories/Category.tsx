@@ -6,8 +6,8 @@ import CateogriesCarousel from "./CarouselComp";
 const Category = () => {
   // const categories = useQuery(ALL_CATEGORIES);
   return (
-    <div className="flex flex-col items-center">
-      <div className="mt-4">
+    <div className="flex flex-col w-full items-center">
+      <div className=" mt-4">
         <CateogriesCarousel />
       </div>
     </div>

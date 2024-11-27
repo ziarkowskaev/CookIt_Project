@@ -2,92 +2,98 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardFooter,
-  CardHeader,
+  CardDescription,
   CardTitle,
 } from "../../components/ui/card";
-import { type CarouselApi } from "../../components/ui/carousel";
-import { useEffect, useState } from "react";
+
+import { useRef } from "react";
 import { useQuery } from "@apollo/client";
 import { ALL_CATEGORIES } from "@/graphql/queries";
-
-import { Recipe } from "../../utils/types";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "../../components/ui/carousel";
+import { ICategory, IRecipe } from "../../utils/types";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // TODO: add more mock data to check scaling of cards
-// TODO: better way to write the Recipe interface
+// TODO: ERROR on refreshing page
 const CateogriesCarousel = () => {
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
   const categories = useQuery(ALL_CATEGORIES);
-  console.log(categories);
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-    setCurrent(api.selectedScrollSnap());
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap());
-    });
-  }, [api]);
+  const navigate = useNavigate();
+  const handlRecipeClick = (recipeId: string) => {
+    navigate(`/recipepage/${recipeId}`);
+  };
   return (
-    <div className="flex flex-col justify-between">
+    <div className="flex flex-col items-center mt-4 px-4 sm:px-6 lg:px-8">
       {categories.data &&
         categories.data.allCategories &&
-        categories.data.allCategories.map(
-          (category: { id: string; name: string; recipes: Recipe[] }) => (
+        categories.data.allCategories.map((category: ICategory) => {
+          //swiper ref for each category
+          const swiperRef = useRef<any>(null);
+          console.log(swiperRef);
+          // Scoped navigation functions
+          const handleNext = () => swiperRef.current?.slideNext();
+          const handlePrev = () => swiperRef.current?.slidePrev();
+          return (
             <div key={category.id} className="flex flex-col px-9 py-9">
-              <h2 className="flex mb-8 font-bold">{category.name}</h2>
-              <div className="flex flex-row items-center justify-between">
+              <h2 className="font-semibold text-2xl mb-8">{category.name}</h2>
+              <div className="flex items-center justify-between w-full">
+                {/* carousel with buttons container */}
                 <Button
                   className="flex bg-transparent rounded-full w-12 h-12 border-black"
-                  onClick={() => api?.scrollTo(current - 1)}
+                  onClick={handlePrev}
                 >
-                  <ArrowLeft className="size-6 text-black"></ArrowLeft>
+                  <ArrowLeft className="size-6 text-black" />
                 </Button>
-                <Carousel setApi={setApi} opts={{ loop: true }}>
-                  <CarouselContent>
-                    {category.recipes.map((recipe: Recipe) => (
-                      <div key={recipe.id}>
-                        <CarouselItem>
-                          <div key={recipe.id}>
-                            <Card className="flex flex-col justify-between w-full h-full rounded-3xl shadow-lg bg-white">
-                              {/* aspect square below centers the elements in the square */}
-                              <CardHeader className="flex gap-4 items-center">
-                                {" "}
-                                <CardTitle className="px-4 ">
+                <div className="w-full max-w-screen-lg mx-auto">
+                  <Swiper
+                    slidesPerView={4} // Default to 1 slide for very small screens
+                    spaceBetween={12} // Default space between slides
+                    loop={true} // Enable looping
+                    breakpoints={{
+                      640: { slidesPerView: 1, spaceBetween: 16 }, // Small screens
+                      768: { slidesPerView: 2, spaceBetween: 20 }, // Medium screens
+                      1024: { slidesPerView: 3, spaceBetween: 24 }, // Large screens
+                      1280: { slidesPerView: 4, spaceBetween: 32 }, // Extra large screens
+                    }}
+                    onSwiper={(swiper) => (swiperRef.current = swiper)}
+                  >
+                    {/*TODO: remove the concatts; only for dummy data */}
+                    {category.recipes
+                      .concat(category.recipes)
+                      .concat(category.recipes)
+                      .concat(category.recipes) // Concatenates the array with itself to add duplicates
+                      .map((recipe: IRecipe) => (
+                        <SwiperSlide key={recipe.id}>
+                          <Card
+                            onClick={() => handlRecipeClick(recipe.id)}
+                            className="flex rounded-custom items-center justify-center w-[250px] aspect-square cursor-pointer"
+                          >
+                            <CardContent className="p-6">
+                              <CardTitle className="mb-2">
+                                <span className="text-l font-semibold">
                                   {recipe.name}
-                                </CardTitle>
-                              </CardHeader>
-                              <CardContent className="flex-grow p-4">
-                                <span className="text-l font-light">
-                                  {recipe.description}
                                 </span>
-                              </CardContent>
-                              <CardFooter></CardFooter>
-                            </Card>
-                          </div>
-                        </CarouselItem>
-                      </div>
-                    ))}
-                  </CarouselContent>
-                </Carousel>
+                              </CardTitle>
+                              <CardDescription>
+                                {recipe.description}
+                              </CardDescription>
+                            </CardContent>
+                          </Card>
+                        </SwiperSlide>
+                      ))}
+                  </Swiper>
+                </div>
                 <Button
                   className="flex bg-transparent rounded-full w-12 h-12 border-black"
-                  onClick={() => api?.scrollTo(current + 1)}
+                  onClick={handleNext}
                 >
-                  <ArrowRight className="size-6 text-black"></ArrowRight>
+                  <ArrowRight className="size-6 text-black" />
                 </Button>
               </div>
             </div>
-          )
-        )}
+          );
+        })}
     </div>
   );
 };
