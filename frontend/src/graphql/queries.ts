@@ -122,11 +122,7 @@ export const FOLDERS_BY_USER = gql`
     foldersByUser(userId: $userId) {
       id
       name
-      recipes {
-        name
-        id
-      }
-      userId
+      usersId
     }
   }
 `;
