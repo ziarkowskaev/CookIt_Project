@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "@/graphql/mutations";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IAuthParams } from "@/utils/types";
 

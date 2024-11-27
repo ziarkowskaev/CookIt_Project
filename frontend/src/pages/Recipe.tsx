@@ -1,27 +1,24 @@
-import * as React from "react";
-
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IRecipe } from "@/utils/types";
-import { useLocation, useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-import { GET_RECIPE } from "@/graphql/queries";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import { GET_RECIPE } from '@/graphql/queries';
 // TODO: check the path of the recipes
 // TODO: check if data received correct
 // TODO: ensure ingredients split at ','
 const Recipe = () => {
-  const location = useLocation();
+  // const location = useLocation();
   // console.log(recipeId);
   const params = useParams();
   const recipeId = params?.recipeId;
-  const { data, loading, error } = useQuery(GET_RECIPE, {
+  const { data } = useQuery(GET_RECIPE, {
     variables: { recipeId },
     skip: !recipeId, // Prevent the query from running if recipeId is undefined
   });
@@ -86,7 +83,7 @@ const Recipe = () => {
               <CardDescription>
                 <ol className="list-decimal mt-4 ml-4">
                   {recipeInfo?.preparation
-                    .split(",")
+                    .split(',')
                     .map((step: string, index: number) => (
                       <li key={index}>{step.trim()}</li>
                     ))}

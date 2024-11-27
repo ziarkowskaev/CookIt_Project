@@ -23,13 +23,15 @@ const CateogriesCarousel = () => {
   const handlRecipeClick = (recipeId: string) => {
     navigate(`/recipepage/${recipeId}`);
   };
+
+  const swiperRef = useRef<any>(null);
+  
   return (
     <div className="flex flex-col items-center mt-4 px-4 sm:px-6 lg:px-8">
       {categories.data &&
         categories.data.allCategories &&
         categories.data.allCategories.map((category: ICategory) => {
           //swiper ref for each category
-          const swiperRef = useRef<any>(null);
           console.log(swiperRef);
           // Scoped navigation functions
           const handleNext = () => swiperRef.current?.slideNext();

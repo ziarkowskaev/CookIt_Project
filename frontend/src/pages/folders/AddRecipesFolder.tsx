@@ -14,7 +14,7 @@ import { ALL_RECIPES } from "@/graphql/queries";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-const AddRecipe = (folderId) => {
+const AddRecipe = (folderId: {folderId: string}) => {
   const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [limit, setLimit] = useState(9);

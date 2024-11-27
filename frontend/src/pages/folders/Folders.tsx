@@ -13,10 +13,6 @@ const Folders = () => {
 
   const resultUser = useQuery(AUTH_USER);
 
-  if (resultUser.loading) {
-    return <div>loading...</div>;
-  }
-
   const userId = resultUser?.data?.me.id;
 
   console.log(userId);
@@ -28,6 +24,10 @@ const Folders = () => {
 
   console.log(resultFolders);
 
+  if (resultUser.loading) {
+    return <div>loading...</div>;
+  }
+
   if (resultFolders.loading) {
     return <div>loading...</div>;
   }
@@ -35,6 +35,7 @@ const Folders = () => {
   const folders = resultFolders.data?.foldersByUser;
 
   console.log(folders);
+
   const handleFolderClick = (folderId: string) => {
     navigate(`/folder/${folderId}`);
   };
@@ -52,7 +53,7 @@ const Folders = () => {
 
   return (
     <div className="flex flex-col items-center font-sans px-6 py-10">
-      {folders.map((folder) => (
+      {folders.map((folder: {id: string, name:string}) => (
         <div key={folder?.id} className="w-full max-w-4xl mb-6">
           <Card
             onClick={() => {

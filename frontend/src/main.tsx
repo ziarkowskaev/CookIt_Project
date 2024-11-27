@@ -24,7 +24,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000/graphql',
+  uri: `http://${import.meta.env.VITE_SERVER_ADDRESS}/graphql`,
 });
 
 const client = new ApolloClient({

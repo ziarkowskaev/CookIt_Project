@@ -27,11 +27,9 @@
     /* Setting base url and source mapping */
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
 
-  "include": ["src"]
+  "include": ["src", "src/main.tsx"]
 }
