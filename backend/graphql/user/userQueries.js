@@ -7,6 +7,9 @@ const userQueries = {
   allUsers: async () => {
     return User.find({}).populate("createdRecipes");
   },
+  getUser: async (_, { id }) => {
+    return User.findById(id).populate("createdRecipes");
+  },
 };
 
 module.exports = userQueries;
