@@ -11,8 +11,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_FOLDER } from "@/graphql/mutations";
+import { ALL_RECIPES } from "@/graphql/queries";
+import { Car } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 // Define TypeScript types for mutation variables and response
 interface CreateFolderVariables {
@@ -28,6 +31,15 @@ interface CreateFolderResponse {
 
 // Component definition
 const AddRecipe: React.FC = () => {
+
+  //search by recipe name 
+  //show all recipes
+  const resultRecipe = useQuery(ALL_RECIPES);
+
+  if(resultRecipe.loading){
+    return <div>loading ...</div>
+  }
+  
   const [folderData, setFolderData] = useState<CreateFolderVariables>({
     name: "",
   });
@@ -70,27 +82,12 @@ const AddRecipe: React.FC = () => {
           {/* <DialogDescription>Add a new folder</DialogDescription> */}
         </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Folder Title
-              </Label>
-              <Input
-                id="name"
-                name="name"
-                value={folderData.name}
-                onChange={handleChange}
-                placeholder="Folder Title"
-                className="col-span-3"
-              />
-            </div>
-          </div>
-          {error && (
-            <p className="text-red-500 text-sm">Error: {error.message}</p>
-          )}
+          {resultRecipe.data && resultRecipe.data?.allRecipes.map(recipe =>{
+           <Card>{recipe.name}</Card>
+          })}
           <DialogFooter>
             <Button type="submit" disabled={loading}>
-              {loading ? "Creating..." : "Create"}
+              {loading ? "Adding..." : "Adding"}
             </Button>
           </DialogFooter>
         </form>

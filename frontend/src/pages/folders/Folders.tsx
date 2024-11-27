@@ -17,12 +17,15 @@ const Folders = () => {
     return <div>loading...</div>
   }
 
-  const userId = resultUser.data.me.id
+  const userId = resultUser.data?.me.id
+
+  console.log(userId)
 
   const resultFolders = useQuery(FOLDERS_BY_USER, {
-    variables: { userId },
-    skip: !userId
+    variables: { userId: "674702a5ab1baa37992c59ba"},
   });
+
+  console.log(resultFolders)
 
   
   if(resultFolders.loading){
