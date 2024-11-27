@@ -1,11 +1,17 @@
+const mongoose = require("mongoose");
 const Folder = require("../../models/Folder");
 
 const folderMutations = {
   // Create a new folder
   createFolder: async (_, { name, userId }) => {
-    //should be added with the ownerID
-    const newFolder = new Folder({ name, users:[userId] });
+
+    const newFolder = new Folder({
+      name,
+      $addToSet: { users: userId } ,
+    });
+
     return await newFolder.save();
+    
   },
   deleteFolder: async (_, { id }) => {
     const deletedFolder = await Folder.findByIdAndDelete(id);

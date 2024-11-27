@@ -9,7 +9,7 @@ const Folder = require("./models/Folder");
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-const toObjectId = (id) => new mongoose.Types.ObjectId(id);
+export const toObjectId = (id) => new mongoose.Types.ObjectId(id);
 
 const mockData = async () => {
   // Connect to MongoDB
