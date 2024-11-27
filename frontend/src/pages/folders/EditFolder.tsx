@@ -71,7 +71,7 @@ const EditFolder: React.FC = () => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger>
         <Button variant="outline">Add users</Button>
       </DialogTrigger>
 
