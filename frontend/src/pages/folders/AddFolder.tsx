@@ -45,7 +45,6 @@ const AddFolder: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
-
     if (!userId) {
       alert("User not authenticated!");
       return;

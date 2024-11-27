@@ -188,7 +188,7 @@ const AddRecipe: React.FC = () => {
           </div>
 
           {/* Grid of Recipe Cards */}
-          <div className="w-full grid grid-cols-3 gap-4 py-4">
+          <div className="w-full grid sm:grid-cols-1 grid-cols-3 gap-4 py-4">
             {filteredRecipes?.slice(0, 9).map((recipe: IRecipe) => (
               <Card key={recipe.id} className="p-4 border rounded">
                 <h3 className="font-semibold text-lg">{recipe.name}</h3>

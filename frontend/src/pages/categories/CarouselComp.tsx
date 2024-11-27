@@ -21,13 +21,10 @@ const CateogriesCarousel = () => {
   const categories = useQuery(ALL_CATEGORIES);
   const navigate = useNavigate();
   const handlRecipeClick = (recipeId: string) => {
-    navigate(`/recipepage/${recipeId}`),
-      {
-        state: { id: recipeId },
-      };
+    navigate(`/recipepage/${recipeId}`);
   };
   return (
-    <div className="flex flex-col items-center mt-4">
+    <div className="flex flex-col items-center mt-4 px-4 sm:px-6 lg:px-8">
       {categories.data &&
         categories.data.allCategories &&
         categories.data.allCategories.map((category: ICategory) => {
@@ -50,16 +47,16 @@ const CateogriesCarousel = () => {
                 </Button>
                 <div className="w-full max-w-screen-lg mx-auto">
                   <Swiper
-                    slidesPerView={4} // Number of slides to show at once
-                    spaceBetween={12} // Space between each slide
-                    loop={true} // Loop the carousel
+                    slidesPerView={4} // Default to 1 slide for very small screens
+                    spaceBetween={12} // Default space between slides
+                    loop={true} // Enable looping
                     breakpoints={{
-                      640: { slidesPerView: 2 },
-                      768: { slidesPerView: 3 },
-                      1024: { slidesPerView: 4 },
+                      640: { slidesPerView: 1, spaceBetween: 16 }, // Small screens
+                      768: { slidesPerView: 2, spaceBetween: 20 }, // Medium screens
+                      1024: { slidesPerView: 3, spaceBetween: 24 }, // Large screens
+                      1280: { slidesPerView: 4, spaceBetween: 32 }, // Extra large screens
                     }}
                     onSwiper={(swiper) => (swiperRef.current = swiper)}
-                    // Set Swiper instance
                   >
                     {/*TODO: remove the concatts; only for dummy data */}
                     {category.recipes
