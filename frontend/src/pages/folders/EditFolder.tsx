@@ -55,7 +55,7 @@ const EditFolder: React.FC = () => {
     try {
       // Trigger the mutation to add the user to the folder
       const userToBeAdded = allUsers.find((user) => user.username === userId);
-      console.log("User to be added:", userToBeAdded);
+
       await addUserToFolder({
         variables: { folderId, userId },
       });
