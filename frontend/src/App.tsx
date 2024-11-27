@@ -34,7 +34,7 @@ const App = () => {
   //should be used with context by the auth user
 
   const resultUser = useQuery(AUTH_USER);
-  const userId = resultUser.data?.me.id;
+  const userId = resultUser.data?.me?.id;
 
   const resultFolders = useQuery(FOLDERS_BY_USER, {
     variables: { userId },

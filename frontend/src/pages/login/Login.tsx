@@ -63,6 +63,7 @@ const Login = ({setToken}: IAuthParams) => {
   return (
     <div className="flex justify-center items-center w-screen h-screen">
       <Form {...form}>
+        <div className="p-10 bg-white rounded-lg">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex-1 max-w-md space-y-5"
@@ -88,7 +89,7 @@ const Login = ({setToken}: IAuthParams) => {
             />
           </div>
 
-          <div className="relative password">
+          <div className="relative password ">
             <FormField
               name="password"
               control={form.control}
@@ -109,14 +110,18 @@ const Login = ({setToken}: IAuthParams) => {
             />
           </div>
 
-          <Button type="submit" className="mt-8 w-full" >
+          <Button type="submit" className="mt-8 w-full " >
             Login
           </Button>
 
           <Button type="submit" className="mt-8 w-full" onClick={() => { navigate("/signup") }}>
             Signup
           </Button>
+          
         </form>
+
+        </div>
+        
       </Form>
     </div>
   );
