@@ -36,11 +36,13 @@ const App = () => {
   const resultUser = useQuery(AUTH_USER);
   // TODO:the userID breaks the code somehow
   const userId = resultUser.data?.me?.id;
+
   // const userId = "172a70ec86b1909118c87d54";
   console.log("User id:", userId);
 
   const resultFolders = useQuery(FOLDERS_BY_USER, {
     variables: { userId },
+    skip: !userId
   });
 
   if (resultRecipes.loading || resultFolders.loading) {
@@ -87,7 +89,7 @@ const App = () => {
         {
           path: "folders",
           element: (
-            <Folders folders={resultFolders.data?.foldersByUser || []} />
+            <Folders />
           ),
         },
         {

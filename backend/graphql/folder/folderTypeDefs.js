@@ -2,7 +2,7 @@ const folderTypeDefs = `#graphql
   type Folder {
     id: ID!
     name: String!
-    usersId: [ID]!            
+    users: [User]!            
     recipes: [Recipe]      
   }
 

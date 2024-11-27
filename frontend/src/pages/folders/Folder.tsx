@@ -52,6 +52,7 @@ const Folder = () => {
           <EditFolder />
         </div>
         <Label>Users</Label>
+        {resultFolder.users}
         <ul className="flex">
           <li className="ml-1">user1 </li>
           <li className="ml-1">user2</li>

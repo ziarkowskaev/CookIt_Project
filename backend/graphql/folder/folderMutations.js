@@ -4,7 +4,7 @@ const folderMutations = {
   // Create a new folder
   createFolder: async (_, { name, userId }) => {
     //should be added with the ownerID
-    const newFolder = new Folder({ name, usersId:[userId] });
+    const newFolder = new Folder({ name, users:[userId] });
     return await newFolder.save();
   },
   deleteFolder: async (_, { id }) => {

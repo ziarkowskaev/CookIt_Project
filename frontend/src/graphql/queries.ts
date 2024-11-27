@@ -112,7 +112,10 @@ export const GET_FOLDER = gql`
     folder(id: $folderId) {
       id
       name
-      usersId
+      users{
+        id
+        username
+      }
     }
   }
 `;
@@ -122,7 +125,10 @@ export const FOLDERS_BY_USER = gql`
     foldersByUser(userId: $userId) {
       id
       name
-      usersId
+      users{
+        id
+        username
+      }
     }
   }
 `;
