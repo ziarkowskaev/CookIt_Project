@@ -64,7 +64,7 @@ const folderMutations = {
 
     const updatedFolder = await Folder.findByIdAndUpdate(
         folderId,
-        { $addToSet: { usersId: { $each: usersId } } }, 
+        { $addToSet: { users: { $each: usersId } } }, 
         { new: true } 
     );
 
