@@ -53,7 +53,9 @@ const Folder = () => {
         </div>
         <Label>Users: </Label>
         {resultFolder &&
-          resultFolder.users.map((user) => <span>{user.username}</span>)}
+          resultFolder.users.map((user) => (
+            <span className="ml-1">{user.username}</span>
+          ))}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {resultFolder &&
             resultFolder.recipes.map((recipe: IRecipe) => (
@@ -71,7 +73,7 @@ const Folder = () => {
             ))}
           <Card className="flex flex-col rounded-custom items-center justify-center aspect-square cursor-pointer">
             <CardContent>
-              <AddRecipe folderId={resultFolder.id}/>
+              <AddRecipe folderId={resultFolder.id} />
             </CardContent>
           </Card>
         </div>

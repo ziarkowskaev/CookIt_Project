@@ -37,18 +37,10 @@ const App = () => {
   // TODO:the userID breaks the code somehow
   const userId = resultUser.data?.me?.id;
 
-  // const userId = "172a70ec86b1909118c87d54";
   console.log("User id:", userId);
-
-  const resultFolders = useQuery(FOLDERS_BY_USER, {
-    variables: { userId },
-    skip: !userId
-  });
-
-  if (resultRecipes.loading || resultFolders.loading) {
+  if (resultRecipes.loading) {
     return <div>loading...</div>;
   }
-  console.log(resultFolders);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -88,9 +80,7 @@ const App = () => {
         },
         {
           path: "folders",
-          element: (
-            <Folders />
-          ),
+          element: <Folders />,
         },
         {
           path: "/category/:categoryName",

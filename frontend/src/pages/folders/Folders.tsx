@@ -19,14 +19,14 @@ const Folders = () => {
 
   const userId = resultUser?.data?.me.id;
 
-  console.log(userId)
+  console.log(userId);
 
   const resultFolders = useQuery(FOLDERS_BY_USER, {
     variables: { userId },
     skip: !userId,
   });
 
-  console.log(resultFolders)
+  console.log(resultFolders);
 
   if (resultFolders.loading) {
     return <div>loading...</div>;
@@ -53,10 +53,10 @@ const Folders = () => {
   return (
     <div className="flex flex-col items-center font-sans px-6 py-10">
       {folders.map((folder) => (
-        <div key={folder.id} className="w-full max-w-4xl mb-6">
+        <div key={folder?.id} className="w-full max-w-4xl mb-6">
           <Card
             onClick={() => {
-              handleFolderClick(folder.id);
+              handleFolderClick(folder?.id);
             }}
             className="rounded-custom cursor-pointer sshadow-lg bg-white border border-gray-200"
           >
