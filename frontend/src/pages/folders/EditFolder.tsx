@@ -32,7 +32,7 @@ interface AddUserToFolderResponse {
 
 const EditFolder: React.FC = () => {
   // const [folderId, setFolderId] = useState<string>(""); // Folder ID to which users will be added
-  const [userId, setUserId] = useState<string>(""); // User ID to add to the folder
+  const [username, setUsername] = useState<string>(""); // User ID to add to the folder
   const resultAllUsers = useQuery(ALL_USERS);
   const allUsers = resultAllUsers.data?.allUsers;
   const params = useParams();
@@ -46,21 +46,22 @@ const EditFolder: React.FC = () => {
   // Handle user ID input change
   const handleUserChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
-    setUserId(value);
+    setUsername(value);
   };
 
   // Handle form submission
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     try {
+      const userDetails = allUsers.find((user) => user.username === username);
+      const userId = userDetails.id;
+      console.log(userId);
       // Trigger the mutation to add the user to the folder
-      const userToBeAdded = allUsers.find((user) => user.username === userId);
-
       await addUserToFolder({
         variables: { folderId, userId },
       });
       alert("User added to folder successfully!");
-      setUserId(""); // Clear user ID input after success
+      setUsername(""); // Clear user ID input after success
     } catch (err) {
       console.error(err);
       alert("An error occurred while adding the user.");
@@ -102,7 +103,7 @@ const EditFolder: React.FC = () => {
               <Input
                 id="userId"
                 name="userId"
-                value={userId}
+                value={username}
                 onChange={handleUserChange}
                 placeholder="username"
                 className="col-span-3"

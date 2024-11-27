@@ -4,14 +4,12 @@ const Folder = require("../../models/Folder");
 const folderMutations = {
   // Create a new folder
   createFolder: async (_, { name, userId }) => {
-
     const newFolder = new Folder({
       name,
-      $addToSet: { users: userId } ,
+      $addToSet: { users: userId },
     });
 
     return await newFolder.save();
-    
   },
   deleteFolder: async (_, { id }) => {
     const deletedFolder = await Folder.findByIdAndDelete(id);
@@ -59,21 +57,21 @@ const folderMutations = {
   addUsersToFolder: async (_, { folderId, usersId }) => {
     // Validate that userIds is an array
     if (!Array.isArray(usersId)) {
-        throw new Error("userIds must be an array");
+      throw new Error("userIds must be an array");
     }
 
     const updatedFolder = await Folder.findByIdAndUpdate(
-        folderId,
-        { $addToSet: { usersId: { $each: usersId } } }, 
-        { new: true } 
+      folderId,
+      { $addToSet: { users: { $each: usersId } } },
+      { new: true }
     );
 
     if (!updatedFolder) {
-        throw new Error("Folder not found");
+      throw new Error("Folder not found");
     }
 
     return updatedFolder;
-},
+  },
 };
 
 module.exports = folderMutations;
