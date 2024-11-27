@@ -42,10 +42,10 @@ const folderMutations = {
     return updatedFolder;
   },
 
-  addRecipeToFolder: async (_, { folderId, recipeId }) => {
+  addRecipesToFolder: async (_, { folderId, recipesId }) => {
     const updatedFolder = await Folder.findByIdAndUpdate(
       folderId,
-      { $addToSet: { recipes: recipeId } },
+      { $addToSet: { recipes: { $each: recipesId } } },
       { new: true }
     );
     if (!updatedFolder) {

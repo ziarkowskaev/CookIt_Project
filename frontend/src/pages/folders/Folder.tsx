@@ -72,7 +72,7 @@ const Folder = () => {
             ))}
           <Card className="flex flex-col rounded-custom items-center justify-center aspect-square cursor-pointer">
             <CardContent>
-              <AddRecipe />
+              <AddRecipe folderId={resultFolder.id}/>
             </CardContent>
           </Card>
         </div>
