@@ -1,216 +1,113 @@
-// import { Button } from "@/components/ui/button";
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogDescription,
-//   DialogFooter,
-//   DialogHeader,
-//   DialogTitle,
-//   DialogTrigger,
-// } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useState, ChangeEvent, FormEvent } from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_FOLDER } from "@/graphql/mutations";
-import { ALL_RECIPES } from "@/graphql/queries";
-import { Car } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { DialogHeader, DialogFooter } from "@/components/ui/dialog";
-import { Checkbox } from "@radix-ui/react-checkbox";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
-} from "@radix-ui/react-dialog";
-import { IRecipe } from "@/utils/types";
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useState, ChangeEvent } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { ADD_RECIPES_TO_FOLDER } from "@/graphql/mutations";
+import { ALL_RECIPES } from "@/graphql/queries";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 
-// // Define TypeScript types for mutation variables and response
-// interface CreateFolderVariables {
-//   name: string;
-// }
+const AddRecipe = (folderId) => {
+  const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [limit, setLimit] = useState(9);
 
-// interface CreateFolderResponse {
-//   createFolder: {
-//     id: string;
-//     name: string;
-//   };
-// }
-
-// // Component definition
-// const AddRecipe: React.FC = () => {
-
-//   //search by recipe name
-//   //show all recipes
-//   const resultRecipe = useQuery(ALL_RECIPES);
-
-//   if(resultRecipe.loading){
-//     return <div>loading ...</div>
-//   }
-
-//   const [folderData, setFolderData] = useState<CreateFolderVariables>({
-//     name: "",
-//   });
-
-//   //add variabled user Id so it saved the user that created the folder
-
-//   const [addFolder, { loading, error }] = useMutation<
-//     CreateFolderResponse,
-//     CreateFolderVariables
-//   >(CREATE_FOLDER);
-
-//   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-//     const { name, value } = e.target;
-//     setFolderData((prev) => ({
-//       ...prev,
-//       [name]: value,
-//     }));
-//   };
-
-//   const handleSubmit = async (e: FormEvent): Promise<void> => {
-//     e.preventDefault();
-//     try {
-//       await addFolder({ variables: { ...folderData } });
-//       alert("Folder created successfully!");
-//       setFolderData({ name: "" }); // Clear input after success
-//     } catch (err) {
-//       console.error(err);
-//       alert("An error occurred while creating the folder.");
-//     }
-//   };
-
-//   return (
-//     <Dialog>
-
-//     </Dialog>
-//   );
-// };
-
-// export default AddRecipe;
-
-interface CreateFolderVariables {
-  name: string;
-}
-
-interface CreateFolderResponse {
-  createFolder: {
-    id: string;
-    name: string;
-  };
-}
-
-const AddRecipe: React.FC = () => {
-  const [folderData, setFolderData] = useState<CreateFolderVariables>({
-    name: "",
+  const { data, loading, fetchMore, refetch } = useQuery(ALL_RECIPES, {
+    variables: { search: searchQuery, limit },
   });
 
-  // Mutation for adding the folder
-  const [addFolder, { loading, error }] = useMutation<
-    CreateFolderResponse,
-    CreateFolderVariables
-  >(CREATE_FOLDER);
+  const [addRecipesToFolder, { loading: adding }] = useMutation(
+    ADD_RECIPES_TO_FOLDER
+  );
 
-  // Query for fetching all recipes
-  const {
-    data,
-    loading: recipeLoading,
-    error: recipeError,
-  } = useQuery(ALL_RECIPES);
-
-  // State for search and selected recipes
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]); // Stores selected recipe ids
-
-  // Handle change in input field (for folder name)
-  // const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-  //   const { name, value } = e.target;
-  //   setFolderData((prev) => ({
-  //     ...prev,
-  //     [name]: value,
-  //   }));
-  // };
-
-  // Handle submit of the form (creating a folder)
-  const handleSubmit = async (e: FormEvent): Promise<void> => {
-    e.preventDefault();
-    try {
-      await addFolder({ variables: { ...folderData } });
-      alert("Folder created successfully!");
-      setFolderData({ name: "" }); // Clear input after success
-    } catch (err) {
-      console.error(err);
-      alert("An error occurred while creating the folder.");
-    }
-  };
-
-  // Handle recipe selection
-  const handleRecipeSelection = (recipeId: string) => {
-    setSelectedRecipes(
-      (prev) =>
-        prev.includes(recipeId)
-          ? prev.filter((id) => id !== recipeId) // Deselect if already selected
-          : [...prev, recipeId] // Add to selected list if not selected
+  const toggleRecipeSelection = (recipeId: string) => {
+    setSelectedRecipes((prev) =>
+      prev.includes(recipeId)
+        ? prev.filter((id) => id !== recipeId)
+        : [...prev, recipeId]
     );
   };
 
-  // Filter recipes based on search term
-  const filteredRecipes = data?.allRecipes;
-  console.log(filteredRecipes);
-  if (recipeLoading) return <div>Loading recipes...</div>;
-  if (recipeError)
-    return <div>Error loading recipes: {recipeError.message}</div>;
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    refetch({ search: e.target.value, limit });
+  };
+
+  const handleLoadMore = () => {
+    setLimit((prev) => prev + 9);
+    fetchMore({ variables: { search: searchQuery, limit: limit + 9 } });
+  };
+
+  const handleAddRecipes = async () => {
+    try {
+      console.log(folderId);
+      console.log(selectedRecipes);
+
+      await addRecipesToFolder({
+        variables: { folderId: folderId.folderId, recipesId: selectedRecipes },
+      });
+      alert("Recipes added successfully!");
+      setSelectedRecipes([]);
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred while adding recipes to the folder.");
+    }
+  };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost">Add Recipes</Button>
       </DialogTrigger>
-
-      <DialogContent className="w-full">
+      <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Select Recipes</DialogTitle>
+          <DialogTitle>Add Recipes</DialogTitle>
         </DialogHeader>
-
-        <form className="w-full" onSubmit={handleSubmit}>
-          <div className="grid gap-4 py-4"></div>
-
-          {/* Search Bar */}
-          <div className="py-4">
-            <Input
-              id="search"
-              value={searchTerm}
-              // //onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search for recipes..."
-              className="w-full"
-            />
-          </div>
-
-          {/* Grid of Recipe Cards */}
-          <div className="w-full grid sm:grid-cols-1 grid-cols-3 gap-4 py-4">
-            {filteredRecipes?.slice(0, 9).map((recipe: IRecipe) => (
-              <Card key={recipe.id} className="p-4 border rounded">
-                <h3 className="font-semibold text-lg">{recipe.name}</h3>
-                <Checkbox
-                  id={recipe.id}
-                  checked={selectedRecipes.includes(recipe.id)}
-                  //onChange={() => handleRecipeSelection(recipe.id)}
-                />
-              </Card>
-            ))}
-          </div>
-
-          {error && (
-            <p className="text-red-500 text-sm">Error: {error.message}</p>
+        <div>
+          <Input
+            placeholder="Search recipes..."
+            value={searchQuery}
+            onChange={handleSearch}
+            className="mb-4"
+          />
+          {loading && <div>Loading recipes...</div>}
+          {data && (
+            <div className="grid grid-cols-3 gap-4">
+              {data.allRecipes.map((recipe: { id: string; name: string }) => (
+                <Card
+                  key={recipe.id}
+                  className="relative p-4 border h-24 flex justify-center items-center"
+                >
+                  <div className="absolute top-2 right-2">
+                    <input
+                      type="checkbox"
+                      checked={selectedRecipes.includes(recipe.id)}
+                      onChange={() => toggleRecipeSelection(recipe.id)}
+                    />
+                  </div>
+                  <div className="text-center">{recipe.name}</div>
+                </Card>
+              ))}
+            </div>
           )}
-
-          <DialogFooter>
-            <Button type="submit" disabled={loading}>
-              {loading ? "Creating..." : "Create Folder"}
+          {data?.allRecipes?.length >= limit && (
+            <Button variant="outline" onClick={handleLoadMore} className="mt-4">
+              Load More
             </Button>
-          </DialogFooter>
-        </form>
+          )}
+        </div>
+        <DialogFooter>
+          <Button onClick={handleAddRecipes} disabled={adding}>
+            {adding ? "Adding..." : "Add Selected Recipes"}
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

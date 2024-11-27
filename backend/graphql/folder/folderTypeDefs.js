@@ -16,7 +16,7 @@ const folderTypeDefs = `#graphql
     deleteFolder(id: ID!): Folder
     updateFolderName(id: ID!, name: String!): Folder
     removeRecipeFromFolder(folderId:ID!, recipeId: ID!): Folder
-    addRecipeToFolder(folderId:ID!, recipeId: ID!): Folder
+    addRecipesToFolder(folderId:ID!, recipesId: [ID]!): Folder
     addUsersToFolder(folderId:ID!, usersId: [ID]!): Folder
   }
 `;

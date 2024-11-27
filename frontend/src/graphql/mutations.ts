@@ -1,28 +1,13 @@
 import { gql } from "@apollo/client";
 
-// export const ADD_RECIPE_TO_FOLDER = gql`
-//     mutation AddRecipeToFolder($folderId: ID!, $recipeId: ID!) {
-//         addRecipeToFolder(folderId: $folderId, recipeId: $recipeId) {
-//         id
-//         name
-//         userId
-//         recipes {
-//             name
-//             description
-//             ingredients
-//             preparation
-//             images
-//             tags
-//             ratings {
-
-//             }
-//             createdBy
-//             createdOn
-//             id
-//         }
-//         }
-//     }
-// `
+export const ADD_RECIPES_TO_FOLDER = gql`
+  mutation AddRecipesToFolder($folderId: ID!, $recipesId: [ID]!) {
+    addRecipesToFolder(folderId: $folderId, recipesId: $recipesId) {
+      id
+      name
+    }
+  }
+`
 export const ADD_USER_TO_FOLDER = gql`
   mutation Mutation($folderId: ID!, $usersId: [ID]!) {
     addUsersToFolder(folderId: $folderId, usersId: $usersId) {
