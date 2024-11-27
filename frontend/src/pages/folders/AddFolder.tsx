@@ -26,7 +26,7 @@ const AddFolder: React.FC = () => {
   });
   //add variable user Id so it saved the user that created the folder
 
-  console.log(userId)
+  console.log(userId);
   const [addFolder, { loading, error }] = useMutation(CREATE_FOLDER);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -39,12 +39,12 @@ const AddFolder: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
-  
+
     if (!userId) {
       alert("User not authenticated!");
       return;
     }
-  
+
     try {
       await addFolder({ variables: { name: folderData.name, userId } });
       alert("Folder created successfully!");
@@ -54,7 +54,6 @@ const AddFolder: React.FC = () => {
       alert("An error occurred while creating the folder.");
     }
   };
-  
 
   return (
     <Dialog>

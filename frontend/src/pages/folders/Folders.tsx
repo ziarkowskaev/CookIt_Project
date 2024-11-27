@@ -22,7 +22,7 @@ const Folders = ({ folders }) => {
               navigate(`/folder/${folder.name}`);
               console.log("Folder ID: ", folder);
             }}
-            className="rounded-custom shadow-lg bg-white border border-gray-200"
+            className="rounded-custom shadow-lg bg-white border cursor-pointer border-gray-200"
           >
             <CardContent className="p-8">
               <CardTitle>

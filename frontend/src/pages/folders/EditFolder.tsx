@@ -12,32 +12,38 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_FOLDER } from "@/graphql/mutations";
+import { ADD_USER_TO_FOLDER } from "@/graphql/mutations";
+import { useParams } from "react-router-dom";
 
 // Define TypeScript types for mutation variables and response
-interface CreateFolderVariables {
-  name: string;
+
+interface AddUserToFolderVariables {
+  folderId: string;
+  userId: string;
 }
 
-interface CreateFolderResponse {
-  createFolder: {
+interface AddUserToFolderResponse {
+  addUserToFolder: {
     id: string;
     name: string;
+    users: { id: string; name: string }[];
   };
 }
 
-// Component definition
 const EditFolder: React.FC = () => {
-  const [folderData, setFolderData] = useState<CreateFolderVariables>({
+  const [folderData, setFolderData] = useState<{ name: string }>({
     name: "",
   });
+  const params = useParams();
+  const folderId = params?.folderId || "";
+  console.log(folderId);
+  const [userId, setUserId] = useState<string>(""); // User ID to add to folder
 
-  //add variabled user Id so it saved the user that created the folder
-
-  const [addFolder, { loading, error }] = useMutation<
-    CreateFolderResponse,
-    CreateFolderVariables
-  >(CREATE_FOLDER);
+  // Mutation hook
+  const [addUserToFolder, { loading, error }] = useMutation<
+    AddUserToFolderResponse,
+    AddUserToFolderVariables
+  >(ADD_USER_TO_FOLDER);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -50,8 +56,8 @@ const EditFolder: React.FC = () => {
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     try {
-      await addFolder({ variables: { ...folderData } });
-      alert("Folder created successfully!");
+      await addUserToFolder({ variables: { folderId, userId } });
+      alert("User added to folder successfully!");
       setFolderData({ name: "" }); // Clear input after success
     } catch (err) {
       console.error(err);
@@ -66,21 +72,21 @@ const EditFolder: React.FC = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Folder</DialogTitle>
+          <DialogTitle>Add User</DialogTitle>
           {/* <DialogDescription>Add a new folder</DialogDescription> */}
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Folder Title
+              <Label htmlFor="userId" className="text-right">
+                Username
               </Label>
               <Input
-                id="name"
-                name="name"
-                value={folderData.name}
-                onChange={handleChange}
-                placeholder="Folder Title"
+                id="userId"
+                name="userId"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
+                placeholder="Username"
                 className="col-span-3"
               />
             </div>

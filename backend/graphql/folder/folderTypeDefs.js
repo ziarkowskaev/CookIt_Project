@@ -3,7 +3,7 @@ const folderTypeDefs = `#graphql
     id: ID!
     name: String!
     usersId: [ID]!            
-    recipes: [Recipe]      
+    recipes: [Recipe]!      
   }
 
   extend type Query {
