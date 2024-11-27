@@ -7,7 +7,7 @@ export const AUTH_USER = gql`
       username
     }
   }
-`
+`;
 export const ALL_CATEGORIES = gql`
   query {
     allCategories {
@@ -112,10 +112,7 @@ export const GET_FOLDER = gql`
     folder(id: $folderId) {
       id
       name
-      recipes {
-        name
-      }
-      userId
+      usersId
     }
   }
 `;
@@ -123,7 +120,13 @@ export const GET_FOLDER = gql`
 export const FOLDERS_BY_USER = gql`
   query FoldersByUser($userId: ID!) {
     foldersByUser(userId: $userId) {
+      id
       name
+      recipes {
+        name
+        id
+      }
+      userId
     }
   }
 `;

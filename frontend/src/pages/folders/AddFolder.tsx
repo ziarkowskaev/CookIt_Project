@@ -13,21 +13,27 @@ import { Label } from "@/components/ui/label";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_FOLDER } from "@/graphql/mutations";
-import { AUTH_USER } from "@/graphql/queries";
+import { AUTH_USER, FOLDERS_BY_USER } from "@/graphql/queries";
 
 // Define TypeScript types for mutation variables and response
-
+// all dialogs sneed to be closed automatically
 // Component definition
 const AddFolder: React.FC = () => {
   const resultUser = useQuery(AUTH_USER);
-  const userId = resultUser.data?.me.id;
+  const userId = resultUser.data?.me?.id;
   const [folderData, setFolderData] = useState({
     name: "",
   });
-  //add variable user Id so it saved the user that created the folder
 
-  console.log(userId)
-  const [addFolder, { loading, error }] = useMutation(CREATE_FOLDER);
+  //add variable user Id so it saved the user that created the folder
+  const [addFolder, { loading, error }] = useMutation(CREATE_FOLDER, {
+    refetchQueries: [
+      {
+        query: FOLDERS_BY_USER,
+        variables: { userId },
+      },
+    ],
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -39,12 +45,12 @@ const AddFolder: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
-  
+
     if (!userId) {
       alert("User not authenticated!");
       return;
     }
-  
+
     try {
       await addFolder({ variables: { name: folderData.name, userId } });
       alert("Folder created successfully!");
@@ -54,7 +60,6 @@ const AddFolder: React.FC = () => {
       alert("An error occurred while creating the folder.");
     }
   };
-  
 
   return (
     <Dialog>

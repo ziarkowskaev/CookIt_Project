@@ -34,7 +34,10 @@ const App = () => {
   //should be used with context by the auth user
 
   const resultUser = useQuery(AUTH_USER);
-  const userId = resultUser.data?.me.id;
+  // TODO:the userID breaks the code somehow
+  const userId = resultUser.data?.me?.id;
+  // const userId = "172a70ec86b1909118c87d54";
+  console.log("User id:", userId);
 
   const resultFolders = useQuery(FOLDERS_BY_USER, {
     variables: { userId },
@@ -43,8 +46,7 @@ const App = () => {
   if (resultRecipes.loading || resultFolders.loading) {
     return <div>loading...</div>;
   }
-
-  // console.log("FOLDERS", resultFolders);
+  console.log(resultFolders);
   const router = createBrowserRouter([
     {
       path: "/",

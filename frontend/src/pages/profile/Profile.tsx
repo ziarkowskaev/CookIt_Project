@@ -8,13 +8,22 @@ import {
 import { AUTH_USER } from "@/graphql/queries";
 import { IRecipeParams, IRecipe } from "@/utils/types";
 import { useQuery } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
 // TODO: adjust spacing for grids
 // TODO: the recipes should have images; and profile details needs to be updated
 export const Profile = ({ recipes }: IRecipeParams) => {
-  console.log(recipes);
   const resultUser = useQuery(AUTH_USER);
+  if (resultUser.loading) {
+    return <div>loading...</div>;
+  }
+  const navigate = useNavigate();
   const userDetails = resultUser?.data?.me;
-  console.log(userDetails);
+  const handlRecipeClick = (recipeId: string) => {
+    navigate(`/recipepage/${recipeId}`),
+      {
+        state: { id: recipeId },
+      };
+  };
   return (
     <div className="flex flex-col justify-between items-center mt-8">
       <div className="flex flex-col w-full items-center">
@@ -33,15 +42,18 @@ export const Profile = ({ recipes }: IRecipeParams) => {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </div>
-        <h2 className="text-xl mt-2 font-semibold">{userDetails.username}</h2>
+        <h2 className="text-xl mt-2 font-semibold">{userDetails?.username}</h2>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  grid-flow-row gap-8 w-4/6 mt-20 ">
         {recipes
-          .filter((recipe: IRecipe) => recipe.createdBy === userDetails.id)
+          .filter((recipe: IRecipe) => recipe.createdBy === userDetails?.id)
           .map((recipe: IRecipe) => (
             <Card
               key={recipe.id}
-              className="flex flex-col rounded-custom items-center aspect-square"
+              onClick={() => {
+                handlRecipeClick(recipe.id);
+              }}
+              className="flex flex-col rounded-custom items-center aspect-square cursor-pointer"
             >
               <CardContent className="mt-4">
                 <CardTitle className="font-semibold text-md">
