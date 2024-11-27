@@ -19,7 +19,6 @@ export function RecipesCarousel({ recipes }: IRecipeParams) {
   const swiperRef = useRef<SwiperCore | null>(null);
   const navigate = useNavigate();
   const handleNext = () => {
-    console.log(swiperRef.current);
     swiperRef.current?.slideNext(); // Move to the next slide
   };
   const handlePrev = () => {

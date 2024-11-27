@@ -44,6 +44,7 @@ export const Profile = ({ recipes }: IRecipeParams) => {
         </div>
         <h2 className="text-xl mt-2 font-semibold">{userDetails?.username}</h2>
       </div>
+      <h2>Created Recipes</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  grid-flow-row gap-8 w-4/6 mt-20 ">
         {recipes
           .filter((recipe: IRecipe) => recipe.createdBy === userDetails?.id)

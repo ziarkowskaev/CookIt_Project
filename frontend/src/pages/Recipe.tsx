@@ -42,8 +42,9 @@ const Recipe = () => {
 
             {/* Recipe name and amount of likes */}
             <CardContent>
-              <CardTitle className="mt-5">{recipeInfo?.name}</CardTitle>
-              <CardDescription>1.6k likes</CardDescription>
+              <CardTitle className="text-3xl mt-5">
+                {recipeInfo?.name}
+              </CardTitle>
             </CardContent>
           </Card>
 

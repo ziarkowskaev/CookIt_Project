@@ -39,7 +39,7 @@ const Home = () => {
             className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 grid-flow-row gap-8 py-10 overflow-y-auto"
             style={{
               maxHeight: "500px",
-              scrollbarWidth: "thin",
+              scrollbarWidth: "auto",
             }}
           >
             {result.data &&
