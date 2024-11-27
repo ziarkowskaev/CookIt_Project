@@ -11,51 +11,59 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useMutation } from "@apollo/client";
-import { CREATE_FOLDER } from "@/graphql/mutations";
+import { useMutation, useQuery } from "@apollo/client";
+import { ADD_USER_TO_FOLDER } from "@/graphql/mutations";
+import { ALL_USERS } from "@/graphql/queries";
+import { useParams } from "react-router-dom";
 
 // Define TypeScript types for mutation variables and response
-interface CreateFolderVariables {
-  name: string;
+interface AddUserToFolderVariables {
+  folderId: string;
+  userId: string;
 }
 
-interface CreateFolderResponse {
-  createFolder: {
+interface AddUserToFolderResponse {
+  addUserToFolder: {
     id: string;
     name: string;
+    users: { id: string; name: string }[];
   };
 }
 
-// Component definition
 const EditFolder: React.FC = () => {
-  const [folderData, setFolderData] = useState<CreateFolderVariables>({
-    name: "",
-  });
+  // const [folderId, setFolderId] = useState<string>(""); // Folder ID to which users will be added
+  const [userId, setUserId] = useState<string>(""); // User ID to add to the folder
+  const resultAllUsers = useQuery(ALL_USERS);
+  const allUsers = resultAllUsers.data?.allUsers;
+  const params = useParams();
+  const folderId = params?.folderId || "";
+  // Mutation for adding user to folder
+  const [addUserToFolder, { loading, error }] = useMutation<
+    AddUserToFolderResponse,
+    AddUserToFolderVariables
+  >(ADD_USER_TO_FOLDER);
 
-  //add variabled user Id so it saved the user that created the folder
-
-  const [addFolder, { loading, error }] = useMutation<
-    CreateFolderResponse,
-    CreateFolderVariables
-  >(CREATE_FOLDER);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
-    setFolderData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  // Handle user ID input change
+  const handleUserChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const { value } = e.target;
+    setUserId(value);
   };
 
+  // Handle form submission
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     try {
-      await addFolder({ variables: { ...folderData } });
-      alert("Folder created successfully!");
-      setFolderData({ name: "" }); // Clear input after success
+      // Trigger the mutation to add the user to the folder
+      const userToBeAdded = allUsers.find((user) => user.username === userId);
+      console.log("User to be added:", userToBeAdded);
+      await addUserToFolder({
+        variables: { folderId, userId },
+      });
+      alert("User added to folder successfully!");
+      setUserId(""); // Clear user ID input after success
     } catch (err) {
       console.error(err);
-      alert("An error occurred while creating the folder.");
+      alert("An error occurred while adding the user.");
     }
   };
 
@@ -64,33 +72,51 @@ const EditFolder: React.FC = () => {
       <DialogTrigger asChild>
         <Button variant="outline">Add users</Button>
       </DialogTrigger>
+
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Folder</DialogTitle>
-          {/* <DialogDescription>Add a new folder</DialogDescription> */}
+          <DialogTitle>Add User to Folder</DialogTitle>
         </DialogHeader>
+
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Folder Title
+            {/* Folder ID input - you can remove this if it's passed dynamically */}
+            {/* <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="folderId" className="text-right">
+                Folder ID
               </Label>
               <Input
-                id="name"
-                name="name"
-                value={folderData.name}
-                onChange={handleChange}
-                placeholder="Folder Title"
+                id="folderId"
+                name="folderId"
+                value={folderId}
+                onChange={(e) => setFolderId(e.target.value)}
+                placeholder="Folder ID"
+                className="col-span-3"
+              />
+            </div> */}
+            {/* User ID input */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="userId" className="text-right">
+                Username
+              </Label>
+              <Input
+                id="userId"
+                name="userId"
+                value={userId}
+                onChange={handleUserChange}
+                placeholder="username"
                 className="col-span-3"
               />
             </div>
           </div>
+
           {error && (
             <p className="text-red-500 text-sm">Error: {error.message}</p>
           )}
+
           <DialogFooter>
             <Button type="submit" disabled={loading}>
-              {loading ? "Creating..." : "Create"}
+              {loading ? "Adding..." : "Add User"}
             </Button>
           </DialogFooter>
         </form>

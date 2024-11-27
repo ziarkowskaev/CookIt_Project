@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 // export const ADD_RECIPE_TO_FOLDER = gql`
 //     mutation AddRecipeToFolder($folderId: ID!, $recipeId: ID!) {
@@ -23,29 +23,26 @@ import { gql } from '@apollo/client';
 //         }
 //     }
 // `
-// export const ADD_USER_TO_FOLDER = gql`
-//     mutation AddUserToFolder($folderId: ID!, $userId: ID!) {
-//         addUserToFolder(folderId: $folderId, userId: $userId) {
-//         id
-//         name
-//         userId
-//         recipes {
-//             name
-//             description
-//             ingredients
-//             preparation
-//             images
-//             tags
-//             ratings {
-
-//             }
-//             createdBy
-//             createdOn
-//             id
-//         }
-//         }
-//     }
-// `
+export const ADD_USER_TO_FOLDER = gql`
+  mutation AddUserToFolder($folderId: ID!, $userId: ID!) {
+    addUserToFolder(folderId: $folderId, userId: $userId) {
+      id
+      name
+      userId
+      recipes {
+        name
+        description
+        ingredients
+        preparation
+        images
+        tags
+        createdBy
+        createdOn
+        id
+      }
+    }
+  }
+`;
 
 // export const CREATE_CATEGORY = gql`
 // mutation CreateCategory($name: String!) {
@@ -85,8 +82,24 @@ export const CREATE_FOLDER = gql`
 
 //BUG HERE TO FIX
 export const CREATE_RECIPE = gql`
-  mutation CreateRecipe($name: String!, $description: String!, $createdBy: ID!, $ingredients: [String], $preparation: String, $images: [String], $tags: [String]) {
-    createRecipe(name: $name, description: $description, createdBy: $createdBy, ingredients: $ingredients, preparation: $preparation, images: $images, tags: $tags) {
+  mutation CreateRecipe(
+    $name: String!
+    $description: String!
+    $createdBy: ID!
+    $ingredients: [String]
+    $preparation: String
+    $images: [String]
+    $tags: [String]
+  ) {
+    createRecipe(
+      name: $name
+      description: $description
+      createdBy: $createdBy
+      ingredients: $ingredients
+      preparation: $preparation
+      images: $images
+      tags: $tags
+    ) {
       name
       description
       ingredients

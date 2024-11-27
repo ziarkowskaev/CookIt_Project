@@ -112,11 +112,11 @@ export const GET_FOLDER = gql`
     folder(id: $folderId) {
       id
       name
-      users{
+      users {
         id
         username
       }
-      recipes{
+      recipes {
         id
         name
       }
@@ -129,7 +129,7 @@ export const FOLDERS_BY_USER = gql`
     foldersByUser(userId: $userId) {
       id
       name
-      users{
+      users {
         id
         username
       }
@@ -145,6 +145,15 @@ export const RECIPE_RATING = gql`
       recipeId
       value
       timestamp
+    }
+  }
+`;
+
+export const ALL_USERS = gql`
+  query AllUsers {
+    allUsers {
+      id
+      username
     }
   }
 `;
