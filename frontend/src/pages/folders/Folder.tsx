@@ -31,7 +31,8 @@ const Folder = () => {
   }
   const resultFolder = data?.folder;
   console.log(resultFolder);
-  const handlRecipeClick = (recipeId: string) => {
+
+  const handleRecipeClick = (recipeId: string) => {
     const navigate = useNavigate();
     navigate(`/recipepage/${recipeId}`),
       {
@@ -51,18 +52,17 @@ const Folder = () => {
           <h2 className="font-bold text-xl">{resultFolder.name}</h2>
           <EditFolder />
         </div>
-        <Label>Users</Label>
-        {resultFolder.users}
-        <ul className="flex">
-          <li className="ml-1">user1 </li>
-          <li className="ml-1">user2</li>
-        </ul>
+        <Label>Users: </Label>
+        {resultFolder &&
+          resultFolder.users.map((user) => (
+            <span>{user.username}</span>
+          ))}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {result.data &&
-            result.data.allRecipes.map((recipe: IRecipe) => (
+          {resultFolder &&
+            resultFolder.recipes.map((recipe: IRecipe) => (
               <Card
                 onClick={() => {
-                  handlRecipeClick(recipe.id);
+                  handleRecipeClick(recipe.id);
                 }}
                 key={recipe.id}
                 className="flex flex-col rounded-custom items-center justify-center aspect-square cursor-pointer "

@@ -116,6 +116,10 @@ export const GET_FOLDER = gql`
         id
         username
       }
+      recipes{
+        id
+        name
+      }
     }
   }
 `;
