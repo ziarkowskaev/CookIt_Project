@@ -65,7 +65,10 @@ export const CREATE_FOLDER = gql`
     createFolder(name: $name, userId: $userId) {
       id
       name
-      usersId
+      users{
+        id
+        username
+      }
     }
   }
 `;
