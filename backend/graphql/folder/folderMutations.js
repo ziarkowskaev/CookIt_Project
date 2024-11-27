@@ -6,7 +6,7 @@ const folderMutations = {
   createFolder: async (_, { name, userId }) => {
     const newFolder = new Folder({
       name,
-      $addToSet: { users: userId },
+      users: [userId], 
     });
 
     return await newFolder.save();

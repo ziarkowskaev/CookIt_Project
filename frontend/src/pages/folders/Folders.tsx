@@ -19,10 +19,14 @@ const Folders = () => {
 
   const userId = resultUser?.data?.me.id;
 
+  console.log(userId)
+
   const resultFolders = useQuery(FOLDERS_BY_USER, {
     variables: { userId },
     skip: !userId,
   });
+
+  console.log(resultFolders)
 
   if (resultFolders.loading) {
     return <div>loading...</div>;
