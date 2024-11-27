@@ -18,7 +18,6 @@ const Folders = () => {
   }
 
   const userId = resultUser?.data?.me.id;
-  const userId = resultUser.data?.me.id
 
   console.log(userId)
 
