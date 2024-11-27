@@ -19,7 +19,7 @@ import { useParams } from "react-router-dom";
 // Define TypeScript types for mutation variables and response
 interface AddUserToFolderVariables {
   folderId: string;
-  userId: string;
+  usersId: string;
 }
 
 interface AddUserToFolderResponse {
@@ -54,11 +54,12 @@ const EditFolder: React.FC = () => {
     e.preventDefault();
     try {
       const userDetails = allUsers.find((user) => user.username === username);
+      
       const userId = userDetails.id;
       console.log(userId);
       // Trigger the mutation to add the user to the folder
       await addUserToFolder({
-        variables: { folderId, userId },
+        variables: { folderId, usersId:[userId] },
       });
       alert("User added to folder successfully!");
       setUsername(""); // Clear user ID input after success

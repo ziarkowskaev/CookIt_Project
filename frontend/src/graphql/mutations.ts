@@ -24,22 +24,10 @@ import { gql } from "@apollo/client";
 //     }
 // `
 export const ADD_USER_TO_FOLDER = gql`
-  mutation AddUserToFolder($folderId: ID!, $userId: ID!) {
-    addUserToFolder(folderId: $folderId, userId: $userId) {
+  mutation Mutation($folderId: ID!, $usersId: [ID]!) {
+    addUsersToFolder(folderId: $folderId, usersId: $usersId) {
       id
       name
-      userId
-      recipes {
-        name
-        description
-        ingredients
-        preparation
-        images
-        tags
-        createdBy
-        createdOn
-        id
-      }
     }
   }
 `;
