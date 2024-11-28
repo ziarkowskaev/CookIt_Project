@@ -2,9 +2,7 @@
 import { Card, CardContent } from "../../components/ui/card.tsx";
 // import { RecipesCarousel } from "./CarouselComp.tsx";
 import { useQuery } from "@apollo/client";
-import {
-  GET_FOLDER,
-} from "@/graphql/queries.ts";
+import { GET_FOLDER } from "@/graphql/queries.ts";
 import { IRecipe } from "@/utils/types.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import EditFolder from "./EditFolder.tsx";
@@ -50,10 +48,13 @@ const Folder = () => {
           <EditFolder />
         </div>
         <Label>Users: </Label>
-        {resultFolder &&
-          resultFolder.users.map((user: { id: string; username: string }) => (
-            <span className="ml-1">{user.username}</span>
-          ))}
+        {resultFolder && (
+          <span className="ml-1">
+            {resultFolder.users
+              .map((user: { id: string; username: string }) => user.username)
+              .join(", ")}
+          </span>
+        )}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {resultFolder &&
             resultFolder.recipes.map((recipe: IRecipe) => (

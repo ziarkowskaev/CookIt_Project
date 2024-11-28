@@ -11,15 +11,12 @@ const Folders = () => {
 
   //should be used with context by the auth user
 
-  const userId = localStorage.getItem('userId');
-
+  const userId = localStorage.getItem("userId");
 
   const resultFolders = useQuery(FOLDERS_BY_USER, {
     variables: { userId },
     skip: !userId,
   });
-
-  console.log(resultFolders);
 
   if (resultFolders.loading) {
     return <div>loading...</div>;
@@ -46,7 +43,7 @@ const Folders = () => {
 
   return (
     <div className="flex flex-col items-center font-sans px-6 py-10">
-      {folders.map((folder: {id: string, name:string}) => (
+      {folders.map((folder: { id: string; name: string }) => (
         <div key={folder?.id} className="w-full max-w-4xl mb-6">
           <Card
             onClick={() => {

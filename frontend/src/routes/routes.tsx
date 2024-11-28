@@ -1,62 +1,43 @@
-// import Home from "../pages/home/Home";
-// import Category from "../pages/categories/Category";
-// import NavigationMenuApp from "../pages/navbar/NavigationBar";
-// import { SearchRes } from "../pages/search/SearchRes";
-// import { Profile } from "../pages/profile/Profile";
-// import Recipes from "../pages/recipes/Recipes";
-// import { createBrowserRouter } from "react-router-dom";
-// import AddRecipe from "../pages/addRecipe/AddRecipe";
-// import { useQuery } from "@apollo/client";
-// import { ALL_RECIPES } from "../graphql/queries";
-// import Folders from "../pages/folders/Folders";
-// // TODO: move routing to own file
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-// const resultRecipes = useQuery(ALL_RECIPES);
+const ProtectedRoute = ({
+  children,
+  userLoggedIn,
+}: {
+  children: JSX.Element;
+  userLoggedIn: boolean;
+}) => {
+  const [showNotification, setShowNotification] = useState(false);
+  const navigate = useNavigate();
 
-// if (resultRecipes.loading) {
-//   <div>loading...</div>;
-// }
+  useEffect(() => {
+    if (!userLoggedIn) {
+      setShowNotification(true);
 
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <NavigationMenuApp />,
-//     children: [
-//       {
-//         // path: "/",
-//         index: true,
-//         element: <Home />,
-//       },
-//       {
-//         path: "/categories",
-//         element: <Category />,
-//       },
-//       {
-//         path: "/recipes", // TODO: should be recipe/:recipeID needs to be considered here
-//         element: <Recipes recipes={resultRecipes.data?.allRecipes || []} />,
-//         children: [],
-//       },
-//       {
-//         path: "/profile", // TODO:  / profile/:id user ID needs to be used here
-//         element: <Profile />,
-//       },
-//       {
-//         path: "/search",
-//         element: <SearchRes recipes={resultRecipes.data?.allRecipes || []} />,
-//       },
-//       {
-//         path: "/addRecipe",
-//         element: <AddRecipe />,
-//       },
-//       {
-//         path: "/category/:categoryName",
-//         element: <Recipes recipes={resultRecipes.data?.allRecipes || []} />,
-//       },
-//       {
-//         path: "/folders",
-//         element: <Folders />,
-//       },
-//     ],
-//   },
-// ]);
-// export default router;
+      // Redirect to home page after showing notification
+      const timer = setTimeout(() => {
+        setShowNotification(false); // Hide notification
+        navigate("/"); // Redirect to home
+      }, 1000);
+
+      return () => clearTimeout(timer); // Cleanup on unmount
+    }
+  }, [userLoggedIn, navigate]);
+
+  if (!userLoggedIn) {
+    return (
+      <>
+        {showNotification && (
+          <div className="fixed top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-md shadow-lg z-50">
+            Cannot access the page. Redirecting to home...
+          </div>
+        )}
+      </>
+    );
+  }
+
+  return children;
+};
+
+export default ProtectedRoute;

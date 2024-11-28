@@ -1,7 +1,7 @@
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@/components/ui/button';
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -9,45 +9,42 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { useMutation } from '@apollo/client';
-import { CREATE_USER} from '@/graphql/mutations';
-import { IAuthParams } from '@/utils/types';
-import { useNavigate } from 'react-router-dom';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useMutation } from "@apollo/client";
+import { CREATE_USER } from "@/graphql/mutations";
+import { useNavigate } from "react-router-dom";
+
 
 const validationSchema = z
   .object({
     username: z.string().min(1, {
-      message: 'Username is required',
+      message: "Username is required",
     }),
     email: z.string().email().min(1, {
-      message: 'Must be a valid email',
+      message: "Must be a valid email",
     }),
-    password: z
-      .string()
-      .min(8, {
-        message: 'Password is required and must contain at least 8 characters',
-      }),
-    confirmPassword: z
-      .string()
-      .min(8, {
-        message: 'Password is required and must contain at least 8 characters',
-      }),
+    password: z.string().min(8, {
+      message: "Password is required and must contain at least 8 characters",
+    }),
+    confirmPassword: z.string().min(8, {
+      message: "Password is required and must contain at least 8 characters",
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
   });
 
 type FormValues = z.infer<typeof validationSchema>;
 
-const Signup = ({}: IAuthParams) => {
+const Signup = () => {
+
   const navigate = useNavigate();
 
   const [createUser] = useMutation(CREATE_USER, {
     onError: (error) => {
-      console.error('Error has occured:', error);
+      console.error("Error has occured:", error);
     },
   });
 
@@ -70,12 +67,12 @@ const Signup = ({}: IAuthParams) => {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(validationSchema),
-    mode: 'onBlur',
+    mode: "onBlur",
     defaultValues: {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
@@ -95,10 +92,10 @@ const Signup = ({}: IAuthParams) => {
       variables: { username, email, password },
       onCompleted: (data) => {
         if (data?.createUser) {
-          alert('User was created successfully!');
-          navigate('/login');
+          alert("User was created successfully!");
+          navigate("/login");
         } else {
-          alert('Error when creating a user');
+          alert("Error when creating a user");
         }
       },
     });
@@ -205,7 +202,7 @@ const Signup = ({}: IAuthParams) => {
               type="submit"
               className="mt-8 w-full"
               onClick={() => {
-                navigate('/login');
+                navigate("/login");
               }}
             >
               Login

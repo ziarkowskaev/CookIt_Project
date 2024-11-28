@@ -2,14 +2,17 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { GET_RECIPE } from '@/graphql/queries';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { ALL_USERS, GET_RECIPE } from "@/graphql/queries";
+import { Button } from "@/components/ui/button";
+
 import {Cloudinary} from "@cloudinary/url-gen";
 import {AdvancedImage} from '@cloudinary/react';
 import {fill} from "@cloudinary/url-gen/actions/resize";
@@ -34,11 +37,20 @@ const Recipe = () => {
 
   const params = useParams();
   const recipeId = params?.recipeId;
-  const { data } = useQuery(GET_RECIPE, {
+  const userId = localStorage.getItem("userId");
+  const resultUsers = useQuery(ALL_USERS);
+  const { data, loading } = useQuery(GET_RECIPE, {
     variables: { recipeId },
     skip: !recipeId, // Prevent the query from running if recipeId is undefined
   });
   const recipeInfo = data?.recipe;
+
+  if (loading || resultUsers.loading) {
+    return <div>loading...</div>;
+  }
+  const createdByUser = resultUsers.data?.allUsers.find(
+    (user: { id: string; username: string }) => user.id === recipeInfo.createdBy
+  ).username;
   // console.log("Recipe details:", recipeInfo);
 
   return (
@@ -61,7 +73,6 @@ const Recipe = () => {
               </CardTitle>
             </CardContent>
           </Card>
-
           <Card className="shadow-none">
             <CardHeader>
               <CardTitle className="text-xl font-bold">Ingredients</CardTitle>
@@ -100,7 +111,7 @@ const Recipe = () => {
               <CardDescription>
                 <ol className="list-decimal mt-4 ml-4">
                   {recipeInfo?.preparation
-                    .split(',')
+                    .split(",")
                     .map((step: string, index: number) => (
                       <li key={index}>{step.trim()}</li>
                     ))}
@@ -170,8 +181,21 @@ const Recipe = () => {
                     </ul>
                   </li>
                 </ol> */}
+                <h3 className="mt-10 font-semibold">
+                  Tags: {recipeInfo.tags.join(", ")}
+                </h3>
               </CardDescription>
             </CardContent>
+            <CardFooter className="flex justify-between">
+              <div className="flex">
+                Recipe by: <p className="font-semibold ml-4">{createdByUser}</p>
+              </div>
+              {userId === recipeInfo.userId ? (
+                <Button>Delete recipe</Button>
+              ) : (
+                <div></div>
+              )}
+            </CardFooter>
           </Card>
         </div>
       </div>
