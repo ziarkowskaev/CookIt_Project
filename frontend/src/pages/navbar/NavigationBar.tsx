@@ -212,7 +212,7 @@ const NavigationMenuApp = ({
           </div>
         </NavigationMenuList>
       </NavigationMenu>
-      <main className="mt-16">
+      <main className="my-16">
         <Outlet />
       </main>
     </>
