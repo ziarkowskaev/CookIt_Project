@@ -119,7 +119,7 @@ const NavigationMenuApp = ({
           </div>
 
           {/* Desktop View */}
-          <div className="hidden sm:flex items-center space-x-4">
+          <div className="hidden sm:flex items-center justify-between w-full space-x-4">
           <h1
               onClick={() => navigate("/")}
               className="font-bold cursor-pointer text-3xl"
