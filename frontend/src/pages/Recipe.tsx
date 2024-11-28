@@ -28,7 +28,7 @@ const Recipe = () => {
     skip: !recipeId, // Prevent the query from running if recipeId is undefined
   });
   const recipeInfo = data?.recipe;
-  if (loading || resultUsers.loadin) {
+  if (loading || resultUsers.loading) {
     return <div>loading...</div>;
   }
   const username = resultUsers.data?.allUsers.find(
