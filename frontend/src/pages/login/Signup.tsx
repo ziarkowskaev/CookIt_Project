@@ -15,6 +15,7 @@ import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "@/graphql/mutations";
 import { useNavigate } from "react-router-dom";
 
+
 const validationSchema = z
   .object({
     username: z.string().min(1, {
@@ -38,6 +39,7 @@ const validationSchema = z
 type FormValues = z.infer<typeof validationSchema>;
 
 const Signup = () => {
+
   const navigate = useNavigate();
 
   const [createUser] = useMutation(CREATE_USER, {

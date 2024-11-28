@@ -13,12 +13,28 @@ import { useQuery } from "@apollo/client";
 import { ALL_USERS, GET_RECIPE } from "@/graphql/queries";
 import { Button } from "@/components/ui/button";
 
+import {Cloudinary} from "@cloudinary/url-gen";
+import {AdvancedImage} from '@cloudinary/react';
+import {fill} from "@cloudinary/url-gen/actions/resize";
+
 // TODO: check the path of the recipes
 // TODO: check if data received correct
 // TODO: ensure ingredients split at ','
 const Recipe = () => {
   // const location = useLocation();
   // console.log(recipeId);
+
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: 'demo'
+    }
+  });
+  // Instantiate a CloudinaryImage object for the image with the public ID, 'docs/models'.
+  const myImage = cld.image('docs/models'); 
+
+  // Resize to 250 x 250 pixels using the 'fill' crop mode.
+  myImage.resize(fill().width(250).height(250));
+
   const params = useParams();
   const recipeId = params?.recipeId;
   const userId = localStorage.getItem("userId");
@@ -45,7 +61,8 @@ const Recipe = () => {
           <Card className="grid grid-cols-2 w-2/5 bg-cream border-none shadow-none">
             {/* Recipe Image */}
             <Avatar className="w-52 h-52">
-              <AvatarImage src="@/images/FoodImg.png" alt="Avatar" />
+              {/* <AvatarImage src="@/images/FoodImg.png" alt="Avatar" /> */}
+              <AdvancedImage cldImg={myImage} />
               <AvatarFallback>Image</AvatarFallback>
             </Avatar>
 
