@@ -1,3 +1,7 @@
+//added next two lines
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
 require("dotenv").config();
 const mongoose = require("mongoose");
 
@@ -42,6 +46,18 @@ const mockData = async () => {
       _id: toObjectId("372a6cca80225447bec329b7"),
       username: "user3",
       email: "user3@gmail.com",
+      passwordHash: "sekret",
+    },
+    {
+      _id: toObjectId("472a6cca80225447bec329b7"),
+      username: "user4",
+      email: "user4@gmail.com",
+      passwordHash: "sekret",
+    },
+    {
+      _id: toObjectId("572a6cca80225447bec329b7"),
+      username: "user5",
+      email: "user5@gmail.com",
       passwordHash: "sekret",
     },
   ];

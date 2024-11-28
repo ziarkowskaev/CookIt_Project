@@ -38,7 +38,9 @@ const CateogriesCarousel = () => {
           const handlePrev = () => swiperRef.current?.slidePrev();
           return (
             <div key={category.id} className="flex flex-col px-9 py-9">
-              <h2 className="font-semibold text-2xl mb-8">{category.name}</h2>
+              <h2 className="font-semibold text-2xl mb-8 text-center sm:text-left w-full">
+                {category.name}
+              </h2>
               <div className="flex items-center justify-between w-full">
                 {/* carousel with buttons container */}
                 <Button
@@ -49,41 +51,43 @@ const CateogriesCarousel = () => {
                 </Button>
                 <div className="w-full max-w-screen-lg mx-auto">
                   <Swiper
-                    slidesPerView={4} // Default to 1 slide for very small screens
-                    spaceBetween={12} // Default space between slides
+                    slidesPerView={1} // Default to 1 slide for very small screens
+                    spaceBetween={10} // Default space between slides
                     loop={true} // Enable looping
                     breakpoints={{
-                      640: { slidesPerView: 1, spaceBetween: 16 }, // Small screens
-                      768: { slidesPerView: 2, spaceBetween: 20 }, // Medium screens
-                      1024: { slidesPerView: 3, spaceBetween: 24 }, // Large screens
-                      1280: { slidesPerView: 4, spaceBetween: 32 }, // Extra large screens
+                      414: { slidesPerView: 1 }, // iPhone and similar devices
+                      640: { slidesPerView: 2 }, // Larger phones or smaller tablets
+                      768: { slidesPerView: 3 }, // Tablets
+                      1024: { slidesPerView: 4 }, // Small desktops
                     }}
                     onSwiper={(swiper) => (swiperRef.current = swiper)}
                   >
                     {/*TODO: remove the concatts; only for dummy data */}
-                    {category.recipes
-                      .concat(category.recipes)
-                      .concat(category.recipes)
-                      .concat(category.recipes) // Concatenates the array with itself to add duplicates
-                      .map((recipe: IRecipe) => (
-                        <SwiperSlide key={recipe.id}>
-                          <Card
-                            onClick={() => handlRecipeClick(recipe.id)}
-                            className="flex rounded-custom items-center justify-center w-[250px] aspect-square cursor-pointer"
-                          >
-                            <CardContent className="p-6">
-                              <CardTitle className="mb-2">
-                                <span className="text-l font-semibold">
-                                  {recipe.name}
-                                </span>
-                              </CardTitle>
-                              <CardDescription>
-                                {recipe.description}
-                              </CardDescription>
-                            </CardContent>
-                          </Card>
-                        </SwiperSlide>
-                      ))}
+                    <div>
+                      {category.recipes
+                        .concat(category.recipes)
+                        .concat(category.recipes)
+                        .concat(category.recipes) // Concatenates the array with itself to add duplicates
+                        .map((recipe: IRecipe) => (
+                          <SwiperSlide key={recipe.id}>
+                            <Card
+                              onClick={() => handlRecipeClick(recipe.id)}
+                              className="flex rounded-custom items-center justify-center w-full w-[250px]  aspect-square cursor-pointer"
+                            >
+                              <CardContent className="p-6">
+                                <CardTitle className="mb-2">
+                                  <span className="text-l font-semibold">
+                                    {recipe.name}
+                                  </span>
+                                </CardTitle>
+                                <CardDescription>
+                                  {recipe.description}
+                                </CardDescription>
+                              </CardContent>
+                            </Card>
+                          </SwiperSlide>
+                        ))}
+                    </div>
                   </Swiper>
                 </div>
                 <Button
