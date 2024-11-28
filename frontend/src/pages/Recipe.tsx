@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -12,22 +13,27 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IRecipe } from "@/utils/types";
 import { useLocation, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { GET_RECIPE } from "@/graphql/queries";
+import { ALL_USERS, GET_RECIPE } from "@/graphql/queries";
 // TODO: check the path of the recipes
 // TODO: check if data received correct
 // TODO: ensure ingredients split at ','
 const Recipe = () => {
-  const location = useLocation();
   // console.log(recipeId);
+  const resultUser = useQuery(ALL_USERS);
   const params = useParams();
   const recipeId = params?.recipeId;
   const { data, loading, error } = useQuery(GET_RECIPE, {
     variables: { recipeId },
     skip: !recipeId, // Prevent the query from running if recipeId is undefined
   });
+  if (loading || resultUser.loading) {
+    return <div>LOADING...</div>;
+  }
   const recipeInfo = data?.recipe;
-  // console.log("Recipe details:", recipeInfo);
 
+  const userName = resultUser.data?.allUsers.find(
+    (user) => user.id === recipeInfo.createdBy
+  )?.username;
   return (
     <div className="w-full mt-20">
       <div className="w-screen px-8 py-4">
@@ -62,19 +68,6 @@ const Recipe = () => {
                   </ul>
                 ))}
               </CardDescription>
-
-              {/* Column 2 */}
-              {/* <CardDescription>
-                <p>For assembly:</p>
-                <ul className="list-disc mt-4">
-                  <li>4 burger buns</li>
-                  <li>4 slices of cheese</li>
-                  <li>Lettuce leaves</li>
-                  <li>Tomato slices</li>
-                  <li>Pickles</li>
-                  <li>Ketchup, mustard, (optional condiments)</li>
-                </ul>
-              </CardDescription> */}
             </CardContent>
           </Card>
 
@@ -156,8 +149,14 @@ const Recipe = () => {
                     </ul>
                   </li>
                 </ol> */}
+                <h3 className="mt-10 font-semibold">
+                  Tags: {recipeInfo.tags.join(", ")}
+                </h3>
               </CardDescription>
             </CardContent>
+            <CardFooter>
+              Recipe by: <p className="font-semibold ml-4">{userName}</p>
+            </CardFooter>
           </Card>
         </div>
       </div>

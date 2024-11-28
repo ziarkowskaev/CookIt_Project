@@ -35,8 +35,8 @@ const CateogriesCarousel = () => {
           const handleNext = () => swiperRef.current?.slideNext();
           const handlePrev = () => swiperRef.current?.slidePrev();
           return (
-            <div key={category.id} className="flex flex-col px-9 py-9">
-              <h2 className="font-semibold text-2xl mb-8 text-center sm:text-left w-full">
+            <div key={category.id} className="flex flex-col py-9">
+              <h2 className="font-semibold text-xl sm:text-xl md:text-xl lg:text-xl mb-8 text-center sm:text-left md:text-left w-full">
                 {category.name}
               </h2>
               <div className="flex items-center justify-between w-full">
