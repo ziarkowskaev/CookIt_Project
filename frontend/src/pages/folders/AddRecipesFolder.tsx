@@ -15,12 +15,12 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { FaPlus } from "react-icons/fa";
 
-const AddRecipe = (folderId: {folderId: string}) => {
+const AddRecipe = (folderId: { folderId: string }) => {
   const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const { data, loading, fetchMore, refetch } = useQuery(ALL_RECIPES, {
-    variables: { search: searchQuery},
+  const { data, loading, refetch } = useQuery(ALL_RECIPES, {
+    variables: { search: searchQuery },
   });
 
   const [addRecipesToFolder, { loading: adding }] = useMutation(
@@ -37,9 +37,8 @@ const AddRecipe = (folderId: {folderId: string}) => {
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-    refetch({ search: e.target.value});
+    refetch({ search: e.target.value });
   };
-
 
   const handleAddRecipes = async () => {
     try {

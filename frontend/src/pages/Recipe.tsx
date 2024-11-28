@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IRecipe } from "@/utils/types";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { ALL_USERS, GET_RECIPE } from "@/graphql/queries";
@@ -24,7 +23,7 @@ const Recipe = () => {
   const recipeId = params?.recipeId;
   const userId = localStorage.getItem("userId");
   const resultUsers = useQuery(ALL_USERS);
-  const { data, loading, error } = useQuery(GET_RECIPE, {
+  const { data, loading } = useQuery(GET_RECIPE, {
     variables: { recipeId },
     skip: !recipeId, // Prevent the query from running if recipeId is undefined
   });

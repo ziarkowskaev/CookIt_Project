@@ -122,7 +122,7 @@ const App = () => {
         },
         {
           path: "/signup",
-          element: <Signup setToken={setToken} />,
+          element: <Signup />,
         },
       ],
     },

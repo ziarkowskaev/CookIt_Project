@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const ProtectedRoute = ({ children, userLoggedIn }) => {
+const ProtectedRoute = ({
+  children,
+  userLoggedIn,
+}: {
+  children: JSX.Element;
+  userLoggedIn: boolean;
+}) => {
   const [showNotification, setShowNotification] = useState(false);
   const navigate = useNavigate();
 
