@@ -21,7 +21,7 @@ const validationSchema = z.object({
   username: z.string().min(1, {
     message: "Username is required",
   }),
-  password: z.string().min(8, {message: "Password is required and must contain at least 8 characters"}),
+  password: z.string().min(1, {message: "Password is required"}),
 });
 
 type FormValues = z.infer<typeof validationSchema>;

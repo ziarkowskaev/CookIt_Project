@@ -94,16 +94,17 @@ const App = () => {
           path: '/recipepage/:recipeId', // TODO: should be recipe/:recipeID needs to be considered here
           element: <Recipe />,
         },
+        {
+          path: '/login',
+          element: <Login setToken={setToken} />,
+        },
+        {
+          path: '/signup',
+          element: <Signup setToken={setToken} />,
+        },
       ],
     },
-    {
-      path: '/login',
-      element: <Login setToken={setToken} />,
-    },
-    {
-      path: '/signup',
-      element: <Signup setToken={setToken} />,
-    },
+    
   ]);
 
   return (
