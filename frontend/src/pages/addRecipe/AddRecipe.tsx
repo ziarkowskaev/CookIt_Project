@@ -58,8 +58,8 @@ const AddRecipe = () => {
     <div className="w-full h-full mt-20">
       <div className="px-8 py-4">
         <form className="flex w-full h-full" onSubmit={handleSubmit}>
-          <Card className="flex flex-col w-full h-full rounded-2xl bg-cream">
-            <CardHeader className="font-bold">Add a recipe</CardHeader>
+          <Card className="flex flex-col w-full h-full rounded-2xl bg-cream hover:bg-cream">
+            <CardHeader className="font-bold text-2xl">Add a recipe</CardHeader>
             <CardContent className="flex h-1/3 gap-10 items-center">
               <input
                 className="bg-white px-2 w-1/3 h-10 mt-10 rounded-none"
@@ -79,8 +79,8 @@ const AddRecipe = () => {
               />
             </CardContent>
             <CardContent className="flex flex-col w-full h-full justify-around items-center">
-              <Card className="flex flex-col w-full h-full mt-10 px-10 justify-top border-none rounded-custom bg-beige">
-                <div className="flex flex-col w-full mt-10 gap-1.5">
+              <Card className="flex flex-col w-full h-full mt-10 px-10 justify-top border-none rounded-custom bg-beige py-10">
+                <div className="flex flex-col w-full gap-1.5">
                   <Label>Description</Label>
                   <textarea
                     className="bg-white w-2/3 h-[100px] p-2 rounded-md border border-gray-300 resize-none"
@@ -127,7 +127,7 @@ const AddRecipe = () => {
                 <div className="flex gap-4 mt-5">
                   <button
                     type="submit"
-                    className="bg-black hover:bg-gray-400 active:bg-gray-500 text-white px-4 py-2 mb-3 text-sm rounded-md"
+                    className="bg-black hover:bg-gray-400 active:bg-gray-500 text-white px-4 py-2 text-sm rounded-md"
                     disabled={loading}
                   >
                     {loading ? 'Creating...' : 'Create Recipe'}

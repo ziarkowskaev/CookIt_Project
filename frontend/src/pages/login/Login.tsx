@@ -31,6 +31,7 @@ const Login = ({setToken}: IAuthParams) => {
 
   const [ loginUser, result ] = useMutation(LOGIN_USER, {
     onError: (error) => {
+      alert("Wrong credentials. Please try again.");
       console.error('Error has occured:', error);
     }
   });

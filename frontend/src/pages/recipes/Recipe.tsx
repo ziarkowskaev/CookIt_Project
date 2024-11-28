@@ -30,7 +30,7 @@ const Recipe = () => {
     }
   });
   // Instantiate a CloudinaryImage object for the image with the public ID, 'docs/models'.
-  const myImage = cld.image('docs/models'); 
+  const myImage = cld.image('samples/breakfast'); 
 
   // Resize to 250 x 250 pixels using the 'fill' crop mode.
   myImage.resize(fill().width(250).height(250));
