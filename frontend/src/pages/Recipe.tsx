@@ -11,17 +11,15 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IRecipe } from "@/utils/types";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { ALL_USERS, GET_RECIPE } from "@/graphql/queries";
-// TODO: check the path of the recipes
-// TODO: check if data received correct
-// TODO: ensure ingredients split at ','
+import { Button } from "@/components/ui/button";
+
 const Recipe = () => {
-  const location = useLocation();
-  // console.log(recipeId);
   const params = useParams();
   const recipeId = params?.recipeId;
+  const userId = localStorage.getItem("userId");
   const resultUsers = useQuery(ALL_USERS);
   const { data, loading, error } = useQuery(GET_RECIPE, {
     variables: { recipeId },
@@ -31,7 +29,7 @@ const Recipe = () => {
   if (loading || resultUsers.loading) {
     return <div>loading...</div>;
   }
-  const username = resultUsers.data?.allUsers.find(
+  const createdByUser = resultUsers.data?.allUsers.find(
     (user) => user.id === recipeInfo.createdBy
   ).username;
   // console.log("Recipe details:", recipeInfo);
@@ -55,7 +53,6 @@ const Recipe = () => {
               </CardTitle>
             </CardContent>
           </Card>
-
           <Card className="shadow-none">
             <CardHeader>
               <CardTitle className="text-xl font-bold">Ingredients</CardTitle>
@@ -169,8 +166,15 @@ const Recipe = () => {
                 </h3>
               </CardDescription>
             </CardContent>
-            <CardFooter>
-              Recipe by: <p className="font-semibold ml-4">{username}</p>
+            <CardFooter className="flex justify-between">
+              <div className="flex">
+                Recipe by: <p className="font-semibold ml-4">{createdByUser}</p>
+              </div>
+              {userId === recipeInfo.userId ? (
+                <Button>Delete recipe</Button>
+              ) : (
+                <div></div>
+              )}
             </CardFooter>
           </Card>
         </div>
