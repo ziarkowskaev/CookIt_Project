@@ -6,7 +6,7 @@ const folderMutations = {
   createFolder: async (_, { name, userId }) => {
     const newFolder = new Folder({
       name,
-      users: [userId], 
+      users: [userId],
     });
 
     return await newFolder.save();
@@ -61,9 +61,9 @@ const folderMutations = {
     }
 
     const updatedFolder = await Folder.findByIdAndUpdate(
-        folderId,
-        { $addToSet: { users: { $each: usersId } } }, 
-        { new: true } 
+      folderId,
+      { $addToSet: { users: { $each: usersId } } },
+      { new: true }
     );
 
     if (!updatedFolder) {
