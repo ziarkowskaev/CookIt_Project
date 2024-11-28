@@ -12,8 +12,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useMutation } from '@apollo/client';
-import { CREATE_USER, LOGIN_USER } from '@/graphql/mutations';
-import { useEffect } from 'react';
+import { CREATE_USER} from '@/graphql/mutations';
 import { IAuthParams } from '@/utils/types';
 import { useNavigate } from 'react-router-dom';
 
@@ -43,7 +42,7 @@ const validationSchema = z
 
 type FormValues = z.infer<typeof validationSchema>;
 
-const Signup = ({ setToken }: IAuthParams) => {
+const Signup = ({}: IAuthParams) => {
   const navigate = useNavigate();
 
   const [createUser] = useMutation(CREATE_USER, {

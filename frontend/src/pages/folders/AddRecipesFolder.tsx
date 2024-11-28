@@ -18,7 +18,7 @@ const AddRecipe = (folderId: {folderId: string}) => {
   const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const { data, loading, fetchMore, refetch } = useQuery(ALL_RECIPES, {
+  const { data, loading, refetch } = useQuery(ALL_RECIPES, {
     variables: { search: searchQuery},
   });
 
