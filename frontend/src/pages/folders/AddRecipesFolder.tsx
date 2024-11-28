@@ -13,14 +13,14 @@ import { ADD_RECIPES_TO_FOLDER } from "@/graphql/mutations";
 import { ALL_RECIPES } from "@/graphql/queries";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { FaPlus } from "react-icons/fa";
 
 const AddRecipe = (folderId: {folderId: string}) => {
   const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [limit, setLimit] = useState(9);
 
-  const { data, loading, fetchMore, refetch } = useQuery(ALL_RECIPES, {
-    variables: { search: searchQuery, limit },
+  const { data, loading, refetch } = useQuery(ALL_RECIPES, {
+    variables: { search: searchQuery},
   });
 
   const [addRecipesToFolder, { loading: adding }] = useMutation(
@@ -37,13 +37,9 @@ const AddRecipe = (folderId: {folderId: string}) => {
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-    refetch({ search: e.target.value, limit });
+    refetch({ search: e.target.value});
   };
 
-  const handleLoadMore = () => {
-    setLimit((prev) => prev + 9);
-    fetchMore({ variables: { search: searchQuery, limit: limit + 9 } });
-  };
 
   const handleAddRecipes = async () => {
     try {
@@ -64,7 +60,10 @@ const AddRecipe = (folderId: {folderId: string}) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost">Add Recipes</Button>
+        {/* added an icon to for recipes */}
+        <Button variant="ghost">
+          <FaPlus className="ml-2ml-2 w-6 h-6" />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
@@ -96,11 +95,6 @@ const AddRecipe = (folderId: {folderId: string}) => {
                 </Card>
               ))}
             </div>
-          )}
-          {data?.allRecipes?.length >= limit && (
-            <Button variant="outline" onClick={handleLoadMore} className="mt-4">
-              Load More
-            </Button>
           )}
         </div>
         <DialogFooter>
