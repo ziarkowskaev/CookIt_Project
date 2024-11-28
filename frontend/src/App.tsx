@@ -37,7 +37,6 @@ const App = () => {
   // TODO:the userID breaks the code somehow
   const userId = resultUser.data?.me?.id;
 
-  console.log("User id:", userId);
   if (resultRecipes.loading) {
     return <div>loading...</div>;
   }

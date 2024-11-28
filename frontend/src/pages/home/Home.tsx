@@ -77,9 +77,7 @@ const Home = () => {
         </div>
 
         <h2 className="font-semibold text-2xl mb-4">RECIPES</h2>
-        <div className="flex flex-col w-full items-center">
-          <RecipesCarousel recipes={resultRecipes.data?.allRecipes} />
-        </div>
+        <RecipesCarousel recipes={resultRecipes.data?.allRecipes} />
       </div>
     </div>
   );

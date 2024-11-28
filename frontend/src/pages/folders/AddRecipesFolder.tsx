@@ -13,6 +13,7 @@ import { ADD_RECIPES_TO_FOLDER } from "@/graphql/mutations";
 import { ALL_RECIPES } from "@/graphql/queries";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { FaPlus } from "react-icons/fa";
 
 const AddRecipe = (folderId) => {
   const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
@@ -64,7 +65,10 @@ const AddRecipe = (folderId) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost">Add Recipes</Button>
+        {/* added an icon to for recipes */}
+        <Button variant="ghost">
+          <FaPlus className="ml-2ml-2 w-6 h-6" />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
