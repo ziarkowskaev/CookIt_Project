@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -12,7 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IRecipe } from "@/utils/types";
 import { useLocation, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { GET_RECIPE } from "@/graphql/queries";
+import { ALL_USERS, GET_RECIPE } from "@/graphql/queries";
 // TODO: check the path of the recipes
 // TODO: check if data received correct
 // TODO: ensure ingredients split at ','
@@ -21,11 +22,18 @@ const Recipe = () => {
   // console.log(recipeId);
   const params = useParams();
   const recipeId = params?.recipeId;
+  const resultUsers = useQuery(ALL_USERS);
   const { data, loading, error } = useQuery(GET_RECIPE, {
     variables: { recipeId },
     skip: !recipeId, // Prevent the query from running if recipeId is undefined
   });
   const recipeInfo = data?.recipe;
+  if (loading || resultUsers.loadin) {
+    return <div>loading...</div>;
+  }
+  const username = resultUsers.data?.allUsers.find(
+    (user) => user.id === recipeInfo.createdBy
+  ).username;
   // console.log("Recipe details:", recipeInfo);
 
   return (
@@ -156,8 +164,14 @@ const Recipe = () => {
                     </ul>
                   </li>
                 </ol> */}
+                <h3 className="mt-10 font-semibold">
+                  Tags: {recipeInfo.tags.join(", ")}
+                </h3>
               </CardDescription>
             </CardContent>
+            <CardFooter>
+              Recipe by: <p className="font-semibold ml-4">{username}</p>
+            </CardFooter>
           </Card>
         </div>
       </div>
