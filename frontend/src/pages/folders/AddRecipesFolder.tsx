@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogContent,
   DialogFooter,
+  DialogTrigger,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -12,7 +13,7 @@ import { ADD_RECIPES_TO_FOLDER } from "@/graphql/mutations";
 import { ALL_RECIPES } from "@/graphql/queries";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-
+import { FaPlus } from "react-icons/fa";
 const AddRecipe = (folderId: { folderId: string }) => {
   const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
