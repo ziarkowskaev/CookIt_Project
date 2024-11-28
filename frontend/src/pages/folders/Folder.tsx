@@ -1,26 +1,23 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Card, CardContent } from "../../components/ui/card.tsx";
 // import { RecipesCarousel } from "./CarouselComp.tsx";
 import { useQuery } from "@apollo/client";
-import {
-  ALL_RECIPES,
-  AUTH_USER,
-  FOLDERS_BY_USER,
-  GET_FOLDER,
-} from "@/graphql/queries.ts";
+import { GET_FOLDER } from "@/graphql/queries.ts";
 import { IRecipe } from "@/utils/types.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import EditFolder from "./EditFolder.tsx";
 import AddRecipe from "./AddRecipesFolder.tsx";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // TODO: the recipes need to be from the user folder; change the query
 // TODO: check responsiveness; reconisder inner div container
 const Folder = () => {
   const params = useParams();
   const folderId = params?.folderId || "";
+  const navigate = useNavigate();
   // const userId = resultUser.data?.me?.id;
   console.log(folderId);
 
-  const { data, loading, error } = useQuery(GET_FOLDER, {
+  const { data, loading } = useQuery(GET_FOLDER, {
     variables: { folderId },
     skip: !folderId, // Prevent the query from running if recipeId is undefined
   });
@@ -32,7 +29,6 @@ const Folder = () => {
   console.log(resultFolder);
 
   const handleRecipeClick = (recipeId: string) => {
-    const navigate = useNavigate();
     navigate(`/recipepage/${recipeId}`),
       {
         state: { id: recipeId },
@@ -54,7 +50,9 @@ const Folder = () => {
         <Label>Users: </Label>
         {resultFolder && (
           <span className="ml-1">
-            {resultFolder.users.map((user) => user.username).join(", ")}
+            {resultFolder.users
+              .map((user: { id: string; username: string }) => user.username)
+              .join(", ")}
           </span>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">

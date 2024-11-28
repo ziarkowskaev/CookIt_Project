@@ -8,8 +8,8 @@ import { useApolloClient, useQuery } from "@apollo/client";
 import Signup from "./pages/login/Signup";
 import Login from "./pages/login/Login";
 import Recipe from "./pages/Recipe";
-import React, { useEffect, useState } from "react";
-import { ALL_RECIPES, AUTH_USER, FOLDERS_BY_USER } from "./graphql/queries";
+import { useEffect, useState } from "react";
+import { ALL_RECIPES, AUTH_USER } from "./graphql/queries";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AddRecipe from "./pages/addRecipe/AddRecipe";
@@ -35,7 +35,12 @@ const App = () => {
   //should be used with context by the auth user
 
   const resultUser = useQuery(AUTH_USER);
+
+  useEffect(() => {
+    console.log("useEffect happened: User id:", userId);
+  }, [resultUser.data]);
   // TODO:the userID breaks the code somehow
+
   const userId = resultUser.data?.me?.id;
 
   if (resultRecipes.loading) {
@@ -83,7 +88,7 @@ const App = () => {
           path: "/addRecipe",
           element: (
             <ProtectedRoute userLoggedIn={token !== ""}>
-              <AddRecipe />,
+              <AddRecipe />
             </ProtectedRoute>
           ),
         },
@@ -91,7 +96,7 @@ const App = () => {
           path: "folders",
           element: (
             <ProtectedRoute userLoggedIn={token !== ""}>
-              <Folders />,
+              <Folders />
             </ProtectedRoute>
           ),
         },
@@ -111,15 +116,15 @@ const App = () => {
           path: "/recipepage/:recipeId", // TODO: should be recipe/:recipeID needs to be considered here
           element: <Recipe />,
         },
+        {
+          path: "/login",
+          element: <Login setToken={setToken} />,
+        },
+        {
+          path: "/signup",
+          element: <Signup setToken={setToken} />,
+        },
       ],
-    },
-    {
-      path: "/login",
-      element: <Login setToken={setToken} />,
-    },
-    {
-      path: "/signup",
-      element: <Signup setToken={setToken} />,
     },
   ]);
 

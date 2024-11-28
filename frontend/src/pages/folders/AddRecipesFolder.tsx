@@ -15,13 +15,12 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { FaPlus } from "react-icons/fa";
 
-const AddRecipe = (folderId) => {
+const AddRecipe = (folderId: {folderId: string}) => {
   const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [limit, setLimit] = useState(9);
 
   const { data, loading, fetchMore, refetch } = useQuery(ALL_RECIPES, {
-    variables: { search: searchQuery, limit },
+    variables: { search: searchQuery},
   });
 
   const [addRecipesToFolder, { loading: adding }] = useMutation(
@@ -38,13 +37,9 @@ const AddRecipe = (folderId) => {
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-    refetch({ search: e.target.value, limit });
+    refetch({ search: e.target.value});
   };
 
-  const handleLoadMore = () => {
-    setLimit((prev) => prev + 9);
-    fetchMore({ variables: { search: searchQuery, limit: limit + 9 } });
-  };
 
   const handleAddRecipes = async () => {
     try {
@@ -100,11 +95,6 @@ const AddRecipe = (folderId) => {
                 </Card>
               ))}
             </div>
-          )}
-          {data?.allRecipes?.length >= limit && (
-            <Button variant="outline" onClick={handleLoadMore} className="mt-4">
-              Load More
-            </Button>
           )}
         </div>
         <DialogFooter>

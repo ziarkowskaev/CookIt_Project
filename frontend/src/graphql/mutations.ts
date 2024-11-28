@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const ADD_RECIPES_TO_FOLDER = gql`
   mutation AddRecipesToFolder($folderId: ID!, $recipesId: [ID]!) {
@@ -98,6 +98,10 @@ export const LOGIN_USER = gql`
   mutation Login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
       value
+      user {
+        id
+        username
+      }
     }
   }
 `;

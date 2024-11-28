@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -17,16 +16,17 @@ import { ALL_USERS } from "@/graphql/queries";
 import { useParams } from "react-router-dom";
 
 // Define TypeScript types for mutation variables and response
+// TODO: extract to types file
 interface AddUserToFolderVariables {
   folderId: string;
-  usersId: string;
+  usersId: string[];
 }
 
 interface AddUserToFolderResponse {
   addUserToFolder: {
     id: string;
     name: string;
-    users: { id: string; name: string }[];
+    users: { id: string; username: string }[];
   };
 }
 
@@ -53,7 +53,7 @@ const EditFolder: React.FC = () => {
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     try {
-      const userDetails = allUsers.find((user) => user.username === username);
+      const userDetails = allUsers.find((user: { id: string; username: string }) => user.username === username);
       
       const userId = userDetails.id;
       console.log(userId);

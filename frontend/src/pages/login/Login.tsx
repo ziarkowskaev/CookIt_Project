@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "@/graphql/mutations";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IAuthParams } from "@/utils/types";
 
@@ -21,7 +21,7 @@ const validationSchema = z.object({
   username: z.string().min(1, {
     message: "Username is required",
   }),
-  password: z.string().min(8, {message: "Password is required and must contain at least 8 characters"}),
+  password: z.string().min(1, {message: "Password is required"}),
 });
 
 type FormValues = z.infer<typeof validationSchema>;
@@ -40,6 +40,8 @@ const Login = ({setToken}: IAuthParams) => {
       const token = result.data.login.value
       setToken(token)
       localStorage.setItem('user-auth-token', "Bearer " + token)
+      localStorage.setItem('username', result.data.login.user.username);
+      localStorage.setItem('userId', result.data.login.user.id);
       navigate("/")
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input.tsx";
 import { Card, CardContent } from "../../components/ui/card.tsx";
 import { RecipesCarousel } from "./CarouselComp.tsx";
-import { useState } from "react";
+import { useState, KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { ALL_CATEGORIES, ALL_RECIPES } from "@/graphql/queries.ts";
 import { useQuery } from "@apollo/client";
@@ -17,7 +17,7 @@ const Home = () => {
   };
   const [searchTags, setSearchTags] = useState("");
   // console.log(result);
-  const handleSearch = (e) => {
+  const handleSearch = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const processedTags = searchTags
         .replace(/[^a-zA-Z,]/g, "") // Removes everything except alphabetic characters and commas

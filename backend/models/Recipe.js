@@ -21,7 +21,6 @@ const schema = new mongoose.Schema({
   images: [
     {
       type: String,
-      required: true,
     },
   ],
   tags: [{

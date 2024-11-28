@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useNavigate, Outlet } from "react-router-dom";
 import AddFolder from "../folders/AddFolder";
-import { useState } from "react";
+import { useState, KeyboardEvent} from "react";
 import { logout } from "@/utils/auth";
 import { Button } from "@/components/ui/button";
 
@@ -29,7 +29,7 @@ const NavigationMenuApp = ({
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       navigate(`/search?query=${searchQuery}`);
     }

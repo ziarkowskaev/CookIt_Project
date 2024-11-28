@@ -1,53 +1,54 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_RECIPE } from "@/graphql/mutations";
-import { ALL_RECIPES, AUTH_USER } from "@/graphql/queries";
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { CREATE_RECIPE } from '@/graphql/mutations';
+import { ALL_RECIPES } from '@/graphql/queries';
 
 // TODO: add destination to post recipe
 const AddRecipe = () => {
   const [recipeData, setRecipeData] = useState({
-    name: "",
-    description: "",
+    name: '',
+    description: '',
     ingredients: [],
-    preparation: "",
+    preparation: '',
     tags: [],
-    images: [],
+    images: [''],
   });
   const [addRecipe, { loading, error, data }] = useMutation(CREATE_RECIPE, {
     refetchQueries: [ALL_RECIPES],
   });
 
-  const user = useQuery(AUTH_USER);
-  console.log(user);
+  const userId = localStorage.getItem('userId');
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
     const { name, value } = e.target;
     setRecipeData({
       ...recipeData,
       [name]:
-        name === "tags" || name === "ingredients" ? value.split(",") : value,
+        name === 'tags' || name === 'ingredients' ? value.split(',') : value,
     });
   };
 
-  const handleFileUpload = (e) => {
-    const files = Array.from(e.target.files).map((file) =>
-      URL.createObjectURL(file)
-    );
+  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+      ? Array.from(e.target.files).map((file) => URL.createObjectURL(file))
+      : [];
     setRecipeData({
       ...recipeData,
       images: files,
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     try {
       await addRecipe({
-        variables: { ...recipeData, createdBy: user.data?.me.id || "" },
+        variables: { ...recipeData, createdBy: userId || '' },
       });
-      alert("Recipe created successfully!");
+      alert('Recipe created successfully!');
     } catch (err) {
       console.error(err);
     }
@@ -97,7 +98,7 @@ const AddRecipe = () => {
                     name="ingredients"
                     id="ingredients"
                     placeholder="List ingredients separated by commas"
-                    value={recipeData.ingredients.join(",")}
+                    value={recipeData.ingredients.join(',')}
                     onChange={handleChange}
                   ></textarea>
                 </div>
@@ -119,7 +120,7 @@ const AddRecipe = () => {
                     name="tags"
                     id="tags"
                     placeholder="Add tags for your recipe (e.g., vegan, quick)"
-                    value={recipeData.tags.join(",")}
+                    value={recipeData.tags.join(',')}
                     onChange={handleChange}
                   />
                 </div>
@@ -129,7 +130,7 @@ const AddRecipe = () => {
                     className="bg-black hover:bg-gray-400 active:bg-gray-500 text-white px-4 py-2 mb-3 text-sm rounded-md"
                     disabled={loading}
                   >
-                    {loading ? "Creating..." : "Create Recipe"}
+                    {loading ? 'Creating...' : 'Create Recipe'}
                   </button>
                 </div>
                 {error && (

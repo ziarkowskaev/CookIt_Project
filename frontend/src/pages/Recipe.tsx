@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import {
   Card,
   CardContent,
@@ -16,7 +14,12 @@ import { useQuery } from "@apollo/client";
 import { ALL_USERS, GET_RECIPE } from "@/graphql/queries";
 import { Button } from "@/components/ui/button";
 
+// TODO: check the path of the recipes
+// TODO: check if data received correct
+// TODO: ensure ingredients split at ','
 const Recipe = () => {
+  // const location = useLocation();
+  // console.log(recipeId);
   const params = useParams();
   const recipeId = params?.recipeId;
   const userId = localStorage.getItem("userId");
@@ -26,11 +29,12 @@ const Recipe = () => {
     skip: !recipeId, // Prevent the query from running if recipeId is undefined
   });
   const recipeInfo = data?.recipe;
+
   if (loading || resultUsers.loading) {
     return <div>loading...</div>;
   }
   const createdByUser = resultUsers.data?.allUsers.find(
-    (user) => user.id === recipeInfo.createdBy
+    (user: { id: string; username: string }) => user.id === recipeInfo.createdBy
   ).username;
   // console.log("Recipe details:", recipeInfo);
 

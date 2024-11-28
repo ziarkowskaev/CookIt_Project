@@ -6,6 +6,7 @@ const userTypeDefs = `#graphql
 
   type Token {
     value: String!
+    user: User!
   }
 
   extend type Query {
