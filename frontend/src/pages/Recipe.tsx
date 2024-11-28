@@ -58,13 +58,15 @@ const Recipe = () => {
       <div className="w-screen px-8 py-4">
         <div className="bg-cream border-none shadow-none rounded-xl">
           {/* Recipe image, name and amount of likes */}
-          <Card className="grid grid-cols-2 w-2/5 bg-cream border-none shadow-none">
+          <Card className="flex flex-col sm:flex-row bg-cream border-none shadow-none">
             {/* Recipe Image */}
+            <div>
             <Avatar className="w-52 h-52">
               {/* <AvatarImage src="@/images/FoodImg.png" alt="Avatar" /> */}
               <AdvancedImage cldImg={myImage} />
               <AvatarFallback>Image</AvatarFallback>
             </Avatar>
+            </div>
 
             {/* Recipe name and amount of likes */}
             <CardContent>

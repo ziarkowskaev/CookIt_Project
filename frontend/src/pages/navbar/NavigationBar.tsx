@@ -20,6 +20,8 @@ import AddFolder from '../folders/AddFolder';
 import { useState, KeyboardEvent } from 'react';
 import { logout } from '@/utils/auth';
 import { Button } from '@/components/ui/button';
+import { FaUser } from "react-icons/fa";
+
 
 const NavigationMenuApp = ({
   userLoggedIn,
@@ -44,7 +46,7 @@ const NavigationMenuApp = ({
             {/* Logo */}
             <h1
               onClick={() => navigate('/')}
-              className="font-bold cursor-pointer text-lg"
+              className="font-bold cursor-pointer text-lg text-cream"
             >
               CookIt
             </h1>
@@ -122,7 +124,7 @@ const NavigationMenuApp = ({
           <div className="hidden sm:flex items-center justify-between w-full space-x-4">
           <h1
               onClick={() => navigate("/")}
-              className="font-bold cursor-pointer text-3xl"
+              className="font-bold cursor-pointer text-3xl text-cream"
             >
               CookIt
             </h1>
@@ -172,13 +174,15 @@ const NavigationMenuApp = ({
                 />
               </NavigationMenuItem>
 
-              <NavigationMenuItem>
+              <NavigationMenuItem className="bg-cream rounded-full">
                 {userLoggedIn ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger>
                       <Avatar>
                         <AvatarImage />
-                        <AvatarFallback>CN</AvatarFallback>
+                        <AvatarFallback>
+                          <FaUser className="ml-2ml-2 w-6 h-6" />
+                        </AvatarFallback>
                       </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
