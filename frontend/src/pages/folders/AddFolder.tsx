@@ -11,16 +11,15 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { CREATE_FOLDER } from '@/graphql/mutations';
-import { AUTH_USER, FOLDERS_BY_USER } from '@/graphql/queries';
+import { FOLDERS_BY_USER } from '@/graphql/queries';
 
 // Define TypeScript types for mutation variables and response
 // all dialogs sneed to be closed automatically
 // Component definition
 const AddFolder: React.FC = () => {
-  const resultUser = useQuery(AUTH_USER);
-  const userId = resultUser.data?.me?.id;
+  const userId = localStorage.getItem('userId');
   const [folderData, setFolderData] = useState({
     name: '',
   });

@@ -34,10 +34,14 @@ const App = () => {
   //should be used with context by the auth user
 
   const resultUser = useQuery(AUTH_USER);
+
+  useEffect(() => {  
+    console.log('useEffect happened: User id:', userId);
+  }, [resultUser.data]);
   // TODO:the userID breaks the code somehow
+  
   const userId = resultUser.data?.me?.id;
 
-  console.log('User id:', userId);
   if (resultRecipes.loading) {
     return <div>loading...</div>;
   }

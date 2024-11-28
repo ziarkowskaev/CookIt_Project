@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardTitle } from "../../components/ui/card.tsx";
-import { AUTH_USER, FOLDERS_BY_USER } from "@/graphql/queries.ts";
+import { FOLDERS_BY_USER } from "@/graphql/queries.ts";
 import { useQuery } from "@apollo/client";
 // import { AUTH_USER } from "@/graphql/queries.ts";
 // import { useQuery } from "@apollo/client";
@@ -11,11 +11,8 @@ const Folders = () => {
 
   //should be used with context by the auth user
 
-  const resultUser = useQuery(AUTH_USER);
+  const userId = localStorage.getItem('userId');
 
-  const userId = resultUser?.data?.me.id;
-
-  console.log(userId);
 
   const resultFolders = useQuery(FOLDERS_BY_USER, {
     variables: { userId },
@@ -23,10 +20,6 @@ const Folders = () => {
   });
 
   console.log(resultFolders);
-
-  if (resultUser.loading) {
-    return <div>loading...</div>;
-  }
 
   if (resultFolders.loading) {
     return <div>loading...</div>;

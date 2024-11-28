@@ -5,19 +5,15 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import { AUTH_USER } from "@/graphql/queries";
 import { IRecipeParams, IRecipe } from "@/utils/types";
-import { useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 // TODO: adjust spacing for grids
 // TODO: the recipes should have images; and profile details needs to be updated
 export const Profile = ({ recipes }: IRecipeParams) => {
-  const resultUser = useQuery(AUTH_USER);
-  if (resultUser.loading) {
-    return <div>loading...</div>;
-  }
+
   const navigate = useNavigate();
-  const userDetails = resultUser?.data?.me;
+  const userId = localStorage.getItem('userId');
+  const username = localStorage.getItem('username');
   const handlRecipeClick = (recipeId: string) => {
     navigate(`/recipepage/${recipeId}`),
       {
@@ -42,12 +38,12 @@ export const Profile = ({ recipes }: IRecipeParams) => {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </div>
-        <h2 className="text-xl mt-2 font-semibold">{userDetails?.username}</h2>
+        <h2 className="text-xl mt-2 font-semibold">{username}</h2>
       </div>
       <h2>Created Recipes</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  grid-flow-row gap-8 w-4/6 mt-20 ">
         {recipes
-          .filter((recipe: IRecipe) => recipe.createdBy === userDetails?.id)
+          .filter((recipe: IRecipe) => recipe.createdBy === userId)
           .map((recipe: IRecipe) => (
             <Card
               key={recipe.id}

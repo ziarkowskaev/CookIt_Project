@@ -40,6 +40,8 @@ const Login = ({setToken}: IAuthParams) => {
       const token = result.data.login.value
       setToken(token)
       localStorage.setItem('user-auth-token', "Bearer " + token)
+      localStorage.setItem('username', result.data.login.user.username);
+      localStorage.setItem('userId', result.data.login.user.id);
       navigate("/")
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

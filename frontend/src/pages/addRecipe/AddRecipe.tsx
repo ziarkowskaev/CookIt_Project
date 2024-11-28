@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { CREATE_RECIPE } from '@/graphql/mutations';
-import { ALL_RECIPES, AUTH_USER } from '@/graphql/queries';
+import { ALL_RECIPES } from '@/graphql/queries';
 
 // TODO: add destination to post recipe
 const AddRecipe = () => {
@@ -19,8 +19,7 @@ const AddRecipe = () => {
     refetchQueries: [ALL_RECIPES],
   });
 
-  const user = useQuery(AUTH_USER);
-  console.log(user);
+  const userId = localStorage.getItem('userId');
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -47,7 +46,7 @@ const AddRecipe = () => {
     e.preventDefault();
     try {
       await addRecipe({
-        variables: { ...recipeData, createdBy: user.data?.me.id || '' },
+        variables: { ...recipeData, createdBy: userId || '' },
       });
       alert('Recipe created successfully!');
     } catch (err) {
