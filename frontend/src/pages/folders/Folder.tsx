@@ -52,10 +52,11 @@ const Folder = () => {
           <EditFolder />
         </div>
         <Label>Users: </Label>
-        {resultFolder &&
-          resultFolder.users.map((user) => (
-            <span className="ml-1">{user.username}</span>
-          ))}
+        {resultFolder && (
+          <span className="ml-1">
+            {resultFolder.users.map((user) => user.username).join(", ")}
+          </span>
+        )}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {resultFolder &&
             resultFolder.recipes.map((recipe: IRecipe) => (
