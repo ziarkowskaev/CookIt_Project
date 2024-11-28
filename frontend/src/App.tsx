@@ -20,6 +20,7 @@ import Folders from "./pages/folders/Folders";
 import "./App.css";
 import { setUserToken } from "./utils/auth";
 import Folder from "./pages/folders/Folder";
+import ProtectedRoute from "./routes/routes";
 
 const App = () => {
   const [token, setToken] = useState("");
@@ -50,6 +51,7 @@ const App = () => {
           client={client}
         />
       ),
+
       children: [
         {
           // path: "/",
@@ -67,7 +69,11 @@ const App = () => {
         },
         {
           path: "/profile", // TODO:  / profile/:id user ID needs to be used here
-          element: <Profile recipes={resultRecipes.data?.allRecipes || []} />,
+          element: (
+            <ProtectedRoute userLoggedIn={token !== ""}>
+              <Profile recipes={resultRecipes.data?.allRecipes || []} />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/search",
@@ -75,11 +81,19 @@ const App = () => {
         },
         {
           path: "/addRecipe",
-          element: <AddRecipe />,
+          element: (
+            <ProtectedRoute userLoggedIn={token !== ""}>
+              <AddRecipe />,
+            </ProtectedRoute>
+          ),
         },
         {
           path: "folders",
-          element: <Folders />,
+          element: (
+            <ProtectedRoute userLoggedIn={token !== ""}>
+              <Folders />,
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/category/:categoryName",
@@ -87,7 +101,11 @@ const App = () => {
         },
         {
           path: "/folder/:folderId",
-          element: <Folder />,
+          element: (
+            <ProtectedRoute userLoggedIn={token !== ""}>
+              <Folder />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/recipepage/:recipeId", // TODO: should be recipe/:recipeID needs to be considered here

@@ -17,7 +17,7 @@ const Folders = () => {
     return <div>loading...</div>;
   }
 
-  const userId = resultUser?.data?.me.id;
+  const userId = resultUser?.data?.me?.id;
 
   console.log(userId);
 
@@ -25,8 +25,6 @@ const Folders = () => {
     variables: { userId },
     skip: !userId,
   });
-
-  console.log(resultFolders);
 
   if (resultFolders.loading) {
     return <div>loading...</div>;
