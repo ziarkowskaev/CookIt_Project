@@ -58,12 +58,6 @@ const AddRecipe = (folderId: { folderId: string }) => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        {/* added an icon to for recipes */}
-        <Button variant="ghost">
-          <FaPlus className="ml-2ml-2 w-6 h-6" />
-        </Button>
-      </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add Recipes</DialogTitle>
