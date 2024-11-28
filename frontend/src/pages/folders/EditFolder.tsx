@@ -14,7 +14,6 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ADD_USER_TO_FOLDER } from "@/graphql/mutations";
 import { ALL_USERS } from "@/graphql/queries";
 import { useParams } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
 
 // Define TypeScript types for mutation variables and response
 // TODO: extract to types file
