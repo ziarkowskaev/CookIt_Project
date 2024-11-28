@@ -14,6 +14,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ADD_USER_TO_FOLDER } from "@/graphql/mutations";
 import { ALL_USERS } from "@/graphql/queries";
 import { useParams } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
 
 // Define TypeScript types for mutation variables and response
 // TODO: extract to types file
@@ -53,13 +54,15 @@ const EditFolder: React.FC = () => {
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     try {
-      const userDetails = allUsers.find((user: { id: string; username: string }) => user.username === username);
-      
+      const userDetails = allUsers.find(
+        (user: { id: string; username: string }) => user.username === username
+      );
+
       const userId = userDetails.id;
       console.log(userId);
       // Trigger the mutation to add the user to the folder
       await addUserToFolder({
-        variables: { folderId, usersId:[userId] },
+        variables: { folderId, usersId: [userId] },
       });
       alert("User added to folder successfully!");
       setUsername(""); // Clear user ID input after success
@@ -71,9 +74,7 @@ const EditFolder: React.FC = () => {
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <Button variant="outline">Add users</Button>
-      </DialogTrigger>
+      <DialogTrigger className="mb-4">Add users </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
