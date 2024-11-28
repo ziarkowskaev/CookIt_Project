@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { ALL_USERS, GET_RECIPE } from "@/graphql/queries";
