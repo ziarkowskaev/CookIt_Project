@@ -53,6 +53,11 @@ const NavigationMenuApp = ({
 
             {/* Search Bar and Hamburger Menu */}
             <div className="flex items-center space-x-4">
+            {userLoggedIn && (
+                    <>
+                        <AddFolder />
+                    </>
+                  )}
               <Input
                 className="bg-white w-28 sm:w-36" // Adjust width for mobile view
                 type="text"
@@ -83,9 +88,6 @@ const NavigationMenuApp = ({
                     <>
                       <DropdownMenuItem onClick={() => navigate('/addRecipe')}>
                         <Button variant="outline">Add Recipe</Button>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <AddFolder />
                       </DropdownMenuItem>
                     </>
                   )}

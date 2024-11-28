@@ -7,7 +7,7 @@ import Recipes from "./pages/recipes/Recipes";
 import { useApolloClient, useQuery } from "@apollo/client";
 import Signup from "./pages/login/Signup";
 import Login from "./pages/login/Login";
-import Recipe from "./pages/Recipe";
+import Recipe from "./pages/recipes/Recipe";
 import { useEffect, useState } from "react";
 import { ALL_RECIPES, AUTH_USER } from "./graphql/queries";
 

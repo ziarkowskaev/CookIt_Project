@@ -32,13 +32,13 @@ const Home = () => {
   return (
     <div className="flex font-sans flex-col items-center">
       <div className="w-full mt-10 max-w-screen-lg px-8">
-        <div className="mt-20">
+        <div className="mt-4">
           <h2 className="font-semibold text-2xl mb-8">CATEGORIES</h2>
           {/* scrollable categories container to fit all categories in database */}
           <div
-            className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 grid-flow-row gap-8 overflow-y-auto"
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 grid-flow-row gap-8 overflow-y-auto"
             style={{
-              maxHeight: "500px",
+              maxHeight: "530px",
               scrollbarWidth: "auto",
             }}
           >

@@ -39,11 +39,11 @@ const Recipes = ({ recipes }: IRecipeParams) => {
     <div className="flex flex-wrap font-sans flex-col items-center">
       <div className="w-full max-w-screen-lg px-8">
         <div className="mt-20">
-          <h2 className="font-semi-bold text-2xl">
-            {categoryName || "MOST POPULAR RECIPES"}
+          <h2 className="font-semibold text-2xl mb-8">
+            {categoryName || "RECIPES"}
           </h2>
           {/* grids shrink based on the screen for now */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-8 mt-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 mt-8">
             {/* recipe names shown, needs to be clickable */}
             {recipes_updated.map((recipe: IRecipe) => (
               <div key={recipe.id}>
