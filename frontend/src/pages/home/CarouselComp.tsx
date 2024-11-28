@@ -1,18 +1,13 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-} from "../../components/ui/card";
-import { useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import SwiperCore from "swiper";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardTitle } from '../../components/ui/card';
+import { useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import SwiperCore from 'swiper';
 
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { IRecipe, IRecipeParams } from "@/utils/types";
-import { useNavigate } from "react-router-dom";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { IRecipe, IRecipeParams } from '@/utils/types';
+import { useNavigate } from 'react-router-dom';
 
 // TODO: change to suit our needs
 export function RecipesCarousel({ recipes }: IRecipeParams) {
