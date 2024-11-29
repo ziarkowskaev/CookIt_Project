@@ -37,7 +37,7 @@ export const Profile = ({ recipes }: IRecipeParams) => {
           <Avatar className="flex h-40 w-40 transform scale-125 -bottom-20">
             <AvatarImage
               src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid"
-              alt="@shadcn"
+              alt="icon representing a user"
             />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>

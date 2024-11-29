@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogContent,
   DialogFooter,
+  DialogTrigger,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -12,7 +13,7 @@ import { ADD_RECIPES_TO_FOLDER } from "@/graphql/mutations";
 import { ALL_RECIPES } from "@/graphql/queries";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-
+import { FaPlus } from "react-icons/fa";
 const AddRecipe = (folderId: { folderId: string }) => {
   const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -55,7 +56,17 @@ const AddRecipe = (folderId: { folderId: string }) => {
   };
 
   return (
+    // removed asChild
     <Dialog>
+      <DialogTrigger>
+        {/* added an icon to for recipes */}
+        <Button
+          className="flex justify-center items-center w-full h-full"
+          variant="ghost"
+        >
+          <FaPlus className="text-gray-400 text-xl" />
+        </Button>
+      </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add Recipes</DialogTitle>

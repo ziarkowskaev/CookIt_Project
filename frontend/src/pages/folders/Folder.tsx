@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label.tsx";
 import EditFolder from "./EditFolder.tsx";
 import AddRecipe from "./AddRecipesFolder.tsx";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
+
 // TODO: the recipes need to be from the user folder; change the query
 // TODO: check responsiveness; reconisder inner div container
 const Folder = () => {
@@ -44,19 +44,19 @@ const Folder = () => {
           scrollbarWidth: "thin", // Optional scrollbar styling
         }}
       >
-        <div className="flex flex-row mb-10 sw-full items-center justify-between">
-          <h2 className="font-bold text-2xl">{resultFolder.name}</h2>
+        <div className="flex flex-row w-full jutstify-between">
+          <h2 className="font-bold text-xl">{resultFolder.name}</h2>
           <EditFolder />
         </div>
-        <Label className="font-light">Users: </Label>
+        <Label>Users: </Label>
         {resultFolder && (
-          <span className="ml-1 font-semibold">
+          <span className="ml-1">
             {resultFolder.users
               .map((user: { id: string; username: string }) => user.username)
               .join(", ")}
           </span>
         )}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {resultFolder &&
             resultFolder.recipes.map((recipe: IRecipe) => (
               <Card
@@ -72,8 +72,7 @@ const Folder = () => {
               </Card>
             ))}
           <Card className="flex rounded-custom items-center justify-center aspect-square cursor-pointer">
-            <CardContent>
-              <FaPlus className="flex justify-center items-center text-gray-400" />
+            <CardContent className="mt-4">
               <AddRecipe folderId={resultFolder.id} />
             </CardContent>
           </Card>
