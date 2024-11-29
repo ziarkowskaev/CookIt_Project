@@ -5,6 +5,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState, ChangeEvent } from "react";
 import { useMutation, useQuery } from "@apollo/client";
@@ -12,6 +13,7 @@ import { ADD_RECIPES_TO_FOLDER } from "@/graphql/mutations";
 import { ALL_RECIPES } from "@/graphql/queries";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { FaPlus } from "react-icons/fa";
 
 const AddRecipe = (folderId: { folderId: string }) => {
   const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
