@@ -1,13 +1,18 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardTitle } from '../../components/ui/card';
-import { useRef } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import SwiperCore from 'swiper';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "../../components/ui/card";
+import { useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import SwiperCore from "swiper";
 
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { IRecipe, IRecipeParams } from '@/utils/types';
-import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { IRecipe, IRecipeParams } from "@/utils/types";
+import { useNavigate } from "react-router-dom";
 
 // TODO: change to suit our needs
 export function RecipesCarousel({ recipes }: IRecipeParams) {
@@ -19,6 +24,10 @@ export function RecipesCarousel({ recipes }: IRecipeParams) {
   const handlePrev = () => {
     swiperRef.current?.slidePrev(); // Move to the previous slide
   };
+  const handlRecipeClick = (recipeId: string) => {
+    navigate(`/recipepage/${recipeId}`);
+  };
+
   return (
     <div className="flex flex-row items-center">
       <Button
@@ -43,14 +52,16 @@ export function RecipesCarousel({ recipes }: IRecipeParams) {
           {recipes.map((recipe: IRecipe) => (
             <SwiperSlide key={recipe.id}>
               <Card
-                onClick={() => {
-                  navigate(`/recipepage/${recipe.id}`);
-                }}
-                className="flex rounded-custom items-center justify-around aspect-square cursor-pointer"
+                onClick={() => handlRecipeClick(recipe.id)}
+                className="flex rounded-custom items-center justify-center w-full aspect-square cursor-pointer"
               >
-                <CardContent className="p-6">
-                  <CardTitle className="mb-2">{recipe.name}</CardTitle>
-                  {/* <CardDescription>{recipe.description}</CardDescription> */}
+                <CardContent className="p-4">
+                  <CardTitle className="mb-2">
+                    <span className="text-lg font-semibold">{recipe.name}</span>
+                  </CardTitle>
+                  <CardDescription className="text-sm text-gray-600">
+                    {recipe.description}
+                  </CardDescription>
                 </CardContent>
               </Card>
             </SwiperSlide>

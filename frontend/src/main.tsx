@@ -1,20 +1,20 @@
 // import React from "react";
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   createHttpLink,
   // gql,
-} from '@apollo/client';
-import App from './App';
-import './index.css';
+} from "@apollo/client";
+import App from "./App";
+import "./index.css";
 
 // Set up Apollo Client
-import { setContext } from '@apollo/client/link/context';
+import { setContext } from "@apollo/client/link/context";
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('user-auth-token');
+  const token = localStorage.getItem("user-auth-token");
   return {
     headers: {
       ...headers,
@@ -24,7 +24,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const httpLink = createHttpLink({
-  uri: `https://${import.meta.env.VITE_SERVER_ADDRESS}/graphql`,
+  uri: `http://${import.meta.env.VITE_SERVER_ADDRESS}/graphql`,
 });
 
 const client = new ApolloClient({
@@ -40,4 +40,4 @@ function Root() {
   );
 }
 
-ReactDOM.render(<Root />, document.getElementById('root'));
+ReactDOM.render(<Root />, document.getElementById("root"));
