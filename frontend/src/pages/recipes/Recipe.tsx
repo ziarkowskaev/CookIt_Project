@@ -7,15 +7,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { ALL_USERS, GET_RECIPE } from "@/graphql/queries";
 import { Button } from "@/components/ui/button";
 
-import {Cloudinary} from "@cloudinary/url-gen";
-import {AdvancedImage} from '@cloudinary/react';
-import {fill} from "@cloudinary/url-gen/actions/resize";
+// import {Cloudinary} from "@cloudinary/url-gen";
+// import {AdvancedImage} from '@cloudinary/react';
+// import {fill} from "@cloudinary/url-gen/actions/resize";
 
 // TODO: check the path of the recipes
 // TODO: check if data received correct
@@ -24,16 +24,16 @@ const Recipe = () => {
   // const location = useLocation();
   // console.log(recipeId);
 
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: 'demo'
-    }
-  });
-  // Instantiate a CloudinaryImage object for the image with the public ID, 'docs/models'.
-  const myImage = cld.image('samples/breakfast'); 
+  // const cld = new Cloudinary({
+  //   cloud: {
+  //     cloudName: 'demo'
+  //   }
+  // });
+  // // Instantiate a CloudinaryImage object for the image with the public ID, 'docs/models'.
+  // const myImage = cld.image('samples/breakfast'); 
 
-  // Resize to 250 x 250 pixels using the 'fill' crop mode.
-  myImage.resize(fill().width(250).height(250));
+  // // Resize to 250 x 250 pixels using the 'fill' crop mode.
+  // myImage.resize(fill().width(250).height(250));
 
   const params = useParams();
   const recipeId = params?.recipeId;
@@ -58,19 +58,17 @@ const Recipe = () => {
       <div className="w-screen px-8 py-4">
         <div className="bg-cream border-none shadow-none rounded-xl">
           {/* Recipe image, name and amount of likes */}
-          <Card className="flex flex-col sm:flex-row bg-cream border-none shadow-none">
+          <Card className="flex flex-col justify-center sm:flex-row bg-cream border-none shadow-none">
             {/* Recipe Image */}
-            <div>
-            <Avatar className="w-52 h-52">
-              {/* <AvatarImage src="@/images/FoodImg.png" alt="Avatar" /> */}
-              <AdvancedImage cldImg={myImage} />
+            <Avatar className="mx-12 sm: w-52 h-52 my-5">
+              <AvatarImage className='overflow:hidden' src={recipeInfo.images[0]} alt="Image of food" />
+              {/* <AdvancedImage cldImg={myImage} /> */}
               <AvatarFallback>Image</AvatarFallback>
             </Avatar>
-            </div>
 
             {/* Recipe name and amount of likes */}
             <CardContent>
-              <CardTitle className="text-3xl mt-5">
+              <CardTitle className="text-3xl mx-8 sm:mt-24">
                 {recipeInfo?.name}
               </CardTitle>
             </CardContent>
