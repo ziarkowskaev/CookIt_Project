@@ -46,13 +46,13 @@ const NavigationMenuApp = ({
             {/* Logo */}
             <h1
               onClick={() => navigate('/')}
-              className="font-bold cursor-pointer text-lg text-cream"
+              className="font-bold cursor-pointer text-lg text-cream mr-4"
             >
               CookIt
             </h1>
 
             {/* Search Bar and Hamburger Menu */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
             {userLoggedIn && (
                     <>
                         <AddFolder />
