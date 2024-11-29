@@ -44,18 +44,21 @@ const Folder = () => {
           scrollbarWidth: "thin", // Optional scrollbar styling
         }}
       >
-        <div className="flex flex-row w-full jutstify-between">
+        <div className="flex flex-row w-full justify-between">
           <h2 className="font-bold text-xl">{resultFolder.name}</h2>
           <EditFolder />
         </div>
-        <Label>Users: </Label>
-        {resultFolder && (
-          <span className="ml-1">
-            {resultFolder.users
-              .map((user: { id: string; username: string }) => user.username)
-              .join(", ")}
-          </span>
-        )}
+        <div className="mb-10">
+          <Label className="font-light">Users: </Label>
+          {resultFolder && (
+            <span className="ml-1 font-semibold">
+              {resultFolder.users
+                .map((user: { id: string; username: string }) => user.username)
+                .join(", ")}
+            </span>
+          )}
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {resultFolder &&
             resultFolder.recipes.map((recipe: IRecipe) => (
