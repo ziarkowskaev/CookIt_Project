@@ -55,5 +55,8 @@ Find us on Github:
 
 Give a ⭐️ if this project helped you!
 
+## Screenshot of the application frontpage
+<img width="893" height="467" alt="image" src="https://github.com/user-attachments/assets/1e3c8996-1864-43e3-a8e5-ec5e1e10af70" />
+
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
